@@ -1,9 +1,13 @@
-<!-- Component: ImmersiveArrival. Geometric terrain, atmosphere and a camera journey. -->
-<section class="landscape-hero" id="inicio" aria-labelledby="hero-title">
-  <img class="hero-photo" id="hero-photo" data-packed-src="assets/photos/hero.webp" src="/media/c809a84c8bead525.webp" width="2200" height="1239" alt="Cerro Arequita, Lavalleja" fetchpriority="high">
-  <div id="hero-canvas" class="hero-canvas" aria-hidden="true"></div>
-  <div class="hero-shade" aria-hidden="true"></div>
-  <div class="hero-topline"><span>URUGUAY. HACIA ADENTRO.</span><span>LAVALLEJA</span></div>
-  <div class="hero-copy"><p class="eyebrow light">HAY QUE VIVIRLO.</p><h1 id="hero-title">ENAMORATE<br>DE LAVALLEJA.</h1><p class="hero-description">El paisaje es sólo el comienzo.</p><a href="#experiencias" class="btn action-rect">COMENZÁ A DESCUBRIR <span aria-hidden="true">↓</span></a></div>
-  <div class="hero-footer"><a href="#experiencias" class="scroll-cue">SEGUÍ EXPLORANDO <span aria-hidden="true">↓</span></a><button id="hero-replay" class="landscape-location" aria-label="Volver a vivir la introducción"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10a9 9 0 1 1 1 7M3 4v6h6"/></svg><span>VOLVER A EMPEZAR</span></button><button class="motion-toggle" id="motion-toggle" aria-label="Pausar movimiento" aria-pressed="false"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg></button></div>
+---
+import JourneyHero from '../../islands/JourneyHero';
+---
+<section class="journey-hero" id="inicio" aria-labelledby="journey-title">
+  <JourneyHero client:load />
+  <div class="journey-edge-controls">
+    <a class="journey-scroll" href="#experiencias">SEGUÍ DESCUBRIENDO <span aria-hidden="true">↓</span></a>
+    <div>
+      <button id="hero-replay" aria-label="Volver a empezar el recorrido" title="Volver a empezar">↺</button>
+      <button class="motion-toggle" id="motion-toggle" aria-label="Pausar movimiento" aria-pressed="false" title="Pausar o continuar el recorrido"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg></button>
+    </div>
+  </div>
 </section>

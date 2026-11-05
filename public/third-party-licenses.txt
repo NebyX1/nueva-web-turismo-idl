@@ -273,3 +273,13 @@ FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
 OTHER DEALINGS IN THE FONT SOFTWARE.
 
 
+Barlow Condensed · The Barlow Project Authors (https://github.com/jpt/barlow)
+========================================================================
+SIL Open Font License 1.1. Fuente distribuida localmente sin modificar.
+Texto completo de la licencia: /fonts/BarlowCondensed-OFL.txt
+Fotografías de referencia y de otras secciones: /guide-photo-credits.html
+
+Cormorant Garamond · Christian Thalmann / Catharsis Fonts
+SIL Open Font License 1.1 · /fonts/CormorantGaramond-OFL.txt
+Ilustraciones del cuaderno Explorá Lavalleja: /guide-illustrations.html
+
