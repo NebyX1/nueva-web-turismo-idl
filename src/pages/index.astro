@@ -1,0 +1,25 @@
+---
+import TourismLayout from "../layouts/TourismLayout.astro";
+import SiteHeader from "../components/layout/SiteHeader.astro";
+import ImmersiveHero from "../components/home/ImmersiveHero.astro";
+import FeaturedDestinations from "../components/home/FeaturedDestinations.astro";
+import TouristGuide from "../components/guide/TouristGuide.astro";
+import EscapePlanner from "../components/planner/EscapePlanner.astro";
+import PracticalInfo from "../components/practical/PracticalInfo.astro";
+import GiannaSection from "../components/gianna/GiannaSection.astro";
+import SiteFooter from "../components/layout/SiteFooter.astro";
+import Dialogs from "../components/layout/Dialogs.astro";
+---
+<TourismLayout>
+  <SiteHeader />
+  <main>
+    <ImmersiveHero />
+    <FeaturedDestinations />
+    <TouristGuide />
+    <EscapePlanner />
+    <PracticalInfo />
+    <GiannaSection />
+  </main>
+  <SiteFooter />
+  <Dialogs />
+</TourismLayout>

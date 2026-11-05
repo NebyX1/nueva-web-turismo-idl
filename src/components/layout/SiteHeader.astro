@@ -1,0 +1,13 @@
+---
+import MobileNavigation from "../../islands/MobileNavigation";
+---
+<a class="skip-link" href="#experiencias">Saltar al contenido</a>
+<!-- Component: GlobalNav. 44px desktop rail; 48px on mobile. -->
+<header class="site-header" id="site-header">
+  <a href="#inicio" class="brand" aria-label="Lavalleja Turismo, inicio"><svg viewBox="0 0 48 30" aria-hidden="true"><path d="M2 25 14 9l8 8L32 3l14 22M10 25l8-8m9 8 6-8 6 8"/></svg><span>LAVALLEJA</span></a>
+  <nav class="desktop-nav" aria-label="Navegación principal"><a href="#experiencias">Descubrí</a><a href="#guia">La guía</a><a href="#escapada">Tu escapada</a><button data-open-gianna>Gianna Turismo</button></nav>
+  <div class="header-actions"><button class="saved-nav" data-open-trip aria-label="Abrir mi viaje"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4z"/></svg><span>Mi viaje</span><span class="saved-count" data-saved-count>0</span></button><button class="menu-button" id="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menú"><span></span><span></span></button></div>
+</header>
+<nav class="mobile-menu" id="mobile-menu" aria-label="Navegación móvil" hidden><a href="#experiencias">Descubrí <span>↗</span></a><a href="#guia">La guía <span>↗</span></a><a href="#escapada">Tu escapada <span>↗</span></a><button data-open-gianna>Gianna Turismo <span>↗</span></button></nav>
+
+<MobileNavigation client:load />
