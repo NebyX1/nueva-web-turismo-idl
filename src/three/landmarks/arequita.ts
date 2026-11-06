@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import type { LandmarkModel } from '../types';
+import { createArequitaRiver, arequitaRiverPoint, arequitaRiverBankDistance, sculptArequitaRiverGround } from './arequitaRiver';
 
 // Photo-informed proportions, not a survey. +Z is the wooded long face.
 const TAU = Math.PI * 2;
@@ -103,12 +104,15 @@ export function createArequita(): LandmarkModel {
     u: distance * stretch / perimeter, depth: 2.8 + rng() * 5.2, width: .5 + rng() * 1.35,
     tilt: (rng() - .5) * 2.4, height: (rng() - .5) * 3.0, phase: index * 2.731,
   }));
-  function terrainHeight(x: number, z: number) {
+  function originalTerrainHeight(x: number, z: number) {
     const hill = 43 * Math.exp(-((x / 154) ** 2 + ((z + 5) / 108) ** 2));
     const shoulders = 5.6 * Math.exp(-(((x + 97) / 69) ** 2 + ((z - 4) / 93) ** 2));
     const edge = Math.max(0, 1 - (x / 214) ** 8) * Math.max(0, 1 - (z / 174) ** 8);
     const detail = (noise(x * .048, z * .048) - .5) * 2.4 + (noise(x * .13, z * .13) - .5) * .7;
     return Math.max(0, (hill + shoulders + detail - 1.7) * edge);
+  }
+  function terrainHeight(x: number, z: number) {
+    return sculptArequitaRiverGround(x, z, originalTerrainHeight(x, z));
   }
   // The user's field photograph shows an abrupt left escarpment and a long
   // descending right shoulder. Monotone Hermite segments avoid ringing or a
@@ -270,11 +274,14 @@ export function createArequita(): LandmarkModel {
   slabs.setAttribute('color', new THREE.Float32BufferAttribute(slabColors, 3)); slabs.setAttribute('uv', new THREE.Float32BufferAttribute(slabUvs, 2)); slabs.setIndex(slabIndices);
   addMesh(group, 'Lajas y desprendimientos adheridos al escarpe', finish(slabs.toNonIndexed()), stoneMaterial);
 
-  const terrain = new THREE.PlaneGeometry(428, 348, 110, 90); terrain.rotateX(-Math.PI / 2);
-  const tp = terrain.attributes.position, groundColors = new Float32Array(tp.count * 3), groundColor = new THREE.Color();
+  const terrain = new THREE.PlaneGeometry(520, 500, 130, 125); terrain.rotateX(-Math.PI / 2);
+  const tp = terrain.attributes.position, groundColors = new Float32Array(tp.count * 3), groundColor = new THREE.Color(), bankColor = new THREE.Color('#777654');
   for (let i = 0; i < tp.count; i++) {
     const x = tp.getX(i), z = tp.getZ(i), n = noise(x * .055, z * .055); tp.setY(i, terrainHeight(x, z));
-    groundColor.setHSL(.185 + n * .035, .22 + n * .12, .24 + n * .12); groundColors.set([groundColor.r, groundColor.g, groundColor.b], i * 3);
+    const bank = arequitaRiverBankDistance(x, z), shore = 1 - THREE.MathUtils.smoothstep(bank, 2, 9);
+    groundColor.setHSL(.185 + n * .035, .22 + n * .12, .24 + n * .12);
+    groundColor.lerp(bankColor, Math.max(0, shore) * .62);
+    groundColors.set([groundColor.r, groundColor.g, groundColor.b], i * 3);
   }
   terrain.setAttribute('color', new THREE.BufferAttribute(groundColors, 3));
   addMesh(group, 'Talud continuo — terreno y raíces al mismo nivel', finish(terrain), new THREE.MeshStandardMaterial({ color: '#ffffff', vertexColors: true, roughness: 1 }));
@@ -302,7 +309,7 @@ export function createArequita(): LandmarkModel {
   // The forest roots are sampled on the same height field used by the terrain.
   for (let attempts = 0; plants.length < 840 && attempts < 14000; attempts++) {
     const x = (rng() - .5) * 366, z = (rng() - .5) * 282;
-    if (insideRock(x, z) || (x / 185) ** 2 + (z / 149) ** 2 > 1 || rng() > .91 - Math.abs(x) * .0012) continue;
+    if (insideRock(x, z) || arequitaRiverBankDistance(x, z) < 7 || (x / 185) ** 2 + (z / 149) ** 2 > 1 || rng() > .91 - Math.abs(x) * .0012) continue;
     const y = terrainHeight(x, z), height = 5.2 + rng() * 6.2;
     plants.push({ point: new THREE.Vector3(x, y - .20, z), height, crown: .9 + rng() * .18 });
   }
@@ -352,8 +359,19 @@ export function createArequita(): LandmarkModel {
     color.setHSL(.115, .07 + rng() * .08, .31 + rng() * .11); boulders.setColorAt(i, color);
   }
   boulders.castShadow = boulders.receiveShadow = true; boulders.computeBoundingBox(); boulders.computeBoundingSphere(); group.add(boulders);
+  const river = createArequitaRiver(terrainHeight); group.add(river.group);
   group.userData.arequita = { reconstruction: 'Photographic interpretation; not surveyed', visibleCliffWidth: 303, crestHeight: 90, forestPlants: plants.length, summitPlants, primaryJoints: joints.length };
   // Radius describes the outcrop and forest; the low blending terrain skirt is
   // intentionally wider. A near-front three-quarter view keeps its long profile.
-  return { group, target: new THREE.Vector3(14, 43, 6), bounds: { radius: 205, height: 98 }, groundY: 0, cameraDirection: new THREE.Vector3(.07, .12, 1).normalize() };
+  return {
+    group, target: new THREE.Vector3(-22, 39, 20), bounds: { radius: 315, height: 98 }, groundY: 0,
+    cameraDirection: new THREE.Vector3(-.52, .12, 1).normalize(), update: river.update,
+    nightLighting: {
+      floodlights: [
+        { foot: new THREE.Vector3(-150, terrainHeight(-150, 75) + .04, 75), target: new THREE.Vector3(-25, 60, 5), angle: .72, strength: 3.9, scale: 1.45 },
+        { foot: new THREE.Vector3(-255, terrainHeight(-255, 110) + .04, 110), target: arequitaRiverPoint(130), angle: .83, strength: 2.1, scale: 1.2 },
+      ],
+      setNight: night => river.setNight(night),
+    },
+  };
 }

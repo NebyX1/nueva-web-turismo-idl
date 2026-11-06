@@ -4,6 +4,7 @@ import assetData from './penitenteAsset.json';
 import { decodePenitenteGeometry, type PenitenteAsset } from './penitenteMesh';
 import { createPenitenteWater } from './penitenteWater';
 import { createPenitenteRock } from './penitenteRock';
+import { createPenitenteFish } from './penitenteFish';
 
 export function createPenitente(): LandmarkModel {
   const asset: PenitenteAsset = assetData;
@@ -33,6 +34,8 @@ export function createPenitente(): LandmarkModel {
     }
   });
   foliage.castShadow = foliage.receiveShadow = true; group.add(foliage);
+  const poolMesh = group.children.find(object => object.userData.kind === 'pool') as THREE.Mesh;
+  const fish = createPenitenteFish(poolMesh, asset.landscape.poolLevel); group.add(fish.group);
   return { group, target: new THREE.Vector3(0, 25, 5), bounds: { radius: 132, height: 74 }, groundY: 0,
-    cameraDirection: new THREE.Vector3(.12, .22, 1).normalize(), update(time) { clock.value = time; } };
+    cameraDirection: new THREE.Vector3(.12, .22, 1).normalize(), update(time) { clock.value = time; fish.update(time); } };
 }

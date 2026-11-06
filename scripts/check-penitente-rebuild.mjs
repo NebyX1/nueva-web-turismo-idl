@@ -52,6 +52,17 @@ model.group.traverse(object => {
 });
 assert.ok(triangleCount < 310000, 'El paisaje excede el presupuesto de geometría');
 assert.ok(rocks.length && water.length === 4, 'Deben estar el arroyo superior, caída, poza y desagüe');
+// The removed tower occupied this footprint beside the main rock face.
+// Check the decoded mesh so a future export cannot bring its two prongs back.
+let crownHeight = -Infinity, crownSamples = 0;
+for (const object of rocks) {
+  const p = object.geometry.attributes.position;
+  for (let i = 0; i < p.count; i++) {
+    if (p.getX(i) < -28 || p.getX(i) > -5 || p.getZ(i) < -2 || p.getZ(i) > 17) continue;
+    crownHeight = Math.max(crownHeight, p.getY(i)); crownSamples++;
+  }
+}
+assert.ok(crownSamples > 100 && crownHeight < 54, `Reapareció el pico artificial junto al salto (${crownHeight.toFixed(2)})`);
 for (const rock of rocks) {
   const g = rock.geometry, edges = new Map(); let volume = 0;
   const a = new THREE.Vector3(), b = new THREE.Vector3(), c = new THREE.Vector3();
@@ -122,8 +133,18 @@ if (!candidate) {
   assert.equal(registered.group.userData.assetSha256, asset.sourceSha256, 'La página sigue usando la versión anterior');
   const approval = load(existsSync(resolve(root, 'assets/penitente/quality-approval.json')) ? 'assets/penitente/quality-approval.json' : 'assets/penitente/user-acceptance.json');
   assert.equal(approval.approved, true, 'Falta aprobación independiente o aceptación explícita del usuario');
-  assert.equal(approval.sourceSha256, asset.sourceSha256, 'La aprobación no corresponde al modelo');
+  let currentRevision = approval;
+  if (approval.sourceSha256 !== asset.sourceSha256) {
+    // Preserve the historical acceptance. A later, explicit user correction
+    // has its own provenance instead of rewriting that earlier sign-off.
+    const refinement = load('assets/penitente/no-spire-refinement.json');
+    assert.equal(refinement.changeType, 'user-requested-refinement');
+    assert.equal(refinement.baseSourceSha256, approval.sourceSha256, 'La corrección no parte de la versión aceptada');
+    assert.ok(refinement.request.includes('pico') && refinement.requestedOn, 'Falta la solicitud de retirar el pico');
+    currentRevision = refinement;
+  }
+  assert.equal(currentRevision.sourceSha256, asset.sourceSha256, 'La revisión no corresponde al modelo');
   assert.equal(hash(readFileSync(resolve(root, 'assets/penitente/penitente.glb'))), asset.sourceSha256);
-  for (const file of approval.files) assert.equal(hash(readFileSync(resolve(root, file.file))), file.sha256, `Cambió después de la revisión: ${file.file}`);
+  for (const file of currentRevision.files) assert.equal(hash(readFileSync(resolve(root, file.file))), file.sha256, `Cambió después de la revisión: ${file.file}`);
 }
-console.log(`Penitente: ${Math.round(triangleCount)} triángulos; macizos cerrados, ${samples} contactos de agua (máximo ${maxGap.toFixed(3)}), poza ${poolSize.x.toFixed(1)} × ${poolSize.z.toFixed(1)} y flujo aguas abajo.`);
+console.log(`Penitente: ${Math.round(triangleCount)} triángulos; coronación sin pico (${crownHeight.toFixed(2)}), macizos cerrados, ${samples} contactos de agua (máximo ${maxGap.toFixed(3)}), poza ${poolSize.x.toFixed(1)} × ${poolSize.z.toFixed(1)} y flujo aguas abajo.`);

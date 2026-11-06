@@ -88,8 +88,71 @@ for (const [file, factory] of models) {
     for (let i = 0; i < plants.count; i++) if (plants.instanceMatrix.array[i * 16 + 13] > 70) upperPlants++;
     assert.ok(upperPlants > 180, 'Falta cobertura vegetal en la cima');
     console.log(`Arequita: cima izquierda ${mean(left).toFixed(1)}, hombro derecho ${mean(right).toFixed(1)}, ${upperPlants} plantas en la zona alta`);
+    const { AREQUITA_RIVER } = load('src/three/landmarks/arequitaRiver.ts');
+    const { Raycaster, Vector3 } = require('three');
+    const water = model.group.getObjectByName('Santa Lucía — superficie continua');
+    const river = model.group.getObjectByName('Río Santa Lucía — cauce, ribera y vida del agua');
+    assert.equal(river.userData.river.animatedFish, 7, 'El río debe incluir los siete peces solicitados');
+    const allFish = []; river.traverse(o => { if (o.isGroup && o.name.startsWith('Pez del Santa Lucía ')) allFish.push(o); });
+    assert.equal(allFish.length, 7);
+    assert.ok(allFish.every(fish => fish.scale.x >= .94 && fish.scale.x <= 1.2 && fish.scale.x === fish.scale.y && fish.scale.y === fish.scale.z), 'Los peces deben ser algo mayores y conservar sus proporciones');
+    const jumpPeaks = new Map();
+    for (let time = 0; time < AREQUITA_RIVER.period; time += .05) {
+      model.update(time);
+      const activeFish = allFish.filter(fish => fish.visible);
+      assert.ok(activeFish.length <= 2, 'Los saltos deben repartirse en el tiempo');
+      for (const fish of activeFish) jumpPeaks.set(fish, Math.max(jumpPeaks.get(fish) ?? -Infinity, fish.position.y));
+    }
+    assert.equal(jumpPeaks.size, 7, 'Todos los peces deben participar en los saltos');
+    assert.ok([...jumpPeaks.values()].every(height => height > AREQUITA_RIVER.level + 3.5), 'Todos los saltos deben elevarse por encima del agua');
+    assert.equal(river.userData.river.side, 'left');
+    assert.ok(Math.abs(river.rotation.y + Math.PI / 2) < .0001, 'El río debe girar 90 grados hacia el costado izquierdo');
+    const ground = model.group.getObjectByName('Talud continuo — terreno y raíces al mismo nivel');
+    assert.ok(water?.isMesh && model.update, 'Falta el río animado al pie del cerro');
+    model.group.updateMatrixWorld(true);
+    const ray = new Raycaster(), wp = water.geometry.attributes.position;
+    let bedSamples = 0;
+    // Sample the middle and both inner shores: neither terrain nor roots may
+    // emerge through the animated surface. The margin includes wave amplitude.
+    for (let row = 8; row < 169; row += 8) for (const column of [3, 9, 15]) {
+      const p = new Vector3().fromBufferAttribute(wp, row * 19 + column).applyMatrix4(water.matrixWorld);
+      assert.ok(p.x < -90, 'El río debe recorrer el costado izquierdo del cerro');
+      ray.set(new Vector3(p.x, 120, p.z), new Vector3(0, -1, 0));
+      const hit = ray.intersectObject(ground)[0];
+      assert.ok(hit && hit.point.y < p.y - .15, 'El cauce debe quedar excavado bajo el agua'); bedSamples++;
+    }
+    const fish = model.group.getObjectByName('Pez del Santa Lucía 1');
+    model.update(AREQUITA_RIVER.jumpDuration / 2);
+    assert.ok(fish.visible && fish.position.y > AREQUITA_RIVER.level + 3.5, 'El salto del pez debe describir un arco por encima del agua');
+    model.update(AREQUITA_RIVER.jumpDuration + .2);
+    assert.equal(fish.visible, false, 'El pez debe volver a sumergirse');
+    const splash = model.group.getObjectByName('Chapoteo — gotas balísticas');
+    const rings = []; model.group.traverse(o => { if (o.name === 'Ondas de la entrada al agua' && o.visible) rings.push(o); });
+    assert.ok(splash.count > 0 && rings.length && rings.every(ring => ring.material.opacity > 0), 'La entrada al agua debe producir gotas y ondas');
+    const heldSplash = Array.from(splash.instanceMatrix.array);
+    model.update(AREQUITA_RIVER.jumpDuration + .2);
+    assert.deepEqual(Array.from(splash.instanceMatrix.array), heldSplash, 'Pausar el reloj debe congelar el chapoteo');
+    assert.equal(water.material.userData.flowClock.value, AREQUITA_RIVER.jumpDuration + .2, 'El agua debe usar el mismo reloj que el recorrido');
+    console.log(`Santa Lucía: ${bedSamples} muestras de cauce, arco del pez, impacto, gotas, ondas y pausa verificados`);
   }
   if (file === 'artigas') {
+    const { Vector3 } = require('three');
+    const frontRight = new Vector3(model.cameraDirection.z, 0, -model.cameraDirection.x).normalize();
+    const flags = model.group.children.filter(object => object.userData.flag).sort((a, b) => a.position.dot(frontRight) - b.position.dot(frontRight));
+    assert.equal(flags.length, 3, 'Deben existir los tres pabellones');
+    assert.equal(flags[0].userData.flag.kind, 'treinta-y-tres', 'Treinta y Tres debe quedar a la izquierda de quien mira');
+    assert.equal(flags[0].userData.flag.legend, 'LIBERTAD O MUERTE');
+    assert.equal(flags[1].userData.flag.country, 'UY', 'El pabellón nacional debe ocupar el centro');
+    assert.equal(flags[2].userData.flag.kind, 'artigas', 'Artigas debe quedar a la derecha de quien mira');
+    assert.equal(flags[2].userData.flag.diagonal, 'upper-hoist-to-lower-fly');
+    for (const [index, flag] of flags.entries()) {
+      assert.ok(Math.abs(flag.userData.flag.height / flag.userData.flag.width - 2 / 3) < .0001);
+      if (index) assert.ok(flags[index - 1].position.x + flags[index - 1].userData.flag.width < flag.position.x, 'Los paños no deben superponerse');
+    }
+    assert.ok(flags[1].position.y > Math.max(flags[0].position.y, flags[2].position.y) + 2, 'El pabellón central debe destacar en altura');
+    assert.ok(Math.abs(flags[0].position.y - flags[2].position.y) < .001, 'Las banderas laterales deben quedar a la misma altura');
+    assert.ok(flags[1].userData.flag.width > flags[0].userData.flag.width, 'El pabellón central debe tener mayor presencia');
+    console.log('Cerro Artigas, de frente: Treinta y Tres — Uruguay central elevado — Artigas; paños separados y laterales alineados');
     const sculpture = model.group.getObjectByName('Artigas — monumento ecuestre reconstruido');
     assert.ok(sculpture?.isGroup && sculpture.children.length >= 8, 'Falta el activo reconstruido');
     const asset = JSON.parse(readFileSync(resolve(root, 'src/three/landmarks/artigasAsset.json'), 'utf8'));

@@ -21,10 +21,15 @@ interface LandmarkView {
   /** Height-relative look offset during the approach and start of the pan. */
   approachFocusFactor?: number;
   overviewDistance?: number;
+  /** Keep wide landscapes legible above the caption on narrow screens. */
+  portraitFocus?: number;
+  portraitEye?: number;
+  portraitViewOffsetX?: number;
+  portraitViewOffset?: number;
 }
 
 const views: Record<JourneyStopId, LandmarkView> = {
-  arequita: { make: createArequita, focus: 130, reveal: 92, sweep: .18, eye: 52, rise: 44, pad: 205 },
+  arequita: { make: createArequita, focus: 200, portraitFocus: 150, portraitEye: 105, portraitViewOffsetX: -.12, portraitViewOffset: .27, reveal: 92, sweep: .18, eye: 64, rise: 44, pad: 325, groundOffset: .04 },
   verdun: { make: createVerdun, focus: 32, reveal: VERDUN_SUMMIT_HEIGHT + 20, sweep: .44, eye: VERDUN_SUMMIT_HEIGHT + 17, pad: VERDUN_FOOTPRINT.supportRadius, groundOffset: .04, approachFocusFactor: 0, overviewDistance: 730 },
   'cerro-artigas': { make: createArtigas, focus: 18, reveal: 44, sweep: .32, pad: 110 },
   'minas-sign': { make: createMinasSign, focus: 50, reveal: 48, sweep: .23, pad: 160, groundOffset: .04 },

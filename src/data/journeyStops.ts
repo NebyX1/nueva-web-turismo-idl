@@ -3,9 +3,20 @@ import { journeyRoute } from './journeyRoute';
 import type { JourneyStopId } from './journeyRoute';
 
 const stopCatalog: Record<JourneyStopId, Omit<JourneyStop, 'id'>> = {
-  'arequita': { name: 'Cerro Arequita', eyebrow: 'LA PIEDRA CUENTA SU HISTORIA', label: 'Roca y monte', description: 'Una silueta inconfundible. Paredes de roca, monte nativo y el paisaje abierto de las sierras.', image: '/media/c809a84c8bead525.webp', imageAlt: 'Cerro Arequita entre campos y monte nativo', sources: [{ label: 'Ministerio de Ambiente · Arequita', url: 'https://www.ambiente.gub.uy/oan/snap/parque-nacional-arequita/' }] },
+  'arequita': {
+    name: 'Cerro Arequita y Naciente del Santa Lucía', navName: 'Arequita y Santa Lucía',
+    heading: { title: 'Cerro Arequita', subtitle: 'y Naciente del Santa Lucía' },
+    eyebrow: 'DONDE LA PIEDRA SE ENCUENTRA CON EL AGUA', label: 'Río, roca y monte',
+    description: 'Paredones de piedra, monte nativo y el alto Santa Lucía a sus pies. El agua corre entre las sierras, con destellos y pequeñas señales de vida.',
+    note: 'La naciente está en Cerro Pelado. Aquí se recrea el tramo del río que acompaña al Arequita.',
+    image: '/media/c809a84c8bead525.webp', imageAlt: 'Cerro Arequita entre campos y monte nativo',
+    sources: [
+      { label: 'Ministerio de Ambiente · Parque Nacional Arequita y alto Santa Lucía', url: 'https://www.gub.uy/ministerio-ambiente/politicas-y-gestion/parque-nacional-arequita' },
+      { label: 'Camping Arequita · Río Santa Lucía y naciente en Cerro Pelado', url: 'https://campingarequita.uy/senti-lavalleja/' },
+    ],
+  },
   'verdun': { name: 'Cerro del Verdún', eyebrow: 'UN HORIZONTE PARA CONTEMPLAR', label: 'Paisaje y santuario', description: 'El camino asciende hasta el santuario: un encuentro entre la devoción, el cielo y las sierras.', image: '/media/47b01b08f4f063e2.webp', imageAlt: 'Cerro y santuario del Verdún', sources: [{ label: 'Turismo de Lavalleja', url: 'https://www.gub.uy/intendencia-lavalleja/turismo' }] },
-  'cerro-artigas': { name: 'Cerro Artigas', eyebrow: 'MINAS, DESDE OTRA PERSPECTIVA', label: 'Memoria y ciudad', description: 'El monumento ecuestre se recorta sobre el cerro. Abajo, Minas encuentra su lugar entre las sierras.', image: '', imageAlt: '', sources: [{ label: 'Ministerio de Turismo · Lavalleja', url: 'https://uruguaynatural.com/es/places/7016/' }] },
+  'cerro-artigas': { name: 'Cerro Artigas', eyebrow: 'MINAS, DESDE OTRA PERSPECTIVA', label: 'Memoria y ciudad', description: 'El monumento ecuestre, rodeado por los pabellones de Uruguay, Artigas y los Treinta y Tres Orientales. Abajo, Minas se abre entre las sierras.', image: '', imageAlt: '', sources: [{ label: 'Ministerio de Turismo · Lavalleja', url: 'https://uruguaynatural.com/es/places/7016/' }] },
   'minas-sign': { name: 'Letras de Minas', eyebrow: 'EL NOMBRE SE VUELVE PAISAJE', label: 'La Coronilla', description: 'Las grandes letras blancas se recortan sobre la ladera rocosa de La Coronilla. Un nuevo hito en la entrada a Minas.', image: '', imageAlt: '', guideChapter: 'minas', sources: [{ label: 'Intendencia · Letras monumentales de Minas', url: 'https://www.gub.uy/intendencia-lavalleja/institucional/normativa/resolucion-n-2425024' }, { label: 'El Observador · Fotografías del cartel terminado', url: 'https://www.elobservador.com.uy/nacional/letras-gigantes-minas-tuvieron-visita-concurrida-este-feriado-no-laborable-del-18-julio-n6009130' }] },
   'plaza-libertad': { name: 'Plaza Libertad', eyebrow: 'EL CORAZÓN DE MINAS', label: 'Agua y patrimonio', description: 'Entre palmeras y agua en movimiento, Lavalleja a caballo marca el centro de la plaza. El paseo abre una vista hacia la catedral, al fondo del callejón.', image: '', imageAlt: '', guideChapter: 'minas', sources: [{ label: 'OPP · Remodelación de Plaza Libertad', url: 'https://www.opp.gub.uy/es/noticias/minas-celebro-la-remodelacion-de-su-plaza-historica' }, { label: 'Intendencia · Turismo de Lavalleja', url: 'https://www.gub.uy/intendencia-lavalleja/turismo' }] },
   'monasterio': { name: 'Monasterio budista', eyebrow: 'CHAGDUD GONPA SENGUE DZONG', label: 'Arquitectura y contemplación', description: 'Piedra local, galerías y cubiertas doradas. Una arquitectura singular en el paisaje de Aguas Blancas.', image: '', imageAlt: '', note: 'El templo informa cierre por reformas. Consultá su reapertura antes de planificar una visita.', sources: [{ label: 'Chagdud Gonpa · Sitio oficial', url: 'https://budismo.com.uy/' }] },

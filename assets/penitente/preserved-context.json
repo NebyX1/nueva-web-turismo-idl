@@ -4,7 +4,7 @@
   "files": [
     {
       "file": "src/three/landmarks/artigas.ts",
-      "sha256": "aac9c6ba3ec6854c7a9e2a46fd69e4b5e3518489ca5c2a2eb5d544c95afafad4"
+      "sha256": "7a98b1d55e51f37cb99608d1cbfe4489fdcc01d8f4d86021b5b95bea505b7a8c"
     },
     {
       "file": "src/three/landmarks/artigasAsset.json",
@@ -44,7 +44,63 @@
     },
     {
       "file": "src/data/journeyStops.ts",
-      "sha256": "82d6863310287c2d5412083cfe15d54a562909f7d23be8db6e36de2891847e33"
+      "sha256": "3b0f352574c3337940cddaa15f840dddd506f4f4aa72d265b00f7de8ab9da7cf"
+    }
+  ],
+  "authorizedFollowups": [
+    {
+      "date": "2026-11-06",
+      "authorization": "User requested the Arequita and Santa Lucía experience, including its new title.",
+      "file": "src/data/journeyStops.ts",
+      "previousSha256": "82d6863310287c2d5412083cfe15d54a562909f7d23be8db6e36de2891847e33",
+      "sha256": "8ca806de90e42b196e17fa124b0ee18ec9613a2e2827a1c04f6d649f9b493ed0",
+      "affectedStop": "arequita",
+      "otherStopsUnchangedSha256": "a64bc67a2d4cb1d18a99bf9697880d53dc0e9f4cd638ebe27e1725a8b107f186"
+    },
+    {
+      "date": "2026-11-06",
+      "authorization": "User requested the three national pavilions at Cerro Artigas.",
+      "file": "src/three/landmarks/artigas.ts",
+      "previousSha256": "aac9c6ba3ec6854c7a9e2a46fd69e4b5e3518489ca5c2a2eb5d544c95afafad4",
+      "sha256": "bd1738bda133aa618a7c141b4d39538fc9023da768e3d3a3e17db8a10ca5de85",
+      "changedParts": [
+        "flag factories",
+        "flag selection and cloth width",
+        "mast spacing and lateral placement"
+      ],
+      "preserved": [
+        "sculpture",
+        "terrain",
+        "camera framing",
+        "pole heights"
+      ]
+    },
+    {
+      "date": "2026-11-06",
+      "authorization": "User requested the three national pavilions at Cerro Artigas.",
+      "file": "src/data/journeyStops.ts",
+      "previousSha256": "8ca806de90e42b196e17fa124b0ee18ec9613a2e2827a1c04f6d649f9b493ed0",
+      "sha256": "3b0f352574c3337940cddaa15f840dddd506f4f4aa72d265b00f7de8ab9da7cf",
+      "affectedStop": "cerro-artigas",
+      "otherStopsUnchangedSha256": "370ba7995720644ff8f4c0ea0d106306372b82b920fe94552df85bb2b8ea0628"
+    },
+    {
+      "date": "2026-11-06",
+      "authorization": "User requested front-view order Thirty-Three / National / Artigas and an elevated central National pavilion.",
+      "file": "src/three/landmarks/artigas.ts",
+      "previousSha256": "bd1738bda133aa618a7c141b4d39538fc9023da768e3d3a3e17db8a10ca5de85",
+      "sha256": "7a98b1d55e51f37cb99608d1cbfe4489fdcc01d8f4d86021b5b95bea505b7a8c",
+      "changedParts": [
+        "pavilion order",
+        "mast lengths and banner elevation",
+        "central banner width"
+      ],
+      "preserved": [
+        "sculpture",
+        "terrain",
+        "mast foot positions",
+        "camera framing"
+      ]
     }
   ]
 }

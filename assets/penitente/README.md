@@ -4,7 +4,8 @@ Geometría propia creada en Blender a partir del estudio de fotografías del lug
 
 - `penitente.blend`: fuente editable del relieve, rocas y superficies de agua.
 - `penitente.glb`: exportación estática que identifica el recurso de origen.
-- `quality-approval.json`: dictamen independiente, identidad del modelo y hashes de archivos revisados.
+- `user-acceptance.json`: aceptación histórica de la versión inicial, conservada sin modificar.
+- `no-spire-refinement.json`: solicitud posterior del usuario de eliminar el pico, identidad de la nueva malla y comprobaciones realizadas. No se presenta como una nueva aprobación independiente.
 - `preserved-context.json`: identidad de los otros sitios y del contexto de Villa Serrana antes de esta sustitución.
 
 La página usa `src/three/landmarks/penitenteAsset.json`, obtenido de la misma geometría. La roca conserva posiciones float32 iguales al GLB para evitar que la compresión colapse sus triángulos más finos; la poza conserva también float32 y las corrientes usan posiciones de 16 bits. La vegetación se almacena como anclajes y se instancia al construir la escena. El material de agua retiene las luces y la niebla del recorrido; su reloj avanza mediante `update(time)`.
@@ -25,5 +26,7 @@ node scripts/check-penitente-rebuild.mjs --candidate
 El exportador recibe una **carpeta**, no un nombre de archivo. Produce `review-scene.json` con la geometría realmente decodificada por Three.js y `review-manifest.json` con sus hashes. El renderizador también admite `--night`, `--web-scale`, `--time` y `--views front,right-oblique,...`.
 
 Una nueva exportación modifica el SHA del recurso y requiere una nueva revisión visual. No se debe reutilizar una aprobación anterior ni sustituir la escena de revisión por otra geometría. `--candidate` permite comprobar un candidato sin aprobar; la comprobación normal exige el activo aprobado y su integración real.
+
+La revisión del 6 de noviembre de 2026 retira la base elevada y las dos lajas verticales junto a la caída. El archivo de autoría ya no crea esas tres masas; el relieve, el agua y los anclajes de vegetación se vuelven a calcular sobre la superficie continua. El verificador comprueba que esa coronación no vuelva a superar 54 unidades de escena y vincula la corrección solicitada a la versión previamente aceptada, sin reemplazar su aceptación histórica.
 
 Los renders offline aproximan materiales y luces: no ejecutan el shader WebGL. El dictamen distingue esa limitación de la revisión exacta de forma y contacto entre roca y agua. Las fuentes y criterios están en `docs/research-penitente-refinement.md` y `docs/penitente-quality-review.md`.

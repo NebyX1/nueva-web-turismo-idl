@@ -49,3 +49,13 @@ La exportación de revisión parte de los arrays, índices, normales, colores, c
 **Límite de la validación visual:** se usan renders offline de la geometría exacta en Blender CPU. Sus materiales procedurales aproximan los shaders de Three.js y su luz diurna/nocturna. Esto verifica forma, contactos y composición; no certifica ejecución de GLSL, transparencia, animación ni rendimiento WebGL en un navegador. La integración y compilación se comprueban por separado.
 
 La aprobación final y sus hashes se registran en `assets/penitente/quality-approval.json` únicamente cuando el revisor aprueba el candidato correspondiente.
+
+## Corrección posterior solicitada por el usuario: retirar el pico
+
+El 6 de noviembre de 2026 el usuario pidió eliminar la torre que sobresalía junto al salto. Se retiraron del generador la raíz elevada del monolito y sus dos lajas verticales, y se regeneraron el `.blend`, el GLB y la malla empaquetada. La coronación de esa zona baja de 70,73 a 48,95 unidades y enlaza con la ladera existente. La caída, la poza y el desagüe se recalculan sobre el mismo relieve resultante; el recorrido, las cámaras y los demás destinos se conservan.
+
+La aceptación inicial permanece intacta. La solicitud y los hashes de esta corrección se registran por separado en `assets/penitente/no-spire-refinement.json`. La revisión verifica mallas cerradas, normales, contacto de agua, continuidad de la poza y ausencia del pico en su huella original; no se declara una nueva aprobación independiente.
+
+## Vida animada en la poza
+
+Por solicitud posterior del usuario, cuatro peces estilizados saltan en diferentes sectores de la poza existente, con gotas y ondas en la caída. `penitenteFish.ts` toma los centros de la geometría real del agua; `waterLife.ts` genera las siluetas y comparte el reloj de la cascada, por lo que pausa y movimiento reducido detienen también los saltos. No se atribuye una especie real ni se altera la topografía o el activo de Blender. La comprobación `check:journey-surprises` muestrea 84 puntos de las trayectorias sobre la malla de agua, las cuatro alturas de salto, chapoteos y pausa.

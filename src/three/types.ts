@@ -32,6 +32,9 @@ export interface LandmarkModel {
 export interface JourneyStop {
   id: JourneyStopId;
   name: string;
+  /** Compact navigation and a two-level heading for a combined landscape. */
+  navName?: string;
+  heading?: { title: string; subtitle: string };
   eyebrow: string;
   description: string;
   image: string;

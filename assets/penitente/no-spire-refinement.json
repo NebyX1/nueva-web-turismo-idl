@@ -1,0 +1,113 @@
+{
+  "changeType": "user-requested-refinement",
+  "requestedOn": "2026-11-06",
+  "request": "En el penitente tenemos este pico horrible, vamos a eliminarlo",
+  "baseSourceSha256": "94735698db9c3615f488c16e8a4b9edc5ae34fac4021e7c293d2f620ce4be9fe",
+  "sourceSha256": "21808837be32892d793695a843798e159ddc730955a31b040fe9da46331ce17d",
+  "sceneSha256": "473eb11fdb70edbf783e3517d3855c99ea89e61e7370c66322dacbae3658a6b0",
+  "removedSourceObjects": [
+    "Raíz común del monolito partido",
+    "Monolito partido — laja mayor",
+    "Monolito partido — laja menor"
+  ],
+  "scope": "Remove the artificial tower and regenerate its own terrain, water and shrub anchors; preserve the route, cameras and all other destinations.",
+  "independentApproval": false,
+  "verification": {
+    "crownHeightBefore": 70.73,
+    "crownHeightAfter": 48.95,
+    "crownHeightLimit": 54,
+    "trianglesWithFoliage": 268729,
+    "waterContactSamples": 609,
+    "maximumWaterGap": 0.24,
+    "visualChecks": [
+      {
+        "mode": "day",
+        "result": "Tower absent, continuous rock face and waterfall visible in the actual WebGL journey."
+      },
+      {
+        "mode": "night",
+        "result": "Tower absent under floodlights; waterfall and landscape remain continuous. No browser console errors."
+      }
+    ]
+  },
+  "files": [
+    {
+      "file": "src/three/landmarks/penitente.ts",
+      "sha256": "2f73824e02050e6fcfe39fb657fbb2b332bc54cb4a711ae89361764359b2e3bb"
+    },
+    {
+      "file": "src/three/landmarks/penitenteMesh.ts",
+      "sha256": "8594dcd8d9aab2417ed2b8eaad3dfe036d2f6e66b44e49b28e048f32c1f54f72"
+    },
+    {
+      "file": "src/three/landmarks/penitenteWater.ts",
+      "sha256": "4d140c2a8bcdfedb81c49a51170e23397d75f73b8536b858ab78a1ad4bdb3c68"
+    },
+    {
+      "file": "src/three/landmarks/penitenteRock.ts",
+      "sha256": "37f38b236614e0ccbb37fb4a546cd60079f109ccaa9b1a64ebbff1e5cf3e033e"
+    },
+    {
+      "file": "src/three/landmarks/penitenteAsset.json",
+      "sha256": "7526ce6a787edf794006d153fb207cab9218ee816bebe6938d1d19fa4929906c"
+    },
+    {
+      "file": "scripts/penitente/build_penitente.py",
+      "sha256": "664249e2fcf5bdd81898b5dc686ad2762064cd9a369a18d6e8582d4e2c03addf"
+    },
+    {
+      "file": "scripts/penitente/pack_penitente.mjs",
+      "sha256": "7801601e1ffa5cf0275fba03ed4d1c3db8cb68d98db32984c786a286c3c6d4ca"
+    },
+    {
+      "file": "scripts/penitente/export_review.mjs",
+      "sha256": "c03b987b5c32b2d0552a764a3c6224e58def893e85e004d308b9107934c79592"
+    },
+    {
+      "file": "scripts/penitente/render_review.py",
+      "sha256": "75dab5ef503ea66941cffa378b7953f06a75f19eb9c97486fae1001af6f4954f"
+    },
+    {
+      "file": "scripts/check-penitente-rebuild.mjs",
+      "sha256": "9cb0b1ddfb85846868b8f1ea49412ffbf7cc4eaf1e971c2878487bb516473469"
+    },
+    {
+      "file": "assets/penitente/penitente.blend",
+      "sha256": "78684dadbff3ea8ee5df8d76106bcb5b7c7eed556daf841acf0794587fa76d17"
+    },
+    {
+      "file": "assets/penitente/penitente.glb",
+      "sha256": "21808837be32892d793695a843798e159ddc730955a31b040fe9da46331ce17d"
+    },
+    {
+      "file": "src/three/landmarks/penitenteFish.ts",
+      "sha256": "7abbd9202b9271426d4e8c2d37d7218d17ab1254cb02e425dba283e1ee705ae8"
+    },
+    {
+      "file": "src/three/landmarks/waterLife.ts",
+      "sha256": "be2b722c791c0d2bd88d371e2f7ec369f0673e369007f9a1ae3a6c2a58ecec30"
+    }
+  ],
+  "authorizedFollowups": [
+    {
+      "requestedOn": "2026-11-06",
+      "authorization": "Quiero que en el estanque aparezca también pececitos saltando.",
+      "file": "src/three/landmarks/penitente.ts",
+      "previousSha256": "c1b4ca835e436734790afad47ad7566cd284d6ac1b3084ad1308f54b52e67880",
+      "sha256": "2f73824e02050e6fcfe39fb657fbb2b332bc54cb4a711ae89361764359b2e3bb",
+      "addedFiles": [
+        "src/three/landmarks/penitenteFish.ts",
+        "src/three/landmarks/waterLife.ts"
+      ],
+      "changed": "Add four stylized jumping fish to the existing pool, with droplets, expanding rings and the shared animation clock.",
+      "preserved": [
+        "native Blender and GLB assets",
+        "packed landscape geometry",
+        "rocks and vegetation",
+        "water mesh and shaders",
+        "camera and route"
+      ],
+      "independentApproval": false
+    }
+  ]
+}

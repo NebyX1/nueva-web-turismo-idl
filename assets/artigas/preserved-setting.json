@@ -1,7 +1,37 @@
 {
   "setting": "67d91fea4391d44e767da2d2ad7a2d3a12659fa8af6989e5d6f4c497c30c9e9a",
-  "flags": "e4ce2269863fb4c362a48a3c49abe829e7d9236b5c3d9b2af07c49cd04a74ec4",
+  "flags": "2910ca7f988e055fbc033cdf7c37d0e3ef274865cd239507913ec3f89c1d888b",
   "framing": "f6cc0900aab1498945571841831da2c75fa4fbe840282dda913afc0f8ae37264",
   "previousFlags": "aaf5c429ec75af91c8ba8655f3465057ae0164437e5829ec873be4528993c859",
-  "flagRevision": "2026-11-05: user requested all three flags to show the national pavilion of Uruguay; pole locations and heights unchanged."
+  "flagRevision": "2026-11-06: corrected front-view order and raised central National pavilion as requested.",
+  "flagRevisions": [
+    {
+      "date": "2026-11-06",
+      "authorization": "User requested Uruguay, Artigas / Liga Federal and Treinta y Tres Orientales with Libertad o Muerte.",
+      "previousSha256": "e4ce2269863fb4c362a48a3c49abe829e7d9236b5c3d9b2af07c49cd04a74ec4",
+      "sha256": "da120c4b673774a5c2bbe68cb579f3d4fea85dd30ba9568d750206c95048d1af",
+      "preserved": [
+        "monument",
+        "terrain",
+        "camera framing",
+        "pole heights"
+      ],
+      "previousRevision": "2026-11-05: user requested all three flags to show the national pavilion of Uruguay; pole locations and heights unchanged.",
+      "layout": "Row moved laterally to show all three pavilions from the unchanged tour camera."
+    },
+    {
+      "date": "2026-11-06",
+      "authorization": "User explicitly requested National at centre and higher, Artigas on viewer-right, Thirty-Three on viewer-left.",
+      "previousSha256": "da120c4b673774a5c2bbe68cb579f3d4fea85dd30ba9568d750206c95048d1af",
+      "sha256": "2910ca7f988e055fbc033cdf7c37d0e3ef274865cd239507913ec3f89c1d888b",
+      "previousRevision": "2026-11-06: user requested Uruguay, Artigas / Liga Federal and Treinta y Tres; original mast heights retained and row moved clear of the sculpture.",
+      "layout": "Viewer-left Thirty-Three; centre National 2.5 units higher and 10% wider; viewer-right Artigas; side pavilions level.",
+      "preserved": [
+        "monument",
+        "terrain",
+        "mast foot positions",
+        "camera framing"
+      ]
+    }
+  ]
 }

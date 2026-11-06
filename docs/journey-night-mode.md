@@ -26,7 +26,19 @@ Si el recorrido está pausado, sólo se dibujan los fotogramas necesarios para t
 
 El modo cambia también cielo, niebla, luz ambiental y exposición en `journeyScene.ts`. La alternativa sin WebGL conserva el selector y la transición, con un cielo nocturno CSS sobre la vista fotográfica. No hay fotografías lunares ni servicios externos nuevos.
 
-## Verificación
+## Visitas sorpresa en el cielo
+
+La ampliación solicitada el 6 de noviembre incorpora cuatro esculturas cómicas en `journeyNightVisitors.ts`: bruja con escoba, dragón chino serpenteante, Papá Noel en trineo con reno y ovni con tripulante. Son geometrías locales, sin imágenes descargadas, audio ni luces adicionales. Comparten un presupuesto de 22 108 triángulos y permanecen ocultas durante el día.
+
+La primera aparición espera aleatoriamente entre 8 y 15 segundos de movimiento nocturno efectivo. Las siguientes esperan entre 30 y 58 segundos y cada vuelo dura entre 9 y 12 segundos. Una bolsa barajada reparte los cuatro personajes antes de repetirlos y evita repetir al último cuando comienza otro ciclo. Vuelan de a uno, en ambos sentidos, con balanceos propios y entrada/salida suaves.
+
+El reloj recibe únicamente los segundos de movimiento efectivo de la escena; seleccionar otra parada, reiniciar el recorrido o redibujar una cámara pausada no consume la espera ni adelanta un vuelo. Pausa, telón, pestaña oculta, recorrido fuera de pantalla y movimiento reducido detienen el reloj existente. Cambiar a día oculta el personaje de inmediato. La proyección usa la cámara real y sus desplazamientos de encuadre; el tamaño se limita tanto en altura como en ancho para escritorio y móvil. La profundidad respeta el relieve y se pospone el inicio cuando la cámara apunta al suelo.
+
+En móvil, la trayectoria baja dentro de su franja de cielo y reduce su altura máxima para dejar libres las dos filas de navegación y el indicador de estado. Si un cambio de cámara o de formato deja la trayectoria por debajo del horizonte, el personaje se desvanece en lugar de aparecer sobre el terreno.
+
+`npm run check:journey-surprises` verifica los cuatro personajes, espera, alternancia, límite de una aparición, pausa, día, movimiento reducido y proyección móvil. También comprueba los peces de la poza del Penitente.
+
+## Comprobaciones del ambiente
 
 - `npm run check:journey-mode`: cambio bajo cobertura, doble clic, ciclo noche/día, desmontaje, movimiento reducido y recuperación ante errores.
 - `npm run check:journey-atmosphere`: nueve sitios × seis proyecciones × dos presupuestos de dispositivo; reflectores y penumbras propios, blancos de estatua e iglesia, transformación local a mundial, sincronización de faroles, dirección y tamaño lunar constantes, traslación sin paralaje, corte de cámara sin teletransporte visible, zoom/formato móvil, salida gradual, finalización del fundido pausado y liberación única de recursos propios.

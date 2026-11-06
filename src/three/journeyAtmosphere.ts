@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import type { LandmarkModel } from './types';
 import { createJourneyMoonMotion, MOON_DISTANCE } from './journeyMoon';
+import { createJourneyNightVisitors } from './journeyNightVisitors';
 
 export interface AtmosphereSite {
   /** World-space placement and point of interest from the journey scene. */
@@ -13,7 +14,7 @@ export interface JourneyAtmosphere {
   group: THREE.Group;
   setNight(night: boolean): void;
   /** True while a short sky dissolve still needs frames, even during pause. */
-  update(camera: THREE.PerspectiveCamera, activeIndex: number, time: number, deltaSeconds?: number): boolean;
+  update(camera: THREE.PerspectiveCamera, activeIndex: number, time: number, deltaSeconds?: number, motionDeltaSeconds?: number): boolean;
   dispose(): void;
 }
 type RigPose = { foot: THREE.Vector3; aim: THREE.Vector3; scale: number; angle: number; strength: number; color?: THREE.ColorRepresentation; penumbra?: number };
@@ -134,6 +135,7 @@ export function createJourneyAtmosphere(scene: THREE.Scene, sites: AtmosphereSit
   moon.name = 'journey-full-moon'; moon.renderOrder = 2; moon.frustumCulled = false;
   skyRoot.add(moon);
   const stars = makeStars(mobile); skyRoot.add(stars);
+  const visitors = createJourneyNightVisitors(); skyRoot.add(visitors.group);
   const rig = new THREE.Group(); rig.name = 'journey-active-site-light-rig'; group.add(rig);
 
   // Shared fixture geometry and surfaces: two actual low-mounted park floodlights.
@@ -247,12 +249,14 @@ export function createJourneyAtmosphere(scene: THREE.Scene, sites: AtmosphereSit
     setNight(value) {
       if (disposed) return;
       night = Boolean(value); group.visible = night; group.userData.night = night;
+      visitors.setNight(night);
+      group.userData.nightVisitor = visitors.group.userData.active ?? null;
       for (const light of lights) light.visible = night;
       rig.visible = night && sites.length > 0;
       if (night && active >= 0) placeRig(active);
       updateSiteLights();
     },
-    update(camera, activeIndex, time, deltaSeconds = 1 / 60) {
+    update(camera, activeIndex, time, deltaSeconds = 1 / 60, motionDeltaSeconds = 0) {
       if (disposed) return false;
       camera.updateMatrixWorld(); camera.getWorldPosition(cameraWorld);
       skyRoot.position.copy(cameraWorld);
@@ -262,6 +266,9 @@ export function createJourneyAtmosphere(scene: THREE.Scene, sites: AtmosphereSit
       moon.scale.setScalar(moonPose.radius); moon.material.uniforms.uOpacity.value = moonPose.opacity;
       group.userData.moonNdc = [moonPose.ndc.x, moonPose.ndc.y];
       stars.material.uniforms.uTime.value = Number.isFinite(time) ? time : 0;
+      visitors.update(camera, motionDeltaSeconds);
+      const visitorProgress = visitors.group.userData.progress ?? 0;
+      group.userData.nightVisitor = visitorProgress > .3 && visitorProgress < .7 ? visitors.group.userData.active ?? null : null;
       const index = sites.length ? THREE.MathUtils.clamp(Number.isFinite(activeIndex) ? Math.trunc(activeIndex) : 0, 0, sites.length - 1) : -1;
       if (index !== active) { active = index; placeRig(index); updateSiteLights(); }
       return moonPose.pending;

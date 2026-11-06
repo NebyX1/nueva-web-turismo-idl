@@ -3,6 +3,7 @@ import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import type { LandmarkModel } from '../types';
 import { createArtigasMonument } from './artigasMonument';
 import { createUruguayFlag } from './uruguayFlag';
+import { createArtigasFlag, createThirtyThreeFlag } from './heritageFlags';
 
 const TAU = Math.PI * 2;
 const material = (color: string, extra: THREE.MeshStandardMaterialParameters = {}) =>
@@ -153,11 +154,16 @@ export function createArtigas(): LandmarkModel {
   statue.position.y = 26; group.add(statue);
 
   const poleMat = material('#b8b9aa', { metalness: .25 });
+  // Front view, left to right: Thirty-Three, National, Artigas.
+  // Level the side pavilions and raise the central national pavilion.
+  const pavilions = [createThirtyThreeFlag, createUruguayFlag, createArtigasFlag];
+  const mastXs = [19, 22.6, 26.2], z = -9;
+  const sidePoleTop = Math.max(...mastXs.map(x => summitHeight(x, z))) + 13.2;
   for (let i = 0; i < 3; i++) {
-    const x = 12.5 + i * 3.1, z = -9, y = summitHeight(x, z);
-    const pole = add(group, new THREE.CylinderGeometry(.055, .075, 13.2, 7), poleMat, 'Mástil del parque'); pole.position.set(x, y + 6.6, z);
-    const flag = createUruguayFlag(3.5, i);
-    flag.position.set(x + .01, y + 12.08, z); group.add(flag);
+    const x = mastXs[i], y = summitHeight(x, z), top = sidePoleTop + (i === 1 ? 2.5 : 0), height = top - y;
+    const pole = add(group, new THREE.CylinderGeometry(.055, .075, height, 7), poleMat, 'Mástil del parque'); pole.position.set(x, y + height / 2, z);
+    const flag = pavilions[i](i === 1 ? 3.3 : 3, i);
+    flag.position.set(x + .01, top - 1.12, z); group.add(flag);
   }
   batchMeshes(group);
   return {

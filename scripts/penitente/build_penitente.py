@@ -241,9 +241,9 @@ def macro_mass(name,x,z,w,d,top,side,tilt=0,rotation=0,drop=-12):
     obj=make_mesh(name,vertices,polys);bm=bmesh.new();bm.from_mesh(obj.data);bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces));bm.to_mesh(obj.data);bm.free()
     for p in obj.data.polygons:p.use_smooth=False
 
-# The main slabs are already in the terrain volume. Do not lay broad caps
-# over them: those caps bridge the carved faults and erase their relief.
-macro_mass('Raíz común del monolito partido',-17,8,15,9,58,-1,-3,.05,-3)
+# Keep this crown continuous with the surrounding slope. The elevated root
+# and the two vertical slabs were removed at the user's request: together
+# they formed a conspicuous artificial tower beside the waterfall.
 
 def all_rock_bvh():
     p=[];f=[]
@@ -254,8 +254,6 @@ def all_rock_bvh():
     return BVHTree.FromPolygons(p,f)
 
 bvh=all_rock_bvh()
-monolith('Monolito partido — laja mayor',-19,8,6.4,4.6,13.2,.20)
-monolith('Monolito partido — laja menor',-12.2,7.7,5.0,4.1,12.2,-.12)
 for i,(z,offset,w,d) in enumerate([(-67,-.8,1.6,2.1),(-60,.9,1.8,1.8),(-55,-.3,1.7,1.7),(-49,1,1.7,2),(-43,-.7,1.4,1.6),(-37,.3,1.3,1.5)]):
     cx,_,_=profile(z)
     monolith('Piedra emergente del arroyo %02d'%i,cx+offset,z,w,d,1.6,0)
@@ -400,7 +398,6 @@ for trial in range(10000):
     if z>=68 and abs(x-cx)<width+4:continue
     y,normal=bed_hit(x,z)
     if normal.z<.38 or y<.1:continue
-    if math.hypot(x+17,z-8)<6:continue
     if ((x<cx and abs(x-cx)<13) or (x>cx and abs(x-cx)<27)) and -30<z<50 and rng.random()<.89:continue
     shrubs.append([x,y,z,rng.uniform(.8,1.4) if z>=68 else rng.uniform(1.15,2.8),rng.random()*math.tau,rng.random()])
 
