@@ -55,9 +55,15 @@ Archivo: `src/three/landmarks/natureMonuments.ts`.
 | Función | Suelo | Objetivo de cámara | Radio de conjunto | Altura de conjunto |
 | --- | --- | --- | --- | --- |
 | `createArequita()` | y=0 | (0,43,0) | 136 | 89 |
-| `createVerdun()` | y=0 | (0,71.2,0) | 121 | 81 |
+| `createVerdun()` | y=0 | (0,149.2,0) | 380 | 160 |
 | `createArtigas()` | y=0 | (0,34.5,0) | 96 | 44 |
 
 Las unidades son metros aproximados de composición. El radio incluye el entorno y sirve para tomas generales; para el acercamiento al templete o la escultura conviene reducir la distancia a una fracción de ese radio. Cada retorno incluye `cameraDirection`, dirección recomendada desde el objetivo hacia la cámara. `createArtigas()` incluye `update(time)` para una brisa suave en las banderas.
 
 La vegetación, troncos y rocas dispersas se instancian. Las texturas de las inscripciones y banderas se dibujan con Canvas, sin imágenes externas. Los componentes reciben y proyectan sombras para integrarse con la luz de la escena. La comprobación aislada con TypeScript 6 terminó sin errores; la revisión visual definitiva corresponde al recorrido integrado.
+
+## Verdún como cumbre dominante del escenario
+
+Por indicación del usuario, el relieve del Verdún pasa a ser el punto más alto y el cerro más ancho del mapa esquemático. `VERDUN_SUMMIT_HEIGHT` fija su cumbre local en 140 unidades de escena; esta es una decisión de composición, no una afirmación de altitud geográfica. La base elíptica se extiende 660 × 570 unidades, frente a las 264 × 244 anteriores, con laderas suaves y una plataforma de integración de 800 × 700. Sendero, rocas y árboles toman su altura del relieve nuevo. El camino amplía sus curvas y se ajusta a los triángulos de la ladera; el santuario conserva su escala original.
+
+`journeySites.ts` deriva la altura del enfoque y del barrido de esa misma constante. La plataforma de integración con el terreno cubre el pie del cerro. `journeyTerrain.ts` comparte el cálculo de altura entre suelo, vegetación, colocación de modelos y verificaciones. La prueba de modelos compara la cima del cerro en coordenadas mundiales con las mallas completas de las otras ocho paradas, incluidas sus copas y monumentos, y con el terreno de fondo. También verifica que el camino apoye sobre la ladera y la cámara cercana quede por encima de la cumbre.

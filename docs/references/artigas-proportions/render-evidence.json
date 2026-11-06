@@ -1,0 +1,106 @@
+{
+  "sourceSha256": "112c805995ff0ffd75f752960d38730848ac1fb3a05be9c38e1f546d3592d32f",
+  "method": "Offline Blender CPU renders of the exact decoded packed geometry. Web-scale cameras and night lighting are approximations, not browser screenshots.",
+  "files": [
+    {
+      "path": "review/front.png",
+      "sha256": "f1d8b9b9730a349f6f4c5bc209b3e9c5d59453cf7cff7097ed479c6acecb6cef"
+    },
+    {
+      "path": "review/head-front.png",
+      "sha256": "d0a51363f021feaafeb45da3aac2d76874ef93466293c4b8ee8372f0dcd32018"
+    },
+    {
+      "path": "review/head-low-front.png",
+      "sha256": "66882e8c1c02ee69aaaaba99c99f0684a2133d964fbba10caf2df51b9d599e39"
+    },
+    {
+      "path": "review/head-low-quarter.png",
+      "sha256": "4d1b903f47d7af3fbe9ef99d52079064f8176fe4fe9f6e15a7274b5d9e8ed3de"
+    },
+    {
+      "path": "review/head-three-quarter.png",
+      "sha256": "d624d4be5b0461b00f58d3d39567b68aab81be4a2fae89430b6fc792630b054f"
+    },
+    {
+      "path": "review/high-hand-dorsal.png",
+      "sha256": "3f3fc98d77ff6acf4e454a3c91f5d62deefddef3b76dea2fda1c10fd89f07ef1"
+    },
+    {
+      "path": "review/high-hand-palm.png",
+      "sha256": "b0a53bb6eeb4bf86011d7fdb9bcff3fa1a3d56f6d69a780d205c91f1a463434d"
+    },
+    {
+      "path": "review/high-hand-side.png",
+      "sha256": "aacea4474f71d7a0d7d2fc293940cbce11011bd138767aab66da498b8ed309f7"
+    },
+    {
+      "path": "review/low-hand-dorsal.png",
+      "sha256": "ad596951b27c8b2cdad3c98b5a86642644c2fbbf09a729c05c1d107edad18c4d"
+    },
+    {
+      "path": "review/low-hand-palm.png",
+      "sha256": "12a965c4e28413cac2dbb2497e0395a24bdfb246abdf880d4a0478ff9bbfb44f"
+    },
+    {
+      "path": "review/low-hand-side.png",
+      "sha256": "09b971ddfbd136c6be5820f9dfe7805eb8c29887cdfadbab55d4069e88f15475"
+    },
+    {
+      "path": "review/other-side.png",
+      "sha256": "958a233249642884ce7318fc9e700800a9896f936c4180dffb17f76db2cd2c11"
+    },
+    {
+      "path": "review/rear.png",
+      "sha256": "d16e87b6dd0baef1c86a4e89a1297f86823c59d2dec5acd83e320e5584a00639"
+    },
+    {
+      "path": "review/side.png",
+      "sha256": "610b6516cf4480e4a6344482e90b0d68afe1c7b6035a0198326ed69337d0c5d0"
+    },
+    {
+      "path": "review/three-quarter.png",
+      "sha256": "10a45f44bddc4d5ac199858d71feea3149ec8c9ec70371de8f3e39c5bc08a050"
+    },
+    {
+      "path": "review/user-angle.png",
+      "sha256": "040856f13863d962fe5587da0e59fcb2eefb6cb58b48c7fe3a2fec4e0d7080f8"
+    },
+    {
+      "path": "isolated-low/low-hand-dorsal.png",
+      "sha256": "918da24cbf3f73af9073c4ccb5dc49da0ff25871c449400d0918db47c05e4754"
+    },
+    {
+      "path": "isolated-low/low-hand-palm.png",
+      "sha256": "e7fc4dc43652a58971215c2850538a40008ba5d9679ea97b69837927a85dee20"
+    },
+    {
+      "path": "isolated-low/low-hand-side.png",
+      "sha256": "f1cc3111928bcb57dc852ae02a4f6b4530ad495e869b116ecf2c5c87036bcd13"
+    },
+    {
+      "path": "isolated-high/high-hand-dorsal.png",
+      "sha256": "60e9d65e9f32fcbea10c214ddf8e80ccda872f11a2e4a414de326863602e6846"
+    },
+    {
+      "path": "isolated-high/high-hand-palm.png",
+      "sha256": "1547c28e98cbc1515ddb3f0dedbdfad26b2d3e6909c152427a70e7e0af6aa7d8"
+    },
+    {
+      "path": "isolated-high/high-hand-side.png",
+      "sha256": "1e61328f6f9c2c35dcd392f2b6c9916cfeb89f2751c7056f52b07d007783935d"
+    },
+    {
+      "path": "web-day/user-angle.png",
+      "sha256": "c42f34375fa0fc62e90cbc3a8484025ba4f574ee2fefbb56eff4ff3c147aeb92"
+    },
+    {
+      "path": "web-night/user-angle.png",
+      "sha256": "99f4c36fcfa54db4e7ce9cca372a1caae230102d86db3f1ac38eb141a7344e96"
+    },
+    {
+      "path": "web-small/user-angle.png",
+      "sha256": "ee92be698455a93043cbecae60c5fb0a96c2c9479a9036822221032aea684da5"
+    }
+  ]
+}

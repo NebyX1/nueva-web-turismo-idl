@@ -1,0 +1,116 @@
+{
+  "sourceSha256": "94735698db9c3615f488c16e8a4b9edc5ae34fac4021e7c293d2f620ce4be9fe",
+  "method": "Exact decoded geometry, offline Blender CPU materials approximation. Final scene only restores float32 pool shoreline precision; v14 geometry difference is submillimetric. No WebGL review.",
+  "images": [
+    {
+      "file": "docs/references/penitente-rebuild/v14/material/aerial.png",
+      "sha256": "c0f43a10feaba709328a5a5cde2be5086e3e1bffcddea862b3f56026e092a6d7",
+      "sceneSha256": "6f012a0eee4be58f0f15a9fc694b94b33333d0090b14ab7cbc56f2e1c2dbbc60"
+    },
+    {
+      "file": "docs/references/penitente-rebuild/v14/material/close.png",
+      "sha256": "57855e307b0c04338d87fef2ddf6a7956435dec1e739be9b246d71dc50e661b9",
+      "sceneSha256": "6f012a0eee4be58f0f15a9fc694b94b33333d0090b14ab7cbc56f2e1c2dbbc60"
+    },
+    {
+      "file": "docs/references/penitente-rebuild/v14/material/front.png",
+      "sha256": "20ee615c3f6f064c38bf00a4a0ad4617a0a19f763df1ca8dc921c6397605b948",
+      "sceneSha256": "6f012a0eee4be58f0f15a9fc694b94b33333d0090b14ab7cbc56f2e1c2dbbc60"
+    },
+    {
+      "file": "docs/references/penitente-rebuild/v14/material/left-oblique.png",
+      "sha256": "5979285000e14a1851e6d0434d5c288ae2c3b6dcfa68f09811b90c9a99806c9c",
+      "sceneSha256": "6f012a0eee4be58f0f15a9fc694b94b33333d0090b14ab7cbc56f2e1c2dbbc60"
+    },
+    {
+      "file": "docs/references/penitente-rebuild/v14/material/outlet.png",
+      "sha256": "63758270cc8e6fbdb56207ca39cb3eda0dd14f20e8d8d6c44e9bb7314cce04a1",
+      "sceneSha256": "6f012a0eee4be58f0f15a9fc694b94b33333d0090b14ab7cbc56f2e1c2dbbc60"
+    },
+    {
+      "file": "docs/references/penitente-rebuild/v14/material/right-oblique.png",
+      "sha256": "08081134ff0aeb26601ce685a2c8b6b7e710fc8e949f0fa5bf9832a1da31f9fa",
+      "sceneSha256": "6f012a0eee4be58f0f15a9fc694b94b33333d0090b14ab7cbc56f2e1c2dbbc60"
+    },
+    {
+      "file": "docs/references/penitente-rebuild/v14/material/tour-top.png",
+      "sha256": "4f1107ee0aa7dcbc201bea0d4b68ff9d3c0811dfa3d8de0b0bef301f5f86b0d4",
+      "sceneSha256": "6f012a0eee4be58f0f15a9fc694b94b33333d0090b14ab7cbc56f2e1c2dbbc60"
+    },
+    {
+      "file": "docs/references/penitente-rebuild/v14/material/tour.png",
+      "sha256": "5da4a1705164cff78f416573510cb86ea6707d7bc813c1f518c5c55905534b40",
+      "sceneSha256": "6f012a0eee4be58f0f15a9fc694b94b33333d0090b14ab7cbc56f2e1c2dbbc60"
+    },
+    {
+      "file": "docs/references/penitente-rebuild/v14/material/upstream.png",
+      "sha256": "d8f032fa45cd23c1e663a89290b60a70380292b161f01c09e023baf69a818183",
+      "sceneSha256": "6f012a0eee4be58f0f15a9fc694b94b33333d0090b14ab7cbc56f2e1c2dbbc60"
+    },
+    {
+      "file": "docs/references/penitente-rebuild/v14/clay/aerial.png",
+      "sha256": "63dcf2a786eb38bb67b5a9c588d204c8929e54668e908fca5fb28d45496f7f43",
+      "sceneSha256": "6f012a0eee4be58f0f15a9fc694b94b33333d0090b14ab7cbc56f2e1c2dbbc60"
+    },
+    {
+      "file": "docs/references/penitente-rebuild/v14/clay/front.png",
+      "sha256": "713cde8a4a8fde5ce97bffeddd56e12623adcf16d665ebc86ba7d7c71395d723",
+      "sceneSha256": "6f012a0eee4be58f0f15a9fc694b94b33333d0090b14ab7cbc56f2e1c2dbbc60"
+    },
+    {
+      "file": "docs/references/penitente-rebuild/v14/clay/left-oblique.png",
+      "sha256": "67cead8589f2d0342cb4a04d20cc3e561c8882d0f0b8908b68b9b51fac6d29ed",
+      "sceneSha256": "6f012a0eee4be58f0f15a9fc694b94b33333d0090b14ab7cbc56f2e1c2dbbc60"
+    },
+    {
+      "file": "docs/references/penitente-rebuild/v14/clay/outlet.png",
+      "sha256": "0acf88be5f1f3c0cc474af2edde65a53f227c3349a6dbbc67f1ff437f6e26503",
+      "sceneSha256": "6f012a0eee4be58f0f15a9fc694b94b33333d0090b14ab7cbc56f2e1c2dbbc60"
+    },
+    {
+      "file": "docs/references/penitente-rebuild/v14/clay/right-oblique.png",
+      "sha256": "a95df7485c40f3492c3088e45c5fec866b8891377af6340fc1d8c9f89bf2c305",
+      "sceneSha256": "6f012a0eee4be58f0f15a9fc694b94b33333d0090b14ab7cbc56f2e1c2dbbc60"
+    },
+    {
+      "file": "docs/references/penitente-rebuild/v14/clay/upstream.png",
+      "sha256": "a2898ceb6c3bfe6522ce65686e160526515b952b2ea1bb85825773c5f82dbfb1",
+      "sceneSha256": "6f012a0eee4be58f0f15a9fc694b94b33333d0090b14ab7cbc56f2e1c2dbbc60"
+    },
+    {
+      "file": "docs/references/penitente-rebuild/v14/night/front.png",
+      "sha256": "bd4a542208192c25184a0ae19d74d6ce306f1e26a89cadb51650e791002c2c1f",
+      "sceneSha256": "6f012a0eee4be58f0f15a9fc694b94b33333d0090b14ab7cbc56f2e1c2dbbc60"
+    },
+    {
+      "file": "docs/references/penitente-rebuild/v14/night/tour.png",
+      "sha256": "c1c6d4ebf107c48a2106edcbbb968d89b90233e4e096c30d72487650326931ac",
+      "sceneSha256": "6f012a0eee4be58f0f15a9fc694b94b33333d0090b14ab7cbc56f2e1c2dbbc60"
+    },
+    {
+      "file": "docs/references/penitente-rebuild/v14/web/tour-top.png",
+      "sha256": "36aa5660168cba99d6e760f5d4749df310ad51bd206e3cb443e232d780224b15",
+      "sceneSha256": "6f012a0eee4be58f0f15a9fc694b94b33333d0090b14ab7cbc56f2e1c2dbbc60"
+    },
+    {
+      "file": "docs/references/penitente-rebuild/v14/web/tour.png",
+      "sha256": "3db35a47dec2738598b4a829db299c7d3795025804a7a03bf8246f4ad7ee0b13",
+      "sceneSha256": "6f012a0eee4be58f0f15a9fc694b94b33333d0090b14ab7cbc56f2e1c2dbbc60"
+    },
+    {
+      "file": "docs/references/penitente-rebuild/v14/flow/front.png",
+      "sha256": "a127d40434141caf89324dd1a0924218dc470dc1cdf40f8f32bb3f35e5139703",
+      "sceneSha256": "6f012a0eee4be58f0f15a9fc694b94b33333d0090b14ab7cbc56f2e1c2dbbc60"
+    },
+    {
+      "file": "docs/references/penitente-rebuild/final/material/aerial.png",
+      "sha256": "cac68620aa267164fae6be8a79801e39515a8e582310355dc28ea3b0c2ac96cb",
+      "sceneSha256": "83f9accc240f1ba90514ff8a693866a3a8aee5585e21720b910ee27c15de720c"
+    },
+    {
+      "file": "docs/references/penitente-rebuild/final/material/front.png",
+      "sha256": "1b3c7b6c553fb411df99e8e71ad45870575978d1a9d8acf5eb74fe8b539336e2",
+      "sceneSha256": "83f9accc240f1ba90514ff8a693866a3a8aee5585e21720b910ee27c15de720c"
+    }
+  ]
+}

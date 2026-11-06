@@ -1,0 +1,9 @@
+Realtime Rancher's 3D Model Pack
+Author: Lyndon Daniels (lyndon)
+Published: 20 January 2012
+Source: https://opengameart.org/content/realtime-ranchers-3d-model-pack
+Download: https://opengameart.org/sites/default/files/horse.zip
+License declared by author: CC0 / Public Domain.
+https://creativecommons.org/publicdomain/zero/1.0/
+Original geometry: horse/LD_HorseRtime02.obj
+Only geometry is included; the source pack's textures are excluded.

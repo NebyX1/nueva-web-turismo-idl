@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import type { LandmarkModel } from '../types';
+import type { LandmarkModel, LandmarkNightLighting } from '../types';
+import { createPlazaFountainLights } from './plazaFountainLights';
 
 // Observed photographs and the compositional axis are documented in the research note.
 // Scene units are approximate metres; this is an interpretation, not a surveyed model.
@@ -118,17 +119,21 @@ function cathedral(parent: THREE.Group) {
 function lavalleja(parent: THREE.Group) {
   const g = new THREE.Group(); g.name = 'Juan Antonio Lavalleja · bronce verde sobre granito rosado'; g.position.z = 21; parent.add(g);
   const stone = material('#c08f79', { map: granite() }), bronze = material('#587064', { metalness: .6, roughness: .56 }), dark = material('#344f46', { metalness: .6 }), plaque = material('#516356', { metalness: .6 });
+  stone.name = 'plaza-lavalleja-granite';
+  bronze.name = 'plaza-lavalleja-bronze';
+  const base = new THREE.Group(); base.name = 'Base de Lavalleja — eje longitudinal corregido';
+  base.rotation.y = Math.PI / 2; g.add(base);
   // Four broad steps, engraved plinth, shaft, relief panel and projecting dentil cornice.
-  for (let i = 0; i < 4; i++) block(g, stone, [12.7 - i * 1.45, .44, 10.1 - i * 1.1], [0, .48 + i * .44, 0]);
-  block(g, stone, [7.9, 1.1, 5.5], [0, 2.45, 0]); block(g, stone, [6.4, 4.7, 4.1], [0, 5.35, 0]);
-  for (const y of [3.15, 3.45, 7.9, 8.25]) block(g, stone, [y > 7 ? 7.3 : 6.8, .22, y > 7 ? 4.8 : 4.5], [0, y, 0]);
-  block(g, stone, [8.3, .36, 5.5], [0, 8.65, 0]); block(g, bronze, [6.5, .2, 3.6], [0, 8.98, 0]);
-  for (let x = -3.4; x <= 3.4; x += .75) for (const z of [-2.35, 2.35]) block(g, stone, [.32, .34, .37], [x, 8.3, z]);
-  for (const z of [-2.08, 2.08]) { block(g, plaque, [4.6, 1.58, .08], [0, 5.7, z]); block(g, plaque, [2.2, .55, .08], [0, 3.95, z]); }
-  for (let x = -3.3; x <= 3.3; x += .82) { for (const z of [-2.81, 2.81]) add(g, new THREE.TorusGeometry(.28, .025, 5, 16), bronze, [x, 2.55, z]); }
+  for (let i = 0; i < 4; i++) block(base, stone, [12.7 - i * 1.45, .44, 10.1 - i * 1.1], [0, .48 + i * .44, 0]);
+  block(base, stone, [7.9, 1.1, 5.5], [0, 2.45, 0]); block(base, stone, [6.4, 4.7, 4.1], [0, 5.35, 0]);
+  for (const y of [3.15, 3.45, 7.9, 8.25]) block(base, stone, [y > 7 ? 7.3 : 6.8, .22, y > 7 ? 4.8 : 4.5], [0, y, 0]);
+  block(base, stone, [8.3, .36, 5.5], [0, 8.65, 0]); block(base, bronze, [6.5, .2, 3.6], [0, 8.98, 0]);
+  for (let x = -3.4; x <= 3.4; x += .75) for (const z of [-2.35, 2.35]) block(base, stone, [.32, .34, .37], [x, 8.3, z]);
+  for (const z of [-2.08, 2.08]) { block(base, plaque, [4.6, 1.58, .08], [0, 5.7, z]); block(base, plaque, [2.2, .55, .08], [0, 3.95, z]); }
+  for (let x = -3.3; x <= 3.3; x += .82) { for (const z of [-2.81, 2.81]) add(base, new THREE.TorusGeometry(.28, .025, 5, 16), bronze, [x, 2.55, z]); }
   // Very low-relief figures give the panel a sculptural surface, without invented wording.
-  for (const side of [-1, 1]) for (const x of [-1.25, -.7, .8, 1.4]) { ellipsoid(g, bronze, [x, 5.8, side * 2.15], [.14, .38, .06]); ellipsoid(g, bronze, [x, 6.27, side * 2.15], [.12, .12, .06]); }
-  const h = new THREE.Group(); h.position.set(0, 9.25, 0); h.rotation.y = -Math.PI / 2; g.add(h);
+  for (const side of [-1, 1]) for (const x of [-1.25, -.7, .8, 1.4]) { ellipsoid(base, bronze, [x, 5.8, side * 2.15], [.14, .38, .06]); ellipsoid(base, bronze, [x, 6.27, side * 2.15], [.12, .12, .06]); }
+  const h = new THREE.Group(); h.name = 'Lavalleja a caballo — orientación original'; h.position.set(0, 9.25, 0); h.rotation.y = -Math.PI / 2; g.add(h);
   // Ferrari's horse in forward motion, not Artigas's still, cloaked equestrian silhouette.
   ellipsoid(h, bronze, [0, 2.8, 0], [2.55, 1.03, .82]); ellipsoid(h, bronze, [-1.5, 3.15, 0], [1, 1.18, .8]); ellipsoid(h, bronze, [1.6, 2.8, 0], [1.04, 1.04, .86]);
   const neck = ellipsoid(h, bronze, [-2.1, 4, 0], [.7, 1.35, .6]); neck.rotation.z = -.43;
@@ -188,8 +193,17 @@ function landscape(g: THREE.Group) {
   stems.castShadow = crowns.castShadow = crowns.receiveShadow = true; g.add(stems, crowns);
 }
 
-function furniture(g: THREE.Group) {
-  const metal = material('#455254', { metalness: .36 }), wood = material('#8a7150'), concrete = material('#d0c8b4'), globe = material('#f3e5c3', { emissive: '#ffdd99', emissiveIntensity: .25 });
+function furniture(g: THREE.Group): LandmarkNightLighting {
+  const metal = material('#455254', { metalness: .36 }), wood = material('#8a7150'), concrete = material('#d0c8b4'), globe = material('#f3e5c3', { emissive: '#ffdd99', emissiveIntensity: 0 });
+  globe.name = 'plaza-lamp-glass';
+  const localLights = new THREE.Group(); localLights.name = 'plaza-street-lights'; localLights.visible = false; g.add(localLights);
+  const sources: THREE.PointLight[] = [];
+  function lamp(position: P, tall: boolean) {
+    const light = new THREE.PointLight(tall ? '#ffe4bc' : '#ffdda1', tall ? 1900 : 280, tall ? 50 : 27, 2);
+    light.name = tall ? 'plaza-mast-light' : 'plaza-twin-globe-light';
+    light.position.set(...position); light.castShadow = false; light.visible = false;
+    localLights.add(light); sources.push(light);
+  }
   for (const side of [-1, 1]) for (const z of [-35, -16, 4, 37]) {
     const bench = new THREE.Group(); bench.position.set(side * 18, 0, z); bench.rotation.y = side > 0 ? -Math.PI / 2 : Math.PI / 2; g.add(bench);
     for (const x of [-1.6, 1.6]) block(bench, concrete, [.4, .65, 1.25], [x, .48, 0]);
@@ -198,8 +212,25 @@ function furniture(g: THREE.Group) {
     for (const x of [-1.6, 1.6]) link(bench, metal, [x, .8, -.6], [x, 1.95, -.6], .06);
     const x = side * 20.6; link(g, metal, [x, .25, z + 4], [x, 5.8, z + 4], .08); link(g, metal, [x - .65, 5.15, z + 4], [x + .65, 5.15, z + 4], .06);
     for (const dx of [-.65, .65]) { link(g, metal, [x + dx, 5.15, z + 4], [x + dx, 5.6, z + 4], .045); ellipsoid(g, globe, [x + dx, 5.84, z + 4], [.3, .3, .3]); }
+    // One source between the two globes keeps all eight posts lit with eight lights.
+    lamp([x, 5.84, z + 4], false);
   }
-  for (const x of [-37, 37]) for (const z of [-33, 33]) { link(g, metal, [x, .2, z], [x, 15.2, z], .085); const light = block(g, globe, [1.7, .15, .56], [x + .5, 15.2, z]); light.rotation.z = -.15; }
+  for (const x of [-37, 37]) for (const z of [-33, 33]) {
+    link(g, metal, [x, .2, z], [x, 15.2, z], .085);
+    const light = block(g, globe, [1.7, .15, .56], [x + .5, 15.2, z]); light.rotation.z = -.15;
+    lamp([x + .5, 15.05, z], true);
+  }
+  return {
+    floodlights: [
+      { foot: new THREE.Vector3(12.5, .25, 36), target: new THREE.Vector3(0, 12.7, 21), angle: .52, penumbra: .38, strength: 14, scale: 1.1, color: '#fff1d9' },
+      { foot: new THREE.Vector3(8.5, .25, -90), target: new THREE.Vector3(0, 19, -120), angle: .74, strength: 6, scale: 1.1, color: '#ffe6c2' },
+    ],
+    setNight(night, active) {
+      globe.emissiveIntensity = night ? 2.1 : 0;
+      localLights.visible = night && active;
+      for (const light of sources) light.visible = night && active;
+    },
+  };
 }
 
 function town(g: THREE.Group) {
@@ -227,7 +258,7 @@ function batchStatic(group: THREE.Group) {
   sets.forEach((meshes, mat) => {
     const parts = meshes.map(mesh => { let geo = mesh.geometry.clone(); if (geo.index) geo = geo.toNonIndexed(); geo.applyMatrix4(mesh.matrixWorld); if (!geo.getAttribute('uv')) geo.setAttribute('uv', new THREE.Float32BufferAttribute(new Float32Array(geo.getAttribute('position').count * 2), 2)); return geo; });
     const merged = mergeGeometries(parts, false); parts.forEach(p => p.dispose()); if (!merged) return;
-    const mesh = new THREE.Mesh(merged, mat); mesh.castShadow = true; mesh.receiveShadow = true; group.add(mesh);
+    const mesh = new THREE.Mesh(merged, mat); mesh.name = mat.name; mesh.castShadow = true; mesh.receiveShadow = true; group.add(mesh);
     meshes.forEach(old => { old.removeFromParent(); disposed.add(old.geometry); });
   });
   disposed.forEach(geo => geo.dispose());
@@ -243,24 +274,37 @@ export function createPlazaLibertad(): LandmarkModel {
   // Fine tile grid and diagonals of the photographed stamped-concrete walkways.
   const grid: number[] = []; for (let i = -54; i <= 54; i += 3) { grid.push(i, .23, -54, i, .23, 54, -54, .23, i, 54, .23, i); }
   const gridGeo = new THREE.BufferGeometry(); gridGeo.setAttribute('position', new THREE.Float32BufferAttribute(grid, 3)); group.add(new THREE.LineSegments(gridGeo, new THREE.LineBasicMaterial({ color: '#7e8075', transparent: true, opacity: .17 })));
-  landscape(group); furniture(group); town(group); cathedral(group); lavalleja(group);
+  landscape(group); const streetLighting = furniture(group); town(group); cathedral(group); lavalleja(group);
   // Elongated pool, with the equestrian plinth at its southern end.
   block(group, poolBlue, [15.6, .36, 72], [0, .25, -3]);
   for (const x of [-7.95, 7.95]) block(group, border, [.4, .35, 73], [x, .45, -3]); for (const z of [-39.5, 33.5]) block(group, border, [16.3, .35, .4], [0, .45, z]);
   const waterMaterial = new THREE.MeshPhysicalMaterial({ color: '#659baf', roughness: .19, metalness: .16, transparent: true, opacity: .81, clearcoat: .85, clearcoatRoughness: .16 });
+  waterMaterial.name = 'plaza-fountain-water';
   const water = add(group, new THREE.PlaneGeometry(15.1, 71.5), waterMaterial, [0, .48, -3]); water.rotation.x = -Math.PI / 2; water.castShadow = false;
   const jetMaterial = new THREE.MeshStandardMaterial({ color: '#bde6ec', emissive: '#6ca6b6', emissiveIntensity: .22, transparent: true, opacity: .7, roughness: .18 });
+  jetMaterial.name = 'plaza-fountain-jets';
   const vertical = new THREE.InstancedMesh(new THREE.CylinderGeometry(.046, .067, 1, 5), jetMaterial, 13); vertical.userData.moving = true; group.add(vertical);
+  vertical.name = 'plaza-fountain-jets';
   const arcPoints: THREE.Vector3[] = []; for (let i = 0; i <= 26; i++) { const u = i / 26; arcPoints.push(new THREE.Vector3(.35 + 5.5 * u, 4 * 2.5 * u * (1 - u), 0)); }
   const archJets = new THREE.InstancedMesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(arcPoints), 26, .036, 5, false), jetMaterial, 22); archJets.userData.moving = true; group.add(archJets);
+  archJets.name = 'plaza-fountain-arcs';
   const spray = new THREE.InstancedMesh(new THREE.SphereGeometry(.045, 5, 4), jetMaterial, 130); spray.userData.moving = true; group.add(spray);
+  spray.name = 'plaza-fountain-spray';
   const led = material('#96d9cb', { emissive: '#5aa7b2', emissiveIntensity: .7 });
+  led.name = 'plaza-fountain-leds';
   for (let i = 0; i < 13; i++) { const z = -34 + i * 3.7; add(group, new THREE.CylinderGeometry(.14, .17, .15, 8), nozzleMat, [0, .51, z]); const light = add(group, new THREE.CircleGeometry(.22, 12), led, [.34, .51, z]); light.rotation.x = -Math.PI / 2; }
   const rippleMaterial = new THREE.MeshBasicMaterial({ color: '#b8d6cb', transparent: true, opacity: .21, depthWrite: false }); const ripples: THREE.Mesh[] = [];
   for (let i = 0; i < 7; i++) { const ring = add(group, new THREE.TorusGeometry(1, .018, 4, 32), rippleMaterial, [0, .505, -32 + i * 6.5]); ring.rotation.x = Math.PI / 2; ring.castShadow = false; ring.userData.moving = true; ripples.push(ring); }
+  const fountainLighting = createPlazaFountainLights(group, jetMaterial, led, rippleMaterial);
+  const nightLighting: LandmarkNightLighting = {
+    floodlights: streetLighting.floodlights,
+    setNight(night, active) { streetLighting.setNight(night, active); fountainLighting.setNight(night, active); },
+  };
   batchStatic(group);
   const dummy = new THREE.Object3D();
   const update = (time: number) => {
+    time = Number.isFinite(time) ? time : 0;
+    fountainLighting.update(time);
     for (let i = 0; i < 13; i++) {
       const height = 1.8 + 3.4 * (.5 + .5 * Math.sin(time * .85 + i * .36)); dummy.position.set(0, .55 + height / 2, -34 + i * 3.7); dummy.rotation.set(0, 0, 0); dummy.scale.set(1, height, 1); dummy.updateMatrix(); vertical.setMatrixAt(i, dummy.matrix);
       for (let j = 0; j < 10; j++) { const u = ((time * .62 + j / 10 + i * .07) % 1); dummy.position.set(Math.sin(i * 5 + j) * u * .25, .55 + height * 4 * u * (1 - u), -34 + i * 3.7 + Math.cos(j * 3) * u * .2); dummy.scale.setScalar(.65 + u * .5); dummy.updateMatrix(); spray.setMatrixAt(i * 10 + j, dummy.matrix); }
@@ -270,5 +314,5 @@ export function createPlazaLibertad(): LandmarkModel {
     ripples.forEach((ring, i) => { const t = (time * .32 + i * .17) % 1; ring.scale.setScalar(.4 + t * 3); });
   };
   update(0); group.userData.reference = 'docs/research-plaza-libertad.md'; group.userData.footprint = { plaza: [110, 110], cathedralZ: -123 };
-  return { group, target: new THREE.Vector3(0, 13, -24), bounds: { radius: 155, height: 44 }, groundY: 0, cameraDirection: new THREE.Vector3(.28, .29, 1), update };
+  return { group, target: new THREE.Vector3(0, 13, -24), bounds: { radius: 155, height: 44 }, groundY: 0, cameraDirection: new THREE.Vector3(.28, .29, 1), update, nightLighting };
 }

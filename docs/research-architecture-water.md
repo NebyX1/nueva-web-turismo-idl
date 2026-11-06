@@ -17,7 +17,11 @@ Tres imágenes inspeccionadas:
 
 ### Representación
 
-`createMonastery()` reproduce volúmenes escalonados, terraza inferior, dos grandes cubiertas y pequeño acceso cubierto, tejas/ribetes, franjas rojas, hileras de círculos blancos, ventanas con marcos claros, portal de color y ruedas geométricas. Las inscripciones y esculturas no se reproducen como texto sagrado inventado: el ornamento se aproxima mediante motivos geométricos. Un material de piedra generado por código reproduce juntas y variación de mampuestos. La fachada principal mira hacia +Z. Cámara sugerida desde `(0.8, 0.38, 1)`. Foco `(0,17,0)`, altura representada 39 y radio de encuadre 60, en unidades proporcionales de escena.
+La reconstrucción se ajustó a las siete fotografías de fachada, tres cuartos y vistas aéreas aportadas por el usuario. `src/three/landmarks/monastery.ts` construye una sala de piedra con alas laterales, franjas granate, terraza y pretiles bajos. Las cubiertas curvas de `monasteryRoof.ts` tienen faldones suaves, aleros turquesa, esquinas levantadas, ganchos dorados y juntas de tejas. Sobre la cubierta superior se eleva un frontón triangular de fondo azul con tres pináculos torneados alineados en la cumbrera. En el tejado inferior, una rueda de ocho radios está flanqueada por dos ciervos arrodillados orientados hacia ella.
+
+El portal adelantado tiene columnas rojas, capiteles pintados, arco festoneado, dos puertas azules con ruedas, rombos y marcos verdes. Ventanas oscuras con parteluces, dinteles claros, frisos de círculos blancos y piezas de colores completan la fachada. Por corrección expresa del usuario, la planta superior tiene **dos ventanas de frente y tres en cada costado**; el espacio central de la fachada queda detrás del emblema. En planta baja hay **cuatro ventanas frontales**: una a cada lado del portal en el cuerpo central y una en cada extremo, cerca de las esquinas de las alas. Las inscripciones no se sustituyen por texto sagrado inventado: se usan motivos florales y geométricos originales. La mampostería y sus juntas se generan con texturas procedurales, sin incorporar las fotografías como texturas.
+
+La fachada principal mira hacia +Z. Cámara sugerida desde `(0.78,0.36,1)`, foco `(0,21,-1)`, altura de encuadre 44 y radio 72, en unidades proporcionales de escena. Los detalles estáticos se agrupan por material; los frisos, piedras y arbustos repetidos usan instancias.
 
 ## Villa Serrana: Ventorrillo de la Buena Vista
 
@@ -43,7 +47,7 @@ Fuente primaria:
 
 - [Parque Salto del Penitente](https://saltodelpenitente.com/es/): describe una cascada de más de 60 metros **de longitud**. Esa cifra no se utiliza como afirmación de altura vertical medida del modelo.
 
-Tres fotografías inspeccionadas:
+Referencias iniciales inspeccionadas:
 
 1. [Tramo superior de la garganta, Petit Futé](https://www.petitfute.com/medias/photo/900_600/20/41/115847-salto-del-penitente-salto-del-penitente.jpg).
 2. [Garganta y laguna inferior, Expedia / trvl-media](https://images.trvl-media.com/place/553248621532370412/a0f4c010-bcaf-4950-b4f6-8ac2a9fbcf81.jpg?ch=480&impolicy=resizecrop&ra=fit&rw=1920).
@@ -51,10 +55,14 @@ Tres fotografías inspeccionadas:
 
 ### Rasgos observados y representación
 
-La cascada es un cauce estrecho que se desliza por una garganta de granito irregular rojizo/gris, con manchas claras de líquenes y vegetación escasa, no una lámina de agua sobre un cilindro. Se construyen dos masas rocosas asimétricas con superficies trianguladas y juntas/variaciones de color, un cauce sinuoso en pendiente con shader de espuma en movimiento, laguna oscura en la base, anillos de impacto y una ligera bruma geométrica. Las masas están selladas hacia el terreno para sostener tomas bajas. Cámara sugerida `(0.4,0.31,1)`, foco `(0,28,0)`, altura de encuadre 78 y radio 82.
+La reconstrucción del 6 de noviembre amplía ese estudio con fotografías frontales, laterales, aéreas y de la cabecera. El inventario, los ejemplos Three.js evaluados y la elección de Blender están documentados en [el estudio específico](research-penitente-refinement.md); el criterio visual y los dictámenes constan en [la revisión independiente](penitente-quality-review.md).
+
+Se sustituye el constructor anterior por geometría propia creada en Blender: un farallón alto a la izquierda al mirar aguas arriba, monolito partido de raíz común y una rampa derecha más baja de placas inclinadas y fracturas. El arroyo superior atraviesa piedras emergentes y se contrae antes de entrar en una canaleta inclinada y quebrada, apoyada en el lecho. El tramo inferior se abre en abanico hacia una poza oscura alargada; el desagüe continúa entre orillas hasta el monte del límite del modelo. Las orillas de la poza se recortan por intersección con la roca final. El agua conserva el sistema de luces y niebla de Three.js y anima espuma y estrías con coordenadas de tiempo de viaje aguas abajo.
+
+`penitente.ts` utiliza el recurso empaquetado derivado del GLB, con posiciones float32 para la roca y la poza, y de 16 bits para las corrientes. El volumen rocoso es cerrado; roca, cuatro superficies de agua y vegetación instanciada forman seis objetos de dibujo. Cámara preferida `(0.12,0.22,1)`, foco del modelo `(0,25,5)`, altura 74 y radio 132, en unidades proporcionales. Las propias cámaras del Penitente contemplan el abanico y el monolito durante el recorrido. Los renders de revisión usan los arrays y transformaciones realmente decodificados, con materiales y luces aproximados offline; no certifican ejecución WebGL.
 
 ## Alcance y rendimiento
 
 Estos son modelos procedurales de aproximación visual basada en fotos; no son levantamientos fotogramétricos ni modelos georreferenciados. Las proporciones se ajustaron para conservar los perfiles y materiales característicos en un recorrido web. Las referencias no permiten reconstruir todas las caras ocultas ni pequeños ornamentos.
 
-Validación estructural local: los tres constructores ejecutan sin GPU, no generan coordenadas no finitas y tienen 105, 98 y 11 objetos de malla respectivamente (monasterio, Villa Serrana y Penitente). Piedras, agaves, ventanas y cornisas repetidas usan instancias. El agua expone `update(time)` para que el renderizador principal anime el flujo; la pausa de movimiento del recorrido puede detener ese reloj.
+La validación estructural ejecuta los constructores sin GPU y comprueba coordenadas, normales, índices y límites. Para el templo también verifica los dos vanos frontales y tres laterales por cara, la elevación de las esquinas de las cubiertas, sus normales exteriores, los tres pináculos, los ocho radios y la posición de los dos ciervos. El agua del Penitente expone `update(time)` para animar el flujo; la pausa del recorrido puede detener ese reloj.

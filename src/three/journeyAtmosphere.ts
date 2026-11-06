@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import type { LandmarkModel } from './types';
+import { createJourneyMoonMotion, MOON_DISTANCE } from './journeyMoon';
 
 export interface AtmosphereSite {
   /** World-space placement and point of interest from the journey scene. */
@@ -11,10 +12,11 @@ export interface AtmosphereSite {
 export interface JourneyAtmosphere {
   group: THREE.Group;
   setNight(night: boolean): void;
-  update(camera: THREE.PerspectiveCamera, activeIndex: number, time: number): void;
+  /** True while a short sky dissolve still needs frames, even during pause. */
+  update(camera: THREE.PerspectiveCamera, activeIndex: number, time: number, deltaSeconds?: number): boolean;
   dispose(): void;
 }
-type RigPose = { foot: THREE.Vector3; aim: THREE.Vector3; scale: number; angle: number; strength: number };
+type RigPose = { foot: THREE.Vector3; aim: THREE.Vector3; scale: number; angle: number; strength: number; color?: THREE.ColorRepresentation; penumbra?: number };
 const Y = new THREE.Vector3(0, 1, 0);
 const TAU = Math.PI * 2;
 
@@ -30,8 +32,8 @@ function moonMaterial() {
   }
   return new THREE.ShaderMaterial({
     name: 'Journey Moon — procedural cratered stone',
-    uniforms: { uCraters: { value: craters } },
-    depthTest: true, depthWrite: true, toneMapped: false,
+    uniforms: { uCraters: { value: craters }, uOpacity: { value: 0 } },
+    transparent: true, depthTest: true, depthWrite: true, toneMapped: false,
     vertexShader: `
       varying vec3 vSphere; varying vec3 vViewNormal;
       void main(){vSphere=normalize(position);vViewNormal=normalize(normalMatrix*normal);
@@ -39,12 +41,13 @@ function moonMaterial() {
     `,
     fragmentShader: `
       precision highp float;
-      uniform vec4 uCraters[16]; varying vec3 vSphere; varying vec3 vViewNormal;
+      uniform vec4 uCraters[16]; uniform float uOpacity; varying vec3 vSphere; varying vec3 vViewNormal;
       float hash(vec3 p){return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5453);}
       float noise(vec3 p){vec3 i=floor(p),f=fract(p);f=f*f*(3.0-2.0*f);
         return mix(mix(mix(hash(i),hash(i+vec3(1,0,0)),f.x),mix(hash(i+vec3(0,1,0)),hash(i+vec3(1,1,0)),f.x),f.y),
           mix(mix(hash(i+vec3(0,0,1)),hash(i+vec3(1,0,1)),f.x),mix(hash(i+vec3(0,1,1)),hash(i+vec3(1,1,1)),f.x),f.y),f.z);}
       void main(){
+        if(uOpacity<.001)discard;
         vec3 n=normalize(vSphere);float grain=noise(n*96.0)*.035+noise(n*29.0)*.055;
         float maria=smoothstep(.34,.72,noise(n*3.2+vec3(2.7,4.1,.3))*.72+noise(n*6.5)*.28);
         float relief=0.0;
@@ -56,7 +59,7 @@ function moonMaterial() {
         float light=.84+.16*max(dot(normalize(vViewNormal),normalize(vec3(-.25,.32,1.0))),0.0);
         float limb=.79+.21*pow(max(normalize(vViewNormal).z,0.0),.45);
         vec3 stone=mix(vec3(.86,.87,.82),vec3(.52,.57,.57),maria*.62);
-        gl_FragColor=vec4(clamp((stone+relief+grain)*light*limb,0.0,1.0),1.0);
+        gl_FragColor=vec4(clamp((stone+relief+grain)*light*limb,0.0,1.0),uOpacity);
         #include <colorspace_fragment>
       }
     `,
@@ -68,7 +71,7 @@ function makeStars(mobile: boolean) {
   const positions: number[] = [], sizes: number[] = [], phases: number[] = [], colors: number[] = [];
   for (let i = 0; i < count; i++) {
     const y = .08 + rng() * .92, a = rng() * TAU, r = Math.sqrt(Math.max(0, 1 - y * y));
-    positions.push(Math.cos(a) * r * 2650, y * 2650, Math.sin(a) * r * 2650);
+    positions.push(Math.cos(a) * r * 3900, y * 3900, Math.sin(a) * r * 3900);
     sizes.push(.7 + Math.pow(rng(), 3) * (mobile ? 1.5 : 1.9)); phases.push(rng() * TAU);
     const warm = rng(); colors.push(.78 + warm * .19, .83 + warm * .13, .97 - warm * .12);
   }
@@ -142,6 +145,7 @@ export function createJourneyAtmosphere(scene: THREE.Scene, sites: AtmosphereSit
   const metal = new THREE.MeshStandardMaterial({ color: '#303b3d', roughness: .64, metalness: .55 });
   const concrete = new THREE.MeshStandardMaterial({ color: '#7b8075', roughness: 1 });
   const lights: THREE.SpotLight[] = [], fixtures: THREE.Group[] = [], lampHeads: THREE.Group[] = [], cones: THREE.Mesh[] = [];
+  const lensSurfaces: THREE.MeshStandardMaterial[] = [];
   for (let i = 0; i < 2; i++) {
     const color = i === 0 ? '#ffd9a3' : '#a6c6ee';
     const light = new THREE.SpotLight(color, 0, 200, .5, .72, 2);
@@ -152,7 +156,9 @@ export function createJourneyAtmosphere(scene: THREE.Scene, sites: AtmosphereSit
     const stand = new THREE.Mesh(standGeo, metal); stand.position.y = .84;
     const head = new THREE.Group(); head.name = `journey-floodlight-housing-${i}`; head.position.y = 1.65;
     const housing = new THREE.Mesh(housingGeo, metal);
-    const lens = new THREE.Mesh(lensGeo, new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 2.3, roughness: .3 }));
+    const lensSurface = new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 2.3, roughness: .3 });
+    lensSurfaces.push(lensSurface);
+    const lens = new THREE.Mesh(lensGeo, lensSurface);
     lens.position.z = .316; lens.name = `journey-floodlight-lens-${i}`;
     head.add(housing, lens); fixture.add(foot, stand, head); rig.add(fixture); fixtures.push(fixture); lampHeads.push(head);
     const cone = new THREE.Mesh(beamGeo, beamMaterial(color, i === 0 ? .009 : .006));
@@ -180,7 +186,14 @@ export function createJourneyAtmosphere(scene: THREE.Scene, sites: AtmosphereSit
     }
     return site.origin.y + .035;
   }
-  const poses = sites.map(site => {
+  const poses: RigPose[][] = sites.map(site => {
+    if (site.model.nightLighting) {
+      return site.model.nightLighting.floodlights.map(light => ({
+        foot: site.model.group.localToWorld(light.foot.clone()),
+        aim: site.model.group.localToWorld(light.target.clone()),
+        scale: light.scale ?? 1, angle: light.angle, strength: light.strength, color: light.color, penumbra: light.penumbra,
+      } satisfies RigPose));
+    }
     const radius = Math.max(1, site.model.bounds.radius), height = Math.max(1, site.model.bounds.height);
     const forward = site.direction.clone().setY(0);
     if (forward.lengthSq() < .001) forward.set(0, 0, 1); forward.normalize();
@@ -200,8 +213,11 @@ export function createJourneyAtmosphere(scene: THREE.Scene, sites: AtmosphereSit
     });
   });
   let night = false, disposed = false, active = -1;
-  const cameraWorld = new THREE.Vector3(), moonRay = new THREE.Vector3(), upperRay = new THREE.Vector3(), direction = new THREE.Vector3();
-  const cameraRotation = new THREE.Quaternion();
+  const cameraWorld = new THREE.Vector3(), direction = new THREE.Vector3(), moonFacing = new THREE.Vector3();
+  const moonMotion = createJourneyMoonMotion(), Z = new THREE.Vector3(0, 0, 1);
+  function updateSiteLights() {
+    sites.forEach((site, index) => site.model.nightLighting?.setNight(night, active === index));
+  }
   function placeRig(index: number) {
     const pose = poses[index]; rig.visible = night && Boolean(pose);
     if (!pose) return;
@@ -209,7 +225,10 @@ export function createJourneyAtmosphere(scene: THREE.Scene, sites: AtmosphereSit
       const p = pose[i], fixture = fixtures[i], light = lights[i], cone = cones[i];
       fixture.position.copy(p.foot); fixture.scale.setScalar(p.scale);
       light.position.copy(p.foot).addScaledVector(Y, 1.65 * p.scale);
-      light.target.position.copy(p.aim); light.angle = p.angle;
+      light.target.position.copy(p.aim); light.angle = p.angle; light.penumbra = p.penumbra ?? .72;
+      light.color.set(p.color ?? (i === 0 ? '#ffd9a3' : '#a6c6ee'));
+      lensSurfaces[i].color.copy(light.color); lensSurfaces[i].emissive.copy(light.color);
+      (cone.material as THREE.ShaderMaterial).uniforms.uColor.value.copy(light.color);
       const reach = light.position.distanceTo(p.aim);
       light.distance = reach * 2.7 + 30; light.intensity = reach * reach * p.strength;
       // Group.lookAt uses +Z, matching the lens on the front of the housing.
@@ -231,31 +250,26 @@ export function createJourneyAtmosphere(scene: THREE.Scene, sites: AtmosphereSit
       for (const light of lights) light.visible = night;
       rig.visible = night && sites.length > 0;
       if (night && active >= 0) placeRig(active);
+      updateSiteLights();
     },
-    update(camera, activeIndex, time) {
-      if (disposed) return;
-      camera.updateMatrixWorld(); camera.getWorldPosition(cameraWorld); camera.getWorldQuaternion(cameraRotation);
+    update(camera, activeIndex, time, deltaSeconds = 1 / 60) {
+      if (disposed) return false;
+      camera.updateMatrixWorld(); camera.getWorldPosition(cameraWorld);
       skyRoot.position.copy(cameraWorld);
-      // Unproject through the actual projection (including the journey's view
-      // offset), rather than assuming that the optical axis is screen center.
-      // Keep the moon clear of the UI after rotating a phone or resizing a
-      // desktop window; mesh detail stays at the initial device budget.
-      const compact = camera.view?.enabled ? camera.view.fullWidth <= 700 : mobile;
-      const distance = 1700, ndcX = compact ? .62 : .68, ndcY = compact ? .62 : .38;
-      const radiusNdc = Math.min(compact ? .075 : .067, (1 - ndcX) * Math.max(.10, camera.aspect) * .75);
-      moonRay.set(ndcX, ndcY, .5).unproject(camera).sub(cameraWorld).normalize();
-      upperRay.set(ndcX, ndcY + radiusNdc, .5).unproject(camera).sub(cameraWorld).normalize();
-      const angularRadius = Math.acos(THREE.MathUtils.clamp(moonRay.dot(upperRay), -1, 1));
-      moon.position.copy(moonRay).multiplyScalar(distance);
-      moon.quaternion.copy(cameraRotation); moon.scale.setScalar(distance * Math.tan(angularRadius));
-      group.userData.moonNdc = [ndcX, ndcY];
+      const moonPose = moonMotion.update(camera, deltaSeconds, night);
+      moon.position.copy(moonPose.direction).multiplyScalar(MOON_DISTANCE);
+      moon.quaternion.setFromUnitVectors(Z, moonFacing.copy(moonPose.direction).negate());
+      moon.scale.setScalar(moonPose.radius); moon.material.uniforms.uOpacity.value = moonPose.opacity;
+      group.userData.moonNdc = [moonPose.ndc.x, moonPose.ndc.y];
       stars.material.uniforms.uTime.value = Number.isFinite(time) ? time : 0;
       const index = sites.length ? THREE.MathUtils.clamp(Number.isFinite(activeIndex) ? Math.trunc(activeIndex) : 0, 0, sites.length - 1) : -1;
-      if (index !== active) { active = index; placeRig(index); }
+      if (index !== active) { active = index; placeRig(index); updateSiteLights(); }
+      return moonPose.pending;
     },
     dispose() {
       if (disposed) return;
       disposed = true; group.removeFromParent();
+      sites.forEach(site => site.model.nightLighting?.setNight(false, false));
       const geometries = new Set<THREE.BufferGeometry>(), materials = new Set<THREE.Material>();
       group.traverse(object => {
         if (object instanceof THREE.Mesh || object instanceof THREE.Points) {

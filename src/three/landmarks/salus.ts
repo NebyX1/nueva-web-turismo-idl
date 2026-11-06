@@ -1,5 +1,6 @@
-import { BufferGeometry, Color, CylinderGeometry, DataTexture, DoubleSide, Float32BufferAttribute, Group, IcosahedronGeometry, InstancedMesh, Mesh, MeshStandardMaterial, Object3D, RepeatWrapping, RGBAFormat, Shape, ShapeGeometry, SphereGeometry, TubeGeometry, CatmullRomCurve3, Vector3, RingGeometry } from 'three';
+import { BufferGeometry, Color, CylinderGeometry, DataTexture, DoubleSide, Float32BufferAttribute, Group, IcosahedronGeometry, InstancedMesh, Mesh, MeshStandardMaterial, Object3D, RepeatWrapping, RGBAFormat, Shape, ShapeGeometry, TubeGeometry, CatmullRomCurve3, Vector3, RingGeometry } from 'three';
 import type { LandmarkModel } from '../types';
+import { createSalusPuma } from './salusPuma';
 /** Fuente del Puma: reclining stone feline, spring pool and woodland, from photographic references. */
 export function createSalus(): LandmarkModel {
     const group = new Group();
@@ -21,8 +22,7 @@ export function createSalus(): LandmarkModel {
     const bark = new MeshStandardMaterial({ color: '#716657', roughness: .97 });
     const canopyMat = new MeshStandardMaterial({ color: '#526545', roughness: 1 });
     const leafMat = new MeshStandardMaterial({ color: '#377842', roughness: .7, side: DoubleSide });
-    const sphere = new SphereGeometry(1, 28, 20), rockGeo = new IcosahedronGeometry(1, 1), dummy = new Object3D(), tint = new Color();
-    function ellipsoid(material: MeshStandardMaterial, x: number, y: number, z: number, sx: number, sy: number, sz: number, rotation = 0) { const mesh = new Mesh(sphere, material); mesh.position.set(x, y, z); mesh.scale.set(sx, sy, sz); mesh.rotation.x = rotation; mesh.castShadow = mesh.receiveShadow = true; group.add(mesh); return mesh; }
+    const rockGeo = new IcosahedronGeometry(1, 1), dummy = new Object3D(), tint = new Color();
     const groundShape = new Shape();
     groundShape.absarc(0, 0, 33, 0, Math.PI * 2, false);
     const groundGeo = new ShapeGeometry(groundShape, 80);
@@ -65,34 +65,8 @@ export function createSalus(): LandmarkModel {
     }
     ledge.castShadow = ledge.receiveShadow = true;
     group.add(ledge);
-    // Reclining torso, raised chest, folded hind legs and the long forepaws seen in the source photographs.
-    ellipsoid(stone, 0, 1.77, -1.45, .88, .72, 1.45, -.08);
-    ellipsoid(stone, 0, 2.02, -.22, .77, 1.04, .88, -.14);
-    ellipsoid(stone, -.69, 1.51, -1.8, .65, .54, .77);
-    ellipsoid(stone, .68, 1.52, -1.77, .65, .54, .77);
-    ellipsoid(stone, -.53, 1.57, .53, .27, .32, 1.05, -.12);
-    ellipsoid(stone, .53, 1.57, .53, .27, .32, 1.05, -.12);
-    ellipsoid(stone, -.53, 1.41, 1.28, .39, .24, .59);
-    ellipsoid(stone, .53, 1.41, 1.28, .39, .24, .59);
-    for (const side of [-1, 1])
-        for (const toe of [-.14, 0, .14])
-            ellipsoid(rockMat, side * .53 + toe, 1.43, 1.72, .015, .07, .08);
-    ellipsoid(stone, 0, 2.75, .32, .56, .76, .61, -.26);
-    ellipsoid(stone, 0, 3.27, .75, .7, .55, .65, -.12).rotation.y = -.1;
-    ellipsoid(stone, -.31, 3.09, 1.27, .4, .29, .35);
-    ellipsoid(stone, .29, 3.09, 1.28, .4, .29, .35);
-    ellipsoid(stone, 0, 2.94, 1.21, .37, .18, .35);
-    ellipsoid(rockMat, 0, 3.22, 1.55, .18, .115, .095);
-    ellipsoid(rockMat, -.5, 3.43, 1.04, .065, .038, .035);
-    ellipsoid(rockMat, .5, 3.43, 1.04, .065, .038, .035);
-    for (const side of [-1, 1]) {
-        ellipsoid(stone, side * .47, 3.72, .52, .24, .3, .19, -.18);
-        ellipsoid(rockMat, side * .47, 3.77, .655, .115, .16, .025, -.18);
-    }
-    const tailCurve = new CatmullRomCurve3([new Vector3(-.6, 1.45, -2.2), new Vector3(-1.6, 1.23, -2.45), new Vector3(-2.05, 1.2, -1.9), new Vector3(-1.8, 1.23, -.9)]);
-    const tail = new Mesh(new TubeGeometry(tailCurve, 28, .135, 8, false), stone);
-    tail.castShadow = true;
-    group.add(tail);
+    const puma = createSalusPuma(stone);
+    group.add(puma.group);
     const poolShape = new Shape();
     poolShape.moveTo(-3.15, -1.2);
     poolShape.bezierCurveTo(-4.4, .3, -2.5, 3.4, 0, 3.2);
@@ -116,9 +90,11 @@ export function createSalus(): LandmarkModel {
     edging.castShadow = edging.receiveShadow = true;
     group.add(edging);
     // The jet comes from the mouth, following a parabolic fall into a shallow natural basin.
-    const jetCurve = new CatmullRomCurve3([new Vector3(0, 3.03, 1.55), new Vector3(0, 2.98, 2.1), new Vector3(0, 2.4, 2.95), new Vector3(0, .44, 4.05)]);
+    const jetCurve = new CatmullRomCurve3([puma.mouth, puma.mouth.clone().add(new Vector3(0, -.035, .55)), new Vector3(0, 2.4, 2.95), new Vector3(0, .44, 4.05)]);
     const jetMat = new MeshStandardMaterial({ color: '#daeeee', roughness: .08, metalness: .12, transparent: true, opacity: .76, emissive: '#203d3d', emissiveIntensity: .3 });
-    group.add(new Mesh(new TubeGeometry(jetCurve, 36, .037, 6, false), jetMat));
+    const jet = new Mesh(new TubeGeometry(jetCurve, 36, .033, 6, false), jetMat);
+    jet.name = 'Agua desde la boca del puma';
+    group.add(jet);
     const ripples: Mesh[] = [];
     for (let i = 0; i < 4; i++) {
         const ripple = new Mesh(new RingGeometry(.27, .29, 36), new MeshStandardMaterial({ color: '#dcefe4', transparent: true, opacity: .5, roughness: .4, side: DoubleSide }));

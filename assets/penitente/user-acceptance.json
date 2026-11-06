@@ -1,0 +1,31 @@
+{
+  "approved": true,
+  "approvalType": "explicit-user-acceptance",
+  "acceptedOn": "2026-11-06",
+  "userStatement": "Ya está, ya quedó bastante bien; acelera la integración y sube a GitHub.",
+  "independentReviewStatus": "Final closure interrupted; this is user acceptance, not an independent QA approval.",
+  "sourceSha256": "94735698db9c3615f488c16e8a4b9edc5ae34fac4021e7c293d2f620ce4be9fe",
+  "sceneSha256": "83f9accc240f1ba90514ff8a693866a3a8aee5585e21720b910ee27c15de720c",
+  "files": [
+    {
+      "file": "src/three/landmarks/penitente.ts",
+      "sha256": "c1b4ca835e436734790afad47ad7566cd284d6ac1b3084ad1308f54b52e67880"
+    },
+    {
+      "file": "src/three/landmarks/penitenteMesh.ts",
+      "sha256": "8594dcd8d9aab2417ed2b8eaad3dfe036d2f6e66b44e49b28e048f32c1f54f72"
+    },
+    {
+      "file": "src/three/landmarks/penitenteWater.ts",
+      "sha256": "4d140c2a8bcdfedb81c49a51170e23397d75f73b8536b858ab78a1ad4bdb3c68"
+    },
+    {
+      "file": "src/three/landmarks/penitenteRock.ts",
+      "sha256": "37f38b236614e0ccbb37fb4a546cd60079f109ccaa9b1a64ebbff1e5cf3e033e"
+    },
+    {
+      "file": "src/three/landmarks/penitenteAsset.json",
+      "sha256": "a2682aabace8ac04b1a4ee065155a9c663839b3d6f84db6c9960d1c0c758fd2a"
+    }
+  ]
+}

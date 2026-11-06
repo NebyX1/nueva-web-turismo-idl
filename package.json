@@ -13,6 +13,8 @@
     "check": "astro check && tsc --noEmit",
     "check:guide-artwork": "node scripts/check-guide-artwork.mjs",
     "check:journey-models": "node scripts/check-journey-models.mjs",
+    "check:artigas": "node scripts/check-artigas-rebuild.mjs",
+    "check:penitente": "node scripts/check-penitente-rebuild.mjs",
     "check:journey-mode": "node scripts/check-journey-mode.mjs",
     "check:journey-atmosphere": "node scripts/check-journey-atmosphere.mjs"
   },

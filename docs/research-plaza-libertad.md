@@ -46,3 +46,9 @@ Exportación: `createPlazaLibertad(): LandmarkModel`.
 - Para encuadre general se recomienda una distancia de aproximadamente 170–210 m y mirada hacia `z=-30`; un acercamiento a 65–90 m muestra monumento/fuente con la concatedral visible por encima, según FOV. La relación monumento/estanque exige evitar una cámara excesivamente baja justo sobre el eje del pedestal.
 - Geometría estática fusionada por material; follaje, troncos, arbustos y agua instanciados. Auditoría runtime: 45 mallas totales, 733 instancias, aproximadamente 138.377 triángulos efectivos; cero coordenadas no finitas. Animación evaluada en 0 y 37,5 segundos.
 - Comprobación TypeScript aislada con TypeScript del proyecto y tipos Three.js: sin errores. La revisión de composición final en el recorrido se realiza al integrar con la cámara y luces del encabezado.
+
+## Corrección de orientación e iluminación
+
+La base de granito, sus escalones, molduras, placas y relieves se agrupan y giran 90° alrededor del eje vertical. El caballo y Lavalleja conservan su transformación original; el lado largo del basamento queda alineado con el estanque. Esta corrección responde a la revisión visual del usuario sobre la escena.
+
+En modo nocturno se encienden las luminarias ya modeladas: ocho faroles dobles y cuatro postes altos. Un reflector se dirige al conjunto ecuestre y el otro a la fachada de la concatedral. Los detalles de activación y presupuesto están en `docs/journey-night-mode.md`.

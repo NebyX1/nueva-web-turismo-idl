@@ -1,12 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { createVerdun } from './landmarks/natureMonuments';
-import { createArequita } from './landmarks/arequita';
-import { createArtigas } from './landmarks/artigas';
-import { createMinasSign } from './landmarks/minasSign';
-import { createPlazaLibertad } from './landmarks/plazaLibertad';
-import { createMonastery, createVillaSerrana, createPenitente } from './landmarks/architectureWater';
-import { createSalus } from './landmarks/salus';
+import { journeyDefinitions as definitions, JOURNEY_WORLD_SIZE, JOURNEY_FOREST_SIZE, JOURNEY_TERRAIN_SEGMENTS, JOURNEY_DAY_FOG, JOURNEY_NIGHT_FOG } from './journeySites';
+import { journeyTerrainHeight as terrainHeight } from './journeyTerrain';
 import type { LandmarkModel } from './types';
 import { createJourneyAtmosphere } from './journeyAtmosphere';
 import type { JourneyMode } from '../lib/journeyModeTransition';
@@ -27,31 +22,8 @@ export interface JourneyScene {
   dispose(): void;
 }
 const STOP_SECONDS = 22;
-const definitions: { make: () => LandmarkModel; x: number; z: number; focus: number; reveal: number; sweep: number; eye?: number; rise?: number; pad?: number; groundOffset?: number }[] = [
-  { make: createArequita, x: -530, z: -200, focus: 130, reveal: 92, sweep: .18, eye: 52, rise: 44, pad: 205 },
-  { make: createVerdun, x: -220, z: -450, focus: 19, reveal: 81, sweep: .44 },
-  { make: createArtigas, x: 160, z: -460, focus: 18, reveal: 44, sweep: .32, pad: 110 },
-  { make: createMinasSign, x: 500, z: -260, focus: 50, reveal: 48, sweep: .23, pad: 160, groundOffset: .04 },
-  { make: createPlazaLibertad, x: 600, z: 130, focus: 50, reveal: 18, sweep: .14, eye: 40, pad: 225, groundOffset: .04 },
-  { make: createMonastery, x: 380, z: 480, focus: 32, reveal: 39, sweep: .44 },
-  { make: createVillaSerrana, x: 0, z: 570, focus: 31, reveal: 30, sweep: .44 },
-  { make: createPenitente, x: -400, z: 410, focus: 37, reveal: 78, sweep: .16 },
-  { make: createSalus, x: -680, z: 90, focus: 6, reveal: 8, sweep: .44 },
-];
 const smooth = (t: number) => THREE.MathUtils.smoothstep(t, 0, 1);
 function random(seed: number) { let value = seed; return () => { value = (value * 1664525 + 1013904223) >>> 0; return value / 4294967296; }; }
-function baseHeight(x: number, z: number) {
-  return 12 + Math.sin(x * .007 + .4) * Math.cos(z * .006) * 22 + Math.sin(x * .018 + z * .009) * 8 + Math.cos(z * .026 - x * .012) * 3;
-}
-function terrainHeight(x: number, z: number) {
-  let weight = 0, closest = Infinity, level = 0;
-  for (const site of definitions) {
-    const distance = Math.hypot(x - site.x, z - site.z);
-    const blend = 1 - THREE.MathUtils.smoothstep(distance, site.pad ?? 48, (site.pad ?? 48) + 97);
-    if (blend > weight || (blend === weight && distance < closest)) { weight = blend; closest = distance; level = baseHeight(site.x, site.z); }
-  }
-  return THREE.MathUtils.lerp(baseHeight(x, z), level, weight);
-}
 
 function grassTexture() {
   const canvas = document.createElement('canvas'); canvas.width = canvas.height = 512;
@@ -68,7 +40,7 @@ function grassTexture() {
 }
 
 function makeTerrain() {
-  const geometry = new THREE.PlaneGeometry(2600, 2600, 190, 190);
+  const geometry = new THREE.PlaneGeometry(JOURNEY_WORLD_SIZE, JOURNEY_WORLD_SIZE, JOURNEY_TERRAIN_SEGMENTS, JOURNEY_TERRAIN_SEGMENTS);
   geometry.rotateX(-Math.PI / 2);
   const p = geometry.attributes.position;
   const colors = new Float32Array(p.count * 3);
@@ -96,7 +68,7 @@ function makeForest(mobile: boolean) {
   const dummy = new THREE.Object3D(), color = new THREE.Color();
   let placed = 0;
   for (let attempt = 0; placed < count && attempt < count * 8; attempt++) {
-    const x = (rand() - .5) * 1800, z = (rand() - .5) * 1800;
+    const x = (rand() - .5) * JOURNEY_FOREST_SIZE, z = (rand() - .5) * JOURNEY_FOREST_SIZE;
     if (definitions.some(site => Math.hypot(x - site.x, z - site.z) < Math.max(125, site.pad ?? 0))) continue;
     if (Math.sin(x * .014) + Math.cos(z * .02) > .8 && rand() > .24) continue;
     const y = terrainHeight(x, z), height = 5 + rand() * 9, wide = 2.2 + rand() * 2.8;
@@ -132,7 +104,7 @@ export function createJourneyScene(host: HTMLElement, callbacks: Callbacks, init
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = .98;
   renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   const canvas = renderer.domElement; canvas.setAttribute('aria-hidden', 'true'); host.appendChild(canvas);
-  const scene = new THREE.Scene(); scene.background = new THREE.Color('#cddbcf'); scene.fog = new THREE.FogExp2('#cddbcf', .00125);
+  const scene = new THREE.Scene(); scene.background = new THREE.Color('#cddbcf'); scene.fog = new THREE.FogExp2('#cddbcf', JOURNEY_DAY_FOG);
   const camera = new THREE.PerspectiveCamera(48, 1, .4, 5000);
   const sky = makeSky(); scene.add(sky);
   const hemisphere = new THREE.HemisphereLight('#e5f4fa', '#647044', 1.25);
@@ -149,7 +121,7 @@ export function createJourneyScene(host: HTMLElement, callbacks: Callbacks, init
     const origin = new THREE.Vector3(definition.x, terrainHeight(definition.x, definition.z) + (definition.groundOffset ?? -.3), definition.z);
     model.group.position.add(origin); scene.add(model.group);
     const target = model.target.clone().add(origin);
-    const direction = definition.make === createPenitente ? new THREE.Vector3(-.08, .2, 1) : model.cameraDirection?.clone() || new THREE.Vector3(.75, .2, 1);
+    const direction = model.cameraDirection?.clone() || new THREE.Vector3(.75, .2, 1);
     direction.y = 0; direction.normalize();
     return { ...definition, model, origin, target, direction };
   });
@@ -159,13 +131,13 @@ export function createJourneyScene(host: HTMLElement, callbacks: Callbacks, init
   controls.maxPolarAngle = Math.PI * .65;
 
   let disposed = false, paused = document.documentElement.classList.contains('motion-paused') || matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let visible = true, frame = 0, last = 0, elapsed = paused ? 13 : 5, stopIndex = -1, previousPhase = '', ready = false;
+  let visible = true, frame = 0, skyFrame = 0, last = 0, lastRender = 0, elapsed = paused ? 13 : 5, stopIndex = -1, previousPhase = '', ready = false;
   let transition: { from: THREE.Vector3; look: THREE.Vector3; to: THREE.Vector3; target: THREE.Vector3; fromFov: number; elapsed: number; index: number } | null = null;
   const look = new THREE.Vector3(), lightOffset = new THREE.Vector3(-180, 330, 190);
   const framing = () => Math.max(1, 1.05 / camera.aspect);
   function sideDirection(index: number, angle = 0) { return sites[index].direction.clone().applyAxisAngle(new THREE.Vector3(0, 1, 0), angle); }
   function widePose(index: number, ending = false) {
-    const site = sites[index], distance = Math.max(site.model.bounds.radius * 2.6, site.focus * 4.1);
+    const site = sites[index], distance = site.overviewDistance ?? Math.max(site.model.bounds.radius * 2.6, site.focus * 4.1);
     const p = site.origin.clone().addScaledVector(sideDirection(index, ending ? site.sweep : -.12), distance * framing());
     p.y += site.model.bounds.height * 1.35 + 35;
     return p;
@@ -196,10 +168,10 @@ export function createJourneyScene(host: HTMLElement, callbacks: Callbacks, init
       camera.fov = 53;
     } else if (local < 10) {
       phase = 'Acercándonos'; const u = smooth((local - 5) / 5);
-      camera.position.copy(widePose(index)).lerp(near, u); look.copy(subject(index)).lerp(subject(index, -.13), u); camera.fov = THREE.MathUtils.lerp(53, 44, u);
+      camera.position.copy(widePose(index)).lerp(near, u); look.copy(subject(index)).lerp(subject(index, site.approachFocusFactor ?? -.13), u); camera.fov = THREE.MathUtils.lerp(53, 44, u);
     } else if (local < 16) {
       phase = 'Mirada panorámica'; const u = smooth((local - 10) / 6);
-      camera.position.copy(near).lerp(lifted, u); look.copy(subject(index, -.13)).lerp(summit, u); camera.fov = 44;
+      camera.position.copy(near).lerp(lifted, u); look.copy(subject(index, site.approachFocusFactor ?? -.13)).lerp(summit, u); camera.fov = 44;
     } else {
       phase = 'El paisaje se abre'; const u = smooth((local - 16) / 6);
       camera.position.copy(lifted).lerp(widePose(index, true), u); look.copy(summit).lerp(subject(index), u); camera.fov = THREE.MathUtils.lerp(44, 53, u);
@@ -209,12 +181,18 @@ export function createJourneyScene(host: HTMLElement, callbacks: Callbacks, init
   }
   function render(time: number) {
     if (disposed) return;
+    const now = performance.now(), delta = lastRender ? Math.min(.05, Math.max(0, (now - lastRender) / 1000)) : 1 / 60;
+    lastRender = now;
     sky.position.copy(camera.position);
     sun.position.copy(look).add(lightOffset); sun.target.position.copy(look); sun.target.updateMatrixWorld();
     for (const site of sites) site.model.update?.(time);
     camera.updateProjectionMatrix(); camera.lookAt(look);
-    atmosphere.update(camera, Math.max(0, stopIndex), time);
+    const settlingSky = atmosphere.update(camera, Math.max(0, stopIndex), time, delta);
     renderer.render(scene, camera);
+    // A bounded dissolve can finish while the tour/water clock stays paused.
+    if (settlingSky && paused && visible && !document.hidden && !skyFrame) {
+      skyFrame = requestAnimationFrame(() => { skyFrame = 0; render(elapsed); });
+    }
     if (!ready) { ready = true; host.dataset.journeyReady = 'true'; callbacks.onReady(); }
   }
   function tick(now: number) {
@@ -244,8 +222,10 @@ export function createJourneyScene(host: HTMLElement, callbacks: Callbacks, init
     }
   }
   const observer = new ResizeObserver(resize); observer.observe(host);
-  const intersection = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; if (visible) wake(); else { cancelAnimationFrame(frame); frame = 0; last = 0; } }, { threshold: .01 }); intersection.observe(host);
-  const visibility = () => { if (document.hidden) { cancelAnimationFrame(frame); frame = 0; last = 0; } else wake(); };
+  function stopFrames() { cancelAnimationFrame(frame); cancelAnimationFrame(skyFrame); frame = skyFrame = 0; last = lastRender = 0; }
+  function resumeView() { if (paused) render(elapsed); else wake(); }
+  const intersection = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; if (visible) resumeView(); else stopFrames(); }, { threshold: .01 }); intersection.observe(host);
+  const visibility = () => { if (document.hidden) stopFrames(); else if (visible) resumeView(); };
   const lost = (event: Event) => { event.preventDefault(); callbacks.onUnavailable(); dispose(); };
   canvas.addEventListener('webglcontextlost', lost); document.addEventListener('visibilitychange', visibility);
   controls.addEventListener('change', () => { if (paused && !disposed) { look.copy(controls.target); camera.position.y = Math.max(camera.position.y, terrainHeight(camera.position.x, camera.position.z) + 1.2); render(elapsed); } });
@@ -255,8 +235,8 @@ export function createJourneyScene(host: HTMLElement, callbacks: Callbacks, init
   }
   function setPaused(value: boolean) {
     paused = value; last = 0; controls.enabled = value;
-    if (value) { cancelAnimationFrame(frame); frame = 0; configureControls(); }
-    else wake();
+    if (value) { cancelAnimationFrame(frame); frame = 0; configureControls(); if (ready) render(elapsed); }
+    else { cancelAnimationFrame(skyFrame); skyFrame = 0; wake(); }
   }
   function select(index: number) {
     index = Math.max(0, Math.min(sites.length - 1, index));
@@ -267,7 +247,7 @@ export function createJourneyScene(host: HTMLElement, callbacks: Callbacks, init
     const night = mode === 'night';
     sky.material.uniforms.uNight.value = night ? 1 : 0;
     scene.background = new THREE.Color(night ? '#081220' : '#cddbcf');
-    scene.fog = new THREE.FogExp2(night ? '#0b1725' : '#cddbcf', night ? .0009 : .00125);
+    scene.fog = new THREE.FogExp2(night ? '#0b1725' : '#cddbcf', night ? JOURNEY_NIGHT_FOG : JOURNEY_DAY_FOG);
     hemisphere.color.set(night ? '#a8c6ed' : '#e5f4fa');
     hemisphere.groundColor.set(night ? '#263b3d' : '#647044');
     hemisphere.intensity = night ? .42 : 1.25;
@@ -283,7 +263,7 @@ export function createJourneyScene(host: HTMLElement, callbacks: Callbacks, init
     render(elapsed);
   }
   function dispose() {
-    if (disposed) return; disposed = true; cancelAnimationFrame(frame); observer.disconnect(); intersection.disconnect(); controls.dispose();
+    if (disposed) return; disposed = true; stopFrames(); observer.disconnect(); intersection.disconnect(); controls.dispose();
     document.removeEventListener('visibilitychange', visibility); canvas.removeEventListener('webglcontextlost', lost);
     atmosphere.dispose();
     const geometries = new Set<THREE.BufferGeometry>(), materials = new Set<THREE.Material>(), textures = new Set<THREE.Texture>();

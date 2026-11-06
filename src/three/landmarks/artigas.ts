@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import type { LandmarkModel } from '../types';
-import { stoneNoiseTexture } from './artigasGeometry';
-import { createArtigasSculpture } from './artigasSculpture';
+import { createArtigasMonument } from './artigasMonument';
+import { createUruguayFlag } from './uruguayFlag';
 
 const TAU = Math.PI * 2;
 const material = (color: string, extra: THREE.MeshStandardMaterialParameters = {}) =>
@@ -149,28 +149,15 @@ function setting(parent: THREE.Group) {
 export function createArtigas(): LandmarkModel {
   const group = new THREE.Group(); group.name = 'Cerro Artigas — José Artigas y caballo esculpidos';
   setting(group);
-  const grain = stoneNoiseTexture();
-  const stone = material('#b9b7ab', { roughness: .94, bumpMap: grain, bumpScale: .026 });
-  const cloth = stone.clone(); cloth.color.set('#b5b3a7'); cloth.roughness = .98;
-  const detail = stone.clone(); detail.color.set('#a9a79b'); detail.bumpScale = .018;
-  const recess = stone.clone(); recess.color.set('#97978c'); recess.bumpScale = .012;
-  const plinth = material('#c2c0b5', { roughness: .92, bumpMap: grain, bumpScale: .032 });
-  const plinthBase = material('#aaa99f', { roughness: .97, bumpMap: grain, bumpScale: .038 });
-  const statue = createArtigasSculpture({ stone, cloth, detail, recess, plinth, plinthBase });
+  const statue = createArtigasMonument();
   statue.position.y = 26; group.add(statue);
 
   const poleMat = material('#b8b9aa', { metalness: .25 });
-  const flagSurfaces = [material('#e8e9dc', { side: THREE.DoubleSide }), material('#7797b5', { side: THREE.DoubleSide }), material('#a66456', { side: THREE.DoubleSide })];
   for (let i = 0; i < 3; i++) {
     const x = 12.5 + i * 3.1, z = -9, y = summitHeight(x, z);
     const pole = add(group, new THREE.CylinderGeometry(.055, .075, 13.2, 7), poleMat, 'Mástil del parque'); pole.position.set(x, y + 6.6, z);
-    for (let band = 0; band < 5; band++) {
-      const geometry = new THREE.PlaneGeometry(3.5, .36, 10, 1), a = geometry.attributes.position;
-      for (let k = 0; k < a.count; k++) a.setZ(k, Math.sin((a.getX(k) + 1.75) * 2 + i) * .18 * (a.getX(k) + 1.75) / 3.5);
-      geometry.computeVertexNormals();
-      const flag = add(group, geometry, flagSurfaces[band % 2 === 0 ? (i === 1 ? 2 : 0) : 1], 'Paño de bandera — bandas');
-      flag.position.set(x + 1.76, y + 11.9 - band * .36, z); flag.castShadow = false;
-    }
+    const flag = createUruguayFlag(3.5, i);
+    flag.position.set(x + .01, y + 12.08, z); group.add(flag);
   }
   batchMeshes(group);
   return {

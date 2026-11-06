@@ -15,9 +15,6 @@ function segment(group: THREE.Group, material: THREE.Material, a: number[], b: n
   const from = new THREE.Vector3(a[0], a[1], a[2]), to = new THREE.Vector3(b[0], b[1], b[2]), delta = to.clone().sub(from);
   const object = mesh(group, new THREE.CylinderGeometry(r2, r1, delta.length(), sides), material); object.position.copy(from.add(to).multiplyScalar(.5)); object.quaternion.setFromUnitVectors(Y, delta.normalize()); return object;
 }
-function tube(group: THREE.Group, material: THREE.Material, points: number[][], radius: number, steps = 24) {
-  return mesh(group, new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points.map(p => new THREE.Vector3(p[0], p[1], p[2]))), steps, radius, 6, false), material);
-}
 function land(group: THREE.Group, width: number, depth: number, heightAt: (x: number, z: number) => number, seed: number) {
   const geometry = new THREE.PlaneGeometry(width, depth, 66, 56); geometry.rotateX(-Math.PI / 2);
   const p = geometry.attributes.position, colors = new Float32Array(p.count * 3), base = new THREE.Color('#718451'), rng = random(seed);
@@ -151,17 +148,35 @@ function inscription(group: THREE.Group, text: string, y: number, z: number, mat
   const label = mesh(group, new THREE.PlaneGeometry(2.1, .8), new THREE.MeshBasicMaterial({ map: texture, transparent: true, depthWrite: false }), 0, y, z); label.castShadow = false;
 }
 
+/** Scenic height, chosen to make Verdún the dominant summit of this schematic map. */
+export const VERDUN_SUMMIT_HEIGHT = 140;
+export const VERDUN_FOOTPRINT = { halfWidth: 330, halfDepth: 285, supportRadius: 370 } as const;
+
 /** White three-sided pointed-arch templete, globe and Marian figure on its hill. */
 export function createVerdun(): LandmarkModel {
   const group = new THREE.Group(); group.name = 'Cerro del Verdún — santuario y Vía Crucis';
-  const terrain = (x: number, z: number) => { const r = Math.sqrt((x / 112) ** 2 + (z / 103) ** 2), slope = Math.max(0, (r - .16) / .84); return Math.max(-1, 62 * Math.pow(Math.max(0, 1 - slope), 1.28) + Math.sin(x * .10) * Math.cos(z * .06) * Math.min(1, Math.max(0, r - .16) * 3)); };
-  land(group, 270, 250, terrain, 424);
-  scatteredRocks(group, 110, 114, rng => { const x = (rng() - .5) * 175, z = (rng() - .5) * 170; return new THREE.Vector3(x, terrain(x, z) + .2, z); }, 1.8);
-  vegetation(group, 55, 995, rng => { const a = rng() * 6.28, r = .5 + rng() * .55, x = Math.cos(a) * 110 * r, z = Math.sin(a) * 100 * r; return new THREE.Vector3(x, terrain(x, z), z); }, 2, 5.5);
+  const terrain = (x: number, z: number) => {
+    const r = Math.hypot(x / VERDUN_FOOTPRINT.halfWidth, z / VERDUN_FOOTPRINT.halfDepth), slope = THREE.MathUtils.smoothstep(r, .16, 1);
+    const detail = Math.sin(x * .10) * Math.cos(z * .06) * Math.min(1, Math.max(0, r - .16) * 3)
+      * (1 - THREE.MathUtils.smoothstep(r, .85, 1.15));
+    return Math.max(0, VERDUN_SUMMIT_HEIGHT * Math.pow(1 - slope, 1.28) + detail);
+  };
+  const hillside = land(group, 800, 700, terrain, 424); hillside.name = 'Cumbre del Verdún — relieve dominante';
+  scatteredRocks(group, 180, 114, rng => { const x = (rng() - .5) * 550, z = (rng() - .5) * 470; return new THREE.Vector3(x, terrain(x, z) + .2, z); }, 1.8);
+  vegetation(group, 140, 995, rng => { const a = rng() * 6.28, r = .5 + rng() * .55, x = Math.cos(a) * VERDUN_FOOTPRINT.halfWidth * r, z = Math.sin(a) * VERDUN_FOOTPRINT.halfDepth * r; return new THREE.Vector3(x, terrain(x, z), z); }, 2, 5.5);
   const path: THREE.Vector3[] = [];
-  for (let i = 0; i <= 120; i++) { const t = i / 120, z = 113 * (1 - t), x = Math.sin(t * Math.PI * 4.7) * 20 * Math.sin(t * Math.PI); path.push(new THREE.Vector3(x, terrain(x, z) + .24, z)); }
-  trail(group, path, 3.3, '#b8b29b');
-  const shrine = new THREE.Group(); shrine.position.y = 62.2; group.add(shrine);
+  for (let i = 0; i <= 120; i++) { const t = i / 120, z = 310 * (1 - t), x = Math.sin(t * Math.PI * 4.7) * 72 * Math.sin(t * Math.PI); path.push(new THREE.Vector3(x, terrain(x, z) + .35, z)); }
+  const ascent = trail(group, path, 3.3, '#b8b29b'); ascent.name = 'Sendero del Verdún — apoyado en la ladera';
+  // Conform both path edges to the actual triangulated slope after raising it.
+  hillside.updateMatrixWorld(true);
+  const ray = new THREE.Raycaster(), road = ascent.geometry.attributes.position;
+  for (let i = 0; i < road.count; i++) {
+    ray.set(new THREE.Vector3(road.getX(i), VERDUN_SUMMIT_HEIGHT + 10, road.getZ(i)), new THREE.Vector3(0, -1, 0));
+    const hit = ray.intersectObject(hillside, false)[0];
+    if (hit) road.setY(i, hit.point.y + .18);
+  }
+  ascent.geometry.computeVertexNormals();
+  const shrine = new THREE.Group(); shrine.name = 'Santuario del Verdún — escala original'; shrine.position.y = VERDUN_SUMMIT_HEIGHT + .2; group.add(shrine);
   const white = stone('#edece1'), mint = stone('#8fbbb4'), gold = stone('#a18a42', { metalness: .3, roughness: .65 });
   for (let step = 0; step < 3; step++) mesh(shrine, new THREE.CylinderGeometry(12.8 - step * .6, 13.4 - step * .6, .23, 48), stone('#b5b4a2'), 0, -.3 + step * .22, 0);
   const wallGeo = new THREE.ExtrudeGeometry(sanctuaryWall(), { depth: .47, bevelEnabled: true, bevelSegments: 2, bevelSize: .075, bevelThickness: .05, curveSegments: 18 });
@@ -215,83 +230,8 @@ export function createVerdun(): LandmarkModel {
   shrine.add(posts); const rim = mesh(shrine, new THREE.TorusGeometry(11.7, .04, 4, 84, Math.PI * 2 - .56), rail, 0, 1.46, 0); rim.rotation.x = Math.PI / 2; rim.rotation.z = Math.PI / 2 + .28;
   const stationMat = stone('#cac7b8');
   for (let i = 1; i < 12; i++) { const p = path[Math.floor(i / 13 * 113)]; mesh(group, new THREE.BoxGeometry(.72, 1.15, .32), stationMat, p.x + 3.1, p.y + .54, p.z); }
-  return { group, target: new THREE.Vector3(0, 71.2, 0), bounds: { radius: 121, height: 81 }, groundY: 0, cameraDirection: new THREE.Vector3(.32, .13, 1).normalize() };
+  return { group, target: new THREE.Vector3(0, VERDUN_SUMMIT_HEIGHT + 9.2, 0), bounds: { radius: 380, height: VERDUN_SUMMIT_HEIGHT + 20 }, groundY: 0, cameraDirection: new THREE.Vector3(.32, .13, 1).normalize() };
 }
 
-function flagTexture(kind: number) {
-  const canvas = document.createElement('canvas'); canvas.width = 384; canvas.height = 240; const ctx = canvas.getContext('2d');
-  if (ctx) {
-    ctx.fillStyle = '#fffdf2'; ctx.fillRect(0, 0, 384, 240);
-    if (kind === 0) {
-      ctx.fillStyle = '#3372a4'; for (let i = 1; i < 9; i += 2) ctx.fillRect(0, i * 240 / 9, 384, 240 / 9);
-      ctx.fillStyle = '#fffdf2'; ctx.fillRect(0, 0, 142, 134); ctx.fillStyle = '#d7b74d'; ctx.beginPath(); ctx.arc(71, 66, 23, 0, 6.28); ctx.fill();
-      ctx.strokeStyle = '#d7b74d'; ctx.lineWidth = 4; for (let i = 0; i < 16; i++) { const a = i * Math.PI / 8; ctx.beginPath(); ctx.moveTo(71 + Math.cos(a) * 28, 66 + Math.sin(a) * 28); ctx.lineTo(71 + Math.cos(a) * 43, 66 + Math.sin(a) * 43); ctx.stroke(); }
-    } else if (kind === 1) {
-      ctx.fillStyle = '#2774a4'; ctx.fillRect(0, 0, 384, 80); ctx.fillRect(0, 160, 384, 80); ctx.strokeStyle = '#b23839'; ctx.lineWidth = 53; ctx.beginPath(); ctx.moveTo(-20, -15); ctx.lineTo(404, 255); ctx.stroke();
-    } else { ctx.fillStyle = '#2a6b9e'; ctx.fillRect(0, 0, 384, 80); ctx.fillStyle = '#aa4c48'; ctx.fillRect(0, 160, 384, 80); }
-  }
-  const texture = new THREE.CanvasTexture(canvas); texture.colorSpace = THREE.SRGBColorSpace; return texture;
-}
-
-/** Pale concrete horse and rider, cloak and tack, on the rocky grass summit. */
-export function createArtigas(): LandmarkModel {
-  const group = new THREE.Group(); group.name = 'Cerro Artigas — monumento ecuestre';
-  const terrain = (x: number, z: number) => { const r = Math.sqrt((x / 81) ** 2 + (z / 72) ** 2), slope = Math.max(0, (r - .18) / .82); return 26 * Math.pow(Math.max(0, 1 - slope), 1.5) + Math.sin(x * .13) * Math.cos(z * .1) * Math.min(.6, Math.max(0, r - .18)); };
-  land(group, 220, 200, terrain, 515);
-  const approach: THREE.Vector3[] = []; for (let i = 0; i <= 80; i++) { const t = i / 80, z = 95 * (1 - t), x = 24 * Math.sin(t * 3.2) * (1 - t); approach.push(new THREE.Vector3(x, terrain(x, z) + .15, z)); } trail(group, approach, 4.5, '#b7b09a');
-  scatteredRocks(group, 100, 681, rng => { const a = rng() * 6.28, r = 8 + rng() * 32, x = Math.cos(a) * r, z = Math.sin(a) * r; return new THREE.Vector3(x, terrain(x, z) + .3, z); }, 2.7);
-  vegetation(group, 55, 971, rng => { const a = rng() * 6.28, r = .65 + rng() * .5, x = Math.cos(a) * 78 * r, z = Math.sin(a) * 67 * r; return new THREE.Vector3(x, terrain(x, z), z); }, 3.5, 7.5);
-  const monument = new THREE.Group(); monument.position.y = 26; group.add(monument);
-  const statue = stone('#bbb6a4'), darker = stone('#aaa590'), hoof = stone('#aaa48f');
-  mesh(monument, new THREE.BoxGeometry(17, .65, 8), stone('#a8a797'), 0, .3, 0);
-  ellipsoid(monument, statue, [-.4, 8.1, 0], [5.2, 2.40, 1.83], 24);
-  ellipsoid(monument, statue, [3.0, 8.5, 0], [1.85, 2.40, 1.75], 20);
-  ellipsoid(monument, statue, [-3.7, 8.2, 0], [2.10, 2.2, 1.85], 20);
-  const neck = ellipsoid(monument, statue, [3.9, 10.7, 0], [1.44, 3.0, 1.25], 22); neck.rotation.z = -.47;
-  const head = ellipsoid(monument, statue, [5.5, 12.6, 0], [1.48, 1.09, .92], 22); head.rotation.z = -.70;
-  const muzzle = ellipsoid(monument, statue, [6.25, 11.65, 0], [.81, .66, .72], 18); muzzle.rotation.z = -.8;
-  for (const side of [-1, 1]) {
-    const ear = mesh(monument, new THREE.ConeGeometry(.30, 1.28, 9), statue, 5.03, 14.10, side * .55); ear.rotation.z = -.23;
-    ellipsoid(monument, darker, [5.75, 12.91, side * .83], [.11, .11, .05], 10);
-    ellipsoid(monument, darker, [6.63, 11.7, side * .58], [.15, .13, .05], 10);
-    const fore = side === -1 ? [[3.25, 7.45, side * 1.28], [4.14, 4.10, side * 1.28], [3.9, 1.30, side * 1.30]] : [[3.05, 7.5, side * 1.30], [3.12, 3.7, side * 1.32], [3.00, .95, side * 1.32]];
-    segment(monument, statue, fore[0], fore[1], .72, .43); segment(monument, statue, fore[1], fore[2], .39, .27); ellipsoid(monument, statue, fore[1], [.46, .55, .43]);
-    mesh(monument, new THREE.BoxGeometry(.85, .64, .74), hoof, fore[2][0] + .18, fore[2][1] - .34, fore[2][2]);
-    const hind = side === -1 ? [[-3.6, 7.6, side * 1.25], [-4.55, 4.7, side * 1.29], [-3.7, 2.5, side * 1.3], [-4.2, .95, side * 1.32]] : [[-3.25, 7.6, side * 1.3], [-2.8, 4.65, side * 1.33], [-2.25, 2.4, side * 1.35], [-2.65, .95, side * 1.35]];
-    segment(monument, statue, hind[0], hind[1], 1.0, .6); segment(monument, statue, hind[1], hind[2], .48, .28); segment(monument, statue, hind[2], hind[3], .28, .25);
-    ellipsoid(monument, statue, hind[1], [.63, .62, .58]); mesh(monument, new THREE.BoxGeometry(.88, .64, .78), hoof, hind[3][0] + .17, .58, hind[3][2]);
-    tube(monument, darker, [[6.7, 11.9, side * .52], [5.1, 12.1, side * .85], [3.2, 11.5, side * 1.1], [1.65, 12.0, side * .55]], .065, 18);
-  }
-  for (let i = 0; i < 16; i++) { const t = i / 15; ellipsoid(monument, darker, [2.83 + t * 1.7, 9.9 + t * 3.7, -.06], [.37, .35, 1.14 - t * .45], 10); }
-  tube(monument, darker, [[-5.0, 8.7, 0], [-6.0, 7.6, .1], [-6.4, 5.1, .25], [-5.9, 3.2, .4]], .40, 20);
-  ellipsoid(monument, darker, [.0, 10.25, 0], [2.0, .38, 1.7], 18);
-  const torso = ellipsoid(monument, statue, [.0, 12.8, 0], [1.05, 2.07, .78], 20); torso.rotation.z = .05;
-  segment(monument, statue, [.10, 14.1, 0], [.38, 15.3, .0], .44, .4);
-  ellipsoid(monument, statue, [.45, 15.65, .0], [.66, .88, .61], 20);
-  ellipsoid(monument, darker, [.21, 16.08, -.04], [.66, .54, .62], 16);
-  ellipsoid(monument, statue, [.94, 15.65, .0], [.25, .32, .36], 12);
-  for (const side of [-1, 1]) {
-    segment(monument, statue, [0, 11.1, side * .65], [.55, 10.1, side * 1.75], .57, .48);
-    segment(monument, statue, [.55, 10.1, side * 1.75], [1.05, 7.35, side * 2.0], .43, .30);
-    ellipsoid(monument, darker, [1.48, 7.15, side * 2.03], [.83, .28, .37], 14);
-    segment(monument, statue, [.26, 13.92, side * .68], [1.12, 12.35, side * .82], .38, .30);
-    segment(monument, statue, [1.12, 12.35, side * .82], [2.05, 12.04, side * .55], .28, .22);
-    ellipsoid(monument, statue, [2.05, 12.05, side * .55], [.30, .23, .23], 12);
-    const stirrup = mesh(monument, new THREE.TorusGeometry(.42, .055, 6, 16), darker, 1.3, 7.12, side * 2.05); stirrup.scale.set(.95, 1.3, 1);
-    tube(monument, darker, [[-.15, 10.35, side * 1.6], [.6, 9.2, side * 1.98], [1.28, 7.4, side * 2.05]], .065, 12);
-  }
-  // The long coat drapes backward over the horse's rump, a key photo silhouette.
-  const capeVertices: number[] = [], capeIndices: number[] = [], across = 12, down = 16;
-  for (let j = 0; j <= down; j++) for (let i = 0; i <= across; i++) { const t = j / down, u = i / across; capeVertices.push(-.7 - t * 3.2 - .25 * Math.sin(u * Math.PI), 14.3 - t * 5.1 + Math.sin(u * 12) * t * .10, (u - .5) * (1.7 + t * 1.4) + Math.sin(t * 5 + u * 14) * .12 * t); if (i && j) { const n = j * (across + 1) + i; capeIndices.push(n - across - 2, n, n - 1, n - across - 2, n - across - 1, n); } }
-  const capeGeo = new THREE.BufferGeometry(); capeGeo.setAttribute('position', new THREE.Float32BufferAttribute(capeVertices, 3)); capeGeo.setIndex(capeIndices); capeGeo.computeVertexNormals(); mesh(monument, capeGeo, stone('#b1ac99', { side: THREE.DoubleSide }));
-  // Sparse spiky plants around the rocky plinth, observed in the side photograph.
-  const leaves: number[] = [], leafIndices: number[] = [], rng = random(475);
-  for (let plant = 0; plant < 42; plant++) { const a = rng() * 6.28, r = 8 + rng() * 10, x = Math.cos(a) * r, z = Math.sin(a) * r, y = terrain(x, z); for (let l = 0; l < 7; l++) { const angle = l / 7 * 6.28 + rng(), length = 1.2 + rng() * 1.7, n = leaves.length / 3; leaves.push(x - .12, y, z, x + .12, y, z, x + Math.cos(angle) * length, y + length * .65, z + Math.sin(angle) * length); leafIndices.push(n, n + 1, n + 2); } }
-  const leafGeo = new THREE.BufferGeometry(); leafGeo.setAttribute('position', new THREE.Float32BufferAttribute(leaves, 3)); leafGeo.setIndex(leafIndices); leafGeo.computeVertexNormals(); mesh(group, leafGeo, stone('#53664d', { side: THREE.DoubleSide }));
-  const waving: THREE.PlaneGeometry[] = [];
-  for (let i = 0; i < 3; i++) {
-    const x = -13 - i * 3.6, z = -8, y = terrain(x, z); segment(group, stone('#aaa99c', { metalness: .6 }), [x, y, z], [x, y + 14.5, z], .07, .055, 7);
-    const geometry = new THREE.PlaneGeometry(3.7, 2.25, 14, 5); geometry.translate(1.85, 0, 0); const flag = mesh(group, geometry, new THREE.MeshStandardMaterial({ map: flagTexture(i), roughness: .9, side: THREE.DoubleSide }), x, y + 12.65, z); flag.castShadow = false; waving.push(geometry);
-  }
-  return { group, target: new THREE.Vector3(0, 34.5, 0), bounds: { radius: 96, height: 44 }, groundY: 0, cameraDirection: new THREE.Vector3(-.15, .10, 1).normalize(), update(time) { waving.forEach((geometry, i) => { const p = geometry.attributes.position; for (let v = 0; v < p.count; v++) p.setZ(v, Math.sin(p.getX(v) * 1.5 - time * 1.7 + i) * .27 * p.getX(v) / 3.7); p.needsUpdate = true; geometry.computeVertexNormals(); }); } };
-}
+// Compatibility export: keep a single implementation of the rebuilt monument.
+export { createArtigas } from './artigas';

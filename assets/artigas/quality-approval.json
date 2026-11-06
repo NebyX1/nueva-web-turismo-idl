@@ -1,0 +1,100 @@
+{
+  "approved": true,
+  "sourceSha256": "112c805995ff0ffd75f752960d38730848ac1fb3a05be9c38e1f546d3592d32f",
+  "reviewer": "artigas_proportions_qa",
+  "reviewDate": "2026-11-05",
+  "version": "arms-fix-v9-packed",
+  "reviewedViews": [
+    "side",
+    "other-side",
+    "front",
+    "rear",
+    "three-quarter",
+    "head-front",
+    "head-three-quarter",
+    "head-low-front",
+    "head-low-quarter",
+    "low-hand-dorsal",
+    "low-hand-palm",
+    "low-hand-side",
+    "high-hand-dorsal",
+    "high-hand-palm",
+    "high-hand-side",
+    "user-angle",
+    "isolated-low/low-hand-dorsal",
+    "isolated-low/low-hand-palm",
+    "isolated-low/low-hand-side",
+    "isolated-high/high-hand-dorsal",
+    "isolated-high/high-hand-palm",
+    "isolated-high/high-hand-side",
+    "web-day/user-angle",
+    "web-night/user-angle",
+    "web-small/user-angle"
+  ],
+  "reviewedRenderCount": 25,
+  "reviewMethod": "Independent visual and quantitative comparison of the exact decoded packed geometry with photographs of Cerro Artigas, Minas: both complete arms, shoulder and elbow continuity, wrist and palm dimensions, fist and resting hand gestures, six complete isolated hand views, four head views and full figure at native screen sizes. All 25 final v9 PNGs were opened; their hashes and repository copies were verified against the render manifest.",
+  "renderDirectory": "D:/Ai Projects/web-turismo/docs/references/artigas-proportions",
+  "sourceRenderDirectory": "C:/Users/black/.codex/visualizations/2026/11/05/01a1aa96-24e3-7f02-8d33-b969869ac95f/artigas-rebuild/arms-fix/v9",
+  "renderEvidence": "docs/references/artigas-proportions/render-evidence.json",
+  "proportionsReport": "docs/artigas-proportions-review.md",
+  "standard": "Minimum presentable stylized recreation with adult arm, wrist, palm and hand proportions; distinct complete hand gestures, supported contacts and continuous shoulders, elbows and wrists.",
+  "browserWebGLReviewed": false,
+  "preservedSculptureGroupsVerified": 11,
+  "geometry": {
+    "groups": 13,
+    "triangles": 193458,
+    "structuralCheckPassed": true,
+    "glbShaMatchesPacked": true,
+    "renderManifestHashesVerified": 25
+  },
+  "measurements": {
+    "approximateCranialHeadUnits": 1.5807,
+    "cranialReferenceUncertaintyH": [0.05, 0.08],
+    "bothArmChains": {
+      "upper": 1.86,
+      "forearm": 1.82,
+      "total": 3.68,
+      "totalH": 2.33
+    },
+    "lowForearmCrossSection": {
+      "maximumDiameter": 0.6997,
+      "minimumWidth": 0.6700,
+      "maximumDiameterH": 0.443,
+      "minimumWidthH": 0.424
+    },
+    "lowHand": {
+      "posedDistalLength": 0.6972,
+      "posedDistalLengthH": 0.44,
+      "palmWidth": 0.5643,
+      "wristWidth": 0.3368,
+      "wristThickness": 0.2116
+    },
+    "highHand": {
+      "posedDistalLength": 1.1992,
+      "posedDistalLengthH": 0.76,
+      "palmWidth": 0.6090,
+      "wristWidth": 0.3543,
+      "wristThickness": 0.2256
+    }
+  },
+  "screenViews": [
+    { "path": "web-day/user-angle.png", "width": 646, "height": 436 },
+    { "path": "web-night/user-angle.png", "width": 646, "height": 436 },
+    { "path": "web-small/user-angle.png", "width": 455, "height": 451 }
+  ],
+  "notes": [
+    "The earlier v6 hand assessment was insufficient. This approval follows an independent review of full arms and proportions and supersedes it only for the exact v9 hash recorded here.",
+    "The low fist has four flexed fingers and an opposed thumb around the reins; the high hand has a complete palm, thumb and fingers in a distinct resting gesture.",
+    "The posterior shoulder pocket and hollow-looking high elbow were rejected in earlier candidates and are visually repaired in final v9 without a new exterior ball.",
+    "Final isolated renders select complete connected hands. The previous Z-plane selection error that clipped the high little finger was corrected before review.",
+    "Cloth contact was checked against final garment triangles with BVH and confirmed in context; hand topology checks alone were not used as visual approval.",
+    "The two contextual palm cameras are occluded; complete isolated palms provide the anatomical evidence, while other contextual views verify wrist and contact.",
+    "The structural check passed against the explicit final packed asset, including four hoof contacts, two closed connected hands, eleven preserved sculpture groups and the protected setting."
+  ],
+  "limitations": [
+    "This is a minimum presentable stylized recreation by photographic reference, not an exact photogrammetric or metric replica. Cloth folds, hair and small surface details remain simplified.",
+    "Web-scale cameras and day/night lighting are offline approximations at the supplied screenshot sizes. No browser WebGL inspection or exact screenshot-camera match is claimed.",
+    "Head and photographic ratios have stated perspective and landmark uncertainty. Cross sections merged with torso or cloak were not reported as independent arm diameters.",
+    "Approval applies only to the recorded source hash and reviewed packed geometry. Integration must preserve that exact identity."
+  ]
+}

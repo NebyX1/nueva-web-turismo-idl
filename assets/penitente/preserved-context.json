@@ -1,0 +1,50 @@
+{
+  "scope": "Only Salto del Penitente and its own camera settings may change.",
+  "villaPrefix": "1993b50b4415d6f7eb24d33727f1441fabe482c377ac2e7ab4ac79e680ec6f6f",
+  "files": [
+    {
+      "file": "src/three/landmarks/artigas.ts",
+      "sha256": "aac9c6ba3ec6854c7a9e2a46fd69e4b5e3518489ca5c2a2eb5d544c95afafad4"
+    },
+    {
+      "file": "src/three/landmarks/artigasAsset.json",
+      "sha256": "8079fdc6d8ab60aad459ff4e0f140909b065579f629f3f148fd508380b6e1b39"
+    },
+    {
+      "file": "src/three/landmarks/uruguayFlag.ts",
+      "sha256": "9f63fba38899ce9deec6dcf3e222d5b96cd81b8cf18d5379c0080f0f75b7c866"
+    },
+    {
+      "file": "src/three/landmarks/monastery.ts",
+      "sha256": "246d6d9c4868c8b39aa26651d76443f29f37841bf9f48d90afca3f6f3553e6d9"
+    },
+    {
+      "file": "src/three/landmarks/monasteryRoof.ts",
+      "sha256": "33acde2beb534f2ebe6cc4d14b745b0e3180be3eb8dabb13e71a6993313a743f"
+    },
+    {
+      "file": "src/three/landmarks/plazaLibertad.ts",
+      "sha256": "d70dc4fb6a95685049990b395832065ce9dfbd06c510ab284cc7f4da6ed82e3d"
+    },
+    {
+      "file": "src/three/landmarks/salus.ts",
+      "sha256": "1a68f8dcc045101ca5e6f9290f4f807145a80ed1fdc50078a7cdc6fb7ade11c8"
+    },
+    {
+      "file": "src/three/landmarks/salusPuma.ts",
+      "sha256": "5ec6f178ab47144e60752e1a8a6d3c64839964f2c672d3b99b1e6115fb18ac7c"
+    },
+    {
+      "file": "src/three/landmarks/natureMonuments.ts",
+      "sha256": "fec010cb1dd245e39be1a3d0321f18551caa0609fedd5f59458b4f835071598c"
+    },
+    {
+      "file": "src/data/journeyRoute.ts",
+      "sha256": "76ebd30cfde32250ce249c0197e9ff67c1516713ad5d4410286dd2c6c7075e3f"
+    },
+    {
+      "file": "src/data/journeyStops.ts",
+      "sha256": "82d6863310287c2d5412083cfe15d54a562909f7d23be8db6e36de2891847e33"
+    }
+  ]
+}

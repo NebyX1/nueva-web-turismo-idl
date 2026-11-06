@@ -1,0 +1,54 @@
+{
+  "baselineSourceSha256": "3d54f257e90dba0314891417442c832308a3396f7a331f5866b909dfae571985",
+  "scope": "Only hands and the garment containing both sleeves may change. All other eleven groups remain byte-identical. Hill, flags and framing are independently protected.",
+  "mutableGroups": [
+    "Manos y dedos de Artigas",
+    "Poncho y uniforme — paño continuo"
+  ],
+  "groups": [
+    {
+      "name": "Caballo — cuerpo y cuatro apoyos",
+      "sha256": "c92a8706866bdfaddb64a547c11e9de61cedcdc68ab3b195a6c29daebaa8de66"
+    },
+    {
+      "name": "Crin, cola y detalles anatómicos del caballo",
+      "sha256": "928563cc4f4b103992dd93d7b3f3a32d68cd1e7737f575340c60ba672567b8a0"
+    },
+    {
+      "name": "Rostro de Artigas — anatomía esculpida",
+      "sha256": "3075339eaa6f34d0e18f6d6a671722bb3a8e1d317e070bfca4cdb42e610921e5"
+    },
+    {
+      "name": "Ojos pétreos contenidos en las órbitas",
+      "sha256": "6f7ea33491a32a64fdd3209eba2f9aded4b2a1a987d15bd55fc2f40f933697ef"
+    },
+    {
+      "name": "Cabellera ondulada de Artigas",
+      "sha256": "7dd08f5dc4889a94e64ff0fc4dd3cf0e1938b7554e5bed979fa6ae73d289f704"
+    },
+    {
+      "name": "Botas de montar de Artigas",
+      "sha256": "aa9c47298db38e7bd799274979c5dd62406747049cb919fb4c5da18c5261b86d"
+    },
+    {
+      "name": "Botas de montar de Artigas",
+      "sha256": "f7152c57eb4d480f54982ad90ce760cba75ccb55be876deed24ae0327655cb4b"
+    },
+    {
+      "name": "Carona, flecos, estribos y riendas",
+      "sha256": "32d5ca7f92e5795d2bed2b25c0256dd9e9ba3ca01380d54ef1f9805d4ded8850"
+    },
+    {
+      "name": "Carona, flecos, estribos y riendas",
+      "sha256": "01c00199db861a1f8648b87dab5f84d1f812f0601ba7afd4a10d49be6a8d649e"
+    },
+    {
+      "name": "Carona, flecos, estribos y riendas",
+      "sha256": "e5814ca671c1c809732cf761cc85115b98e4410127e4a16fff5a3f1286b8cc47"
+    },
+    {
+      "name": "Basamento rectangular escalonado",
+      "sha256": "9265ab7edbd1894c8b3ac48206231e4b26495d488b572252996e2b042bb28261"
+    }
+  ]
+}

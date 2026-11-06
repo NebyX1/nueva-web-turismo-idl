@@ -96,24 +96,27 @@ export function sculptGeometry(
   const marching = new MarchingCubes(resolution, dummyMaterial, false, false, 180000);
   marching.isolation = 0;
   const field = marching.field;
-  for (let iz = 0; iz < resolution; iz++) {
-    const wz = center[2] + (iz / resolution * 2 - 1) * size[2] / 2;
-    for (let iy = 0; iy < resolution; iy++) {
-      const wy = center[1] + (iy / resolution * 2 - 1) * size[1] / 2;
-      for (let ix = 0; ix < resolution; ix++) {
-        const wx = center[0] + (ix / resolution * 2 - 1) * size[0] / 2;
-        let distance = 1000;
-        for (const part of primitives) {
-          const d = distanceToPrimitive(part, wx, wy, wz);
+  // Only visit the voxels inside each primitive's influence. Primitive order and
+  // double precision are preserved, so the union/cut result stays the same.
+  const distances = new Float64Array(field.length).fill(1000);
+  const coordinates = size.map((extent, axis) => Float64Array.from({ length: resolution }, (_, i) => center[axis] + (i / resolution * 2 - 1) * extent / 2));
+  for (const part of primitives) {
+    const low = part.bounds[0].map((value, axis) => Math.max(0, Math.floor((value - minPoint[axis]) / size[axis] * resolution)));
+    const high = part.bounds[1].map((value, axis) => Math.min(resolution - 1, Math.ceil((value - minPoint[axis]) / size[axis] * resolution)));
+    for (let iz = low[2]; iz <= high[2]; iz++) {
+      for (let iy = low[1]; iy <= high[1]; iy++) {
+        let index = low[0] + iy * resolution + iz * resolution * resolution;
+        for (let ix = low[0]; ix <= high[0]; ix++, index++) {
+          const d = distanceToPrimitive(part, coordinates[0][ix], coordinates[1][iy], coordinates[2][iz]);
           if (d === 100) continue;
-          distance = part.subtract
-            ? -smoothMin(-distance, d, part.blend)
-            : smoothMin(distance, d, part.blend);
+          distances[index] = part.subtract
+            ? -smoothMin(-distances[index], d, part.blend)
+            : smoothMin(distances[index], d, part.blend);
         }
-        field[ix + iy * resolution + iz * resolution * resolution] = -distance;
       }
     }
   }
+  for (let i = 0; i < field.length; i++) field[i] = -distances[i];
   marching.update();
   const geometry = new THREE.BufferGeometry();
   geometry.setAttribute('position', new THREE.BufferAttribute(marching.positionArray.slice(0, marching.count * 3), 3));
@@ -142,20 +145,4 @@ export function projectStoneUV(geometry: THREE.BufferGeometry, scale = .45) {
   }
   geometry.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
   return geometry;
-}
-
-export function stoneNoiseTexture() {
-  const size = 128, data = new Uint8Array(size * size * 4);
-  let seed = 41983;
-  for (let i = 0; i < size * size; i++) {
-    seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
-    const coarse = Math.sin((i % size) * .31) * Math.cos(Math.floor(i / size) * .27) * 9;
-    const value = THREE.MathUtils.clamp(151 + coarse + (seed / 4294967296 - .5) * 60, 0, 255);
-    data[i * 4] = data[i * 4 + 1] = data[i * 4 + 2] = value; data[i * 4 + 3] = 255;
-  }
-  const texture = new THREE.DataTexture(data, size, size, THREE.RGBAFormat);
-  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-  texture.magFilter = THREE.LinearFilter; texture.minFilter = THREE.LinearMipmapLinearFilter;
-  texture.generateMipmaps = true; texture.needsUpdate = true;
-  return texture;
 }

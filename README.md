@@ -23,7 +23,7 @@ Crear un recurso desde el repositorio, seleccionar el `Dockerfile` incluido y ex
 
 ## Recorrido 3D del encabezado
 
-El encabezado recorre nueve recreaciones geométricas construidas tras inspeccionar múltiples fotografías de cada lugar: Arequita, Verdún, Cerro Artigas, las letras monumentales de Minas en La Coronilla, Plaza Libertad con la concatedral al fondo, monasterio Chagdud Gonpa Sengue Dzong, Villa Serrana (Ventorrillo), Penitente y Salus (Fuente del Puma). Las fuentes, rasgos observados y límites están en los documentos de investigación de `docs/research-*.md`. Las fotos de estudio no se redistribuyen ni se usan como texturas; los materiales se generan localmente.
+El encabezado recorre nueve recreaciones geométricas construidas tras inspeccionar múltiples fotografías de cada lugar: monasterio Chagdud Gonpa Sengue Dzong, Salus (Fuente del Puma), las letras monumentales de Minas en La Coronilla, Verdún, Plaza Libertad con la concatedral al fondo, Arequita, Cerro Artigas, Penitente y Villa Serrana (Ventorrillo). El orden y las posiciones siguen el esquema del usuario documentado en `docs/journey-route-layout.md`. Las fuentes, rasgos observados y límites están en los documentos de investigación de `docs/research-*.md`. Las fotos de estudio no se redistribuyen ni se usan como texturas; los materiales se generan localmente.
 
 `src/three/journeyScene.ts` compone terreno, vegetación, luz y una secuencia de 22 segundos por parada: llegada aérea, acercamiento, barrido panorámico desde abajo hacia arriba y alejamiento. Las cámaras usan focos específicos por lugar. Hay selección manual, pausa, reinicio y exploración orbital al pausar. El reloj se detiene fuera de pantalla y con la pestaña oculta; la preferencia de movimiento reducido muestra una toma estática. Una vista fotográfica o fondo informativo sustituye la escena si WebGL no está disponible.
 
@@ -31,7 +31,11 @@ Los modelos viven en `src/three/landmarks/`, la información de las paradas en `
 
 El selector Día/Noche abre y cierra un telón antes de revelar el ambiente elegido. El modo nocturno añade luna llena procedural, estrellas y dos reflectores que iluminan la parada activa; sus lámparas y haces se ocultan durante el día. La elección se recuerda localmente. Cambiar de modo conserva la parada y la preferencia de pausa; con movimiento reducido, el telón usa un fundido breve. `src/three/journeyAtmosphere.ts` contiene la iluminación y el cielo nocturno, y `src/lib/journeyModeTransition.ts` controla la transición. `npm run check:journey-mode` verifica interrupciones y temporizadores; `npm run check:journey-atmosphere` comprueba las nueve paradas, proyecciones de la luna, visibilidad y liberación de recursos.
 
+La luna mantiene un rumbo celeste fijo y se desvanece suavemente en los bordes o ante cortes bruscos de cámara. En Plaza Libertad, un foco frontal destaca a Lavalleja, otro ilumina la iglesia y las luminarias de la plaza alumbran los paseos. Los chorros de la fuente y sus luces recorren lentamente tonos violetas, rosados y celestes durante la noche.
+
 Los módulos `arequita.ts` y `artigas.ts` refinan la silueta de la roca y la anatomía de la escultura. `minasSign.ts` modela cada letra con volumen, espesor y apoyos; `plazaLibertad.ts` reúne monumento a Lavalleja, estanque con chorros y arcos animados, palmeras, jardines y la concatedral retirada al fondo del callejón. Las geometrías estáticas se agrupan por material y la vegetación se instancia. `npm run check:journey-models` valida las cuatro construcciones, sus buffers, animaciones y enlaces a la guía.
+
+La escultura de Artigas se edita en Blender y se entrega como geometría estática cuantizada; las fuentes y el proyecto editable están en `assets/artigas/`. `npm run check:artigas` verifica geometría, entorno preservado y aprobación independiente vinculada al mismo archivo. La revisión específica de proporciones de brazos, mangas, muñecas y manos está documentada en `docs/artigas-proportions-review.md`.
 
 ## Guía turística
 
