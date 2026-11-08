@@ -5,25 +5,27 @@ import { journeyTerrainHeight as terrainHeight } from './journeyTerrain';
 import type { LandmarkModel } from './types';
 import { createJourneyAtmosphere } from './journeyAtmosphere';
 import type { JourneyMode } from '../lib/journeyModeTransition';
+import { createJourneyCameraVisits, createJourneyCameraTour, JOURNEY_VISIT_SECONDS as STOP_SECONDS } from './journeyCameraTour';
+import type { JourneyPhase } from './journeyCameraTour';
 
-export type JourneyPhase = 'Llegando' | 'Acercándonos' | 'Mirada panorámica' | 'El paisaje se abre';
+export type { JourneyPhase } from './journeyCameraTour';
 export type JourneyLoadStage = 'engine' | 'terrain' | 'landmarks' | 'lighting' | 'frame';
 interface Callbacks {
   onStop(index: number): void;
   onPhase(phase: JourneyPhase): void;
+  onView?(label: string): void;
   onProgress(progress: number): void;
   onReady(): void;
   onUnavailable(): void;
   onLoading?(stage: JourneyLoadStage, completed?: number, total?: number): void;
 }
 export interface JourneyScene {
-  select(index: number): void;
+  select(index: number, visit?: number): void;
   replay(): void;
   setPaused(paused: boolean): void;
   setMode(mode: JourneyMode): void;
   dispose(): void;
 }
-const STOP_SECONDS = 22;
 const smooth = (t: number) => THREE.MathUtils.smoothstep(t, 0, 1);
 function random(seed: number) { let value = seed; return () => { value = (value * 1664525 + 1013904223) >>> 0; return value / 4294967296; }; }
 
@@ -108,6 +110,7 @@ export async function createJourneyScene(host: HTMLElement, callbacks: Callbacks
     for (const cleanup of cleanups.reverse()) cleanup();
     delete host.dataset.journeyReady;
     delete host.dataset.nightVisitor;
+    delete host.dataset.journeyView;
   }
   function checkCancelled() {
     if (disposed || signal?.aborted) throw new DOMException('Journey loading cancelled', 'AbortError');
@@ -170,7 +173,8 @@ export async function createJourneyScene(host: HTMLElement, callbacks: Callbacks
     }
     await loading('landmarks', sites.length, definitions.length);
     await loading('lighting');
-    const atmosphere = createJourneyAtmosphere(scene, sites, mobile);
+    const visits = createJourneyCameraVisits(sites), tour = createJourneyCameraTour(visits);
+    const atmosphere = createJourneyAtmosphere(scene, visits, mobile);
     cleanups.push(() => atmosphere.dispose());
     const controls = new OrbitControls(camera, canvas);
     cleanups.push(() => controls.dispose());
@@ -181,52 +185,19 @@ export async function createJourneyScene(host: HTMLElement, callbacks: Callbacks
     let visible = true, frame = 0, skyFrame = 0, last = 0, lastRender = 0, elapsed = paused ? 13 : 5, stopIndex = -1, previousPhase = '', ready = false;
     let transition: { from: THREE.Vector3; look: THREE.Vector3; to: THREE.Vector3; target: THREE.Vector3; fromFov: number; elapsed: number; index: number } | null = null;
     const look = new THREE.Vector3(), lightOffset = new THREE.Vector3(-180, 330, 190);
+    let visitIndex = 0, previousView = '';
+    const viewport = () => ({ width: camera.view?.width ?? host.clientWidth, height: camera.view?.height ?? host.clientHeight });
     const framing = () => Math.max(1, 1.05 / camera.aspect);
-    const focusAt = (index: number) => camera.view && camera.view.width <= 700 ? sites[index].portraitFocus ?? sites[index].focus : sites[index].focus;
-    function sideDirection(index: number, angle = 0) { return sites[index].direction.clone().applyAxisAngle(new THREE.Vector3(0, 1, 0), angle); }
-    function widePose(index: number, ending = false) {
-      const site = sites[index], distance = site.overviewDistance ?? Math.max(site.model.bounds.radius * 2.6, site.focus * 4.1);
-      const p = site.origin.clone().addScaledVector(sideDirection(index, ending ? site.sweep : -.12), distance * framing());
-      p.y += site.model.bounds.height * 1.35 + 35;
-      return p;
-    }
-    function subject(index: number, factor = 0) {
-      const site = sites[index], target = site.target.clone().add(new THREE.Vector3(0, site.model.bounds.height * factor, 0));
-      target.y = Math.max(site.origin.y + .8, target.y);
-      return target;
-    }
+    const focusAt = (index: number) => tour.focusAt(index, viewport());
     function notify(index: number, phase: JourneyPhase) {
       if (index !== stopIndex) { stopIndex = index; callbacks.onStop(index); }
       if (phase !== previousPhase) { previousPhase = phase; callbacks.onPhase(phase); }
     }
     function sample(time: number) {
-      const index = Math.floor(time / STOP_SECONDS) % sites.length, local = time % STOP_SECONDS, site = sites[index];
-      const near = site.origin.clone().addScaledVector(sideDirection(index), focusAt(index) * 2.6 * framing());
-      const eye = camera.view && camera.view.width <= 700 ? site.portraitEye ?? site.eye : site.eye;
-      near.y = eye === undefined ? site.target.y - site.model.bounds.height * .22 : site.origin.y + eye;
-      const lifted = site.origin.clone().addScaledVector(sideDirection(index, site.sweep), focusAt(index) * 2.8 * framing());
-      lifted.y = Math.max(site.origin.y + 1.7, near.y) + site.reveal * .06 + (site.rise ?? 0);
-      const summit = site.target.clone(); summit.y = site.origin.y + site.reveal * .96;
-      let phase: JourneyPhase;
-      if (local < 5) {
-        phase = 'Llegando';
-        const prev = (index + sites.length - 1) % sites.length, from = widePose(prev, true), to = widePose(index);
-        const middle = from.clone().lerp(to, .5); middle.y = Math.max(from.y, to.y) + 90;
-        const path = new THREE.QuadraticBezierCurve3(from, middle, to);
-        camera.position.copy(path.getPoint(smooth(local / 5))); look.copy(subject(prev)).lerp(subject(index), smooth(local / 5));
-        camera.fov = 53;
-      } else if (local < 10) {
-        phase = 'Acercándonos'; const u = smooth((local - 5) / 5);
-        camera.position.copy(widePose(index)).lerp(near, u); look.copy(subject(index)).lerp(subject(index, site.approachFocusFactor ?? -.13), u); camera.fov = THREE.MathUtils.lerp(53, 44, u);
-      } else if (local < 16) {
-        phase = 'Mirada panorámica'; const u = smooth((local - 10) / 6);
-        camera.position.copy(near).lerp(lifted, u); look.copy(subject(index, site.approachFocusFactor ?? -.13)).lerp(summit, u); camera.fov = 44;
-      } else {
-        phase = 'El paisaje se abre'; const u = smooth((local - 16) / 6);
-        camera.position.copy(lifted).lerp(widePose(index, true), u); look.copy(summit).lerp(subject(index), u); camera.fov = THREE.MathUtils.lerp(44, 53, u);
-      }
+      const pose = tour.sample(time, viewport()); visitIndex = pose.index;
+      camera.position.copy(pose.position); look.copy(pose.look); camera.fov = pose.fov;
       camera.position.y = Math.max(camera.position.y, terrainHeight(camera.position.x, camera.position.z) + 1.7);
-      notify(index, phase); callbacks.onProgress(local / STOP_SECONDS);
+      notify(pose.visit.stopIndex, pose.phase); callbacks.onProgress(pose.progress);
     }
     function render(time: number, motionDeltaSeconds = 0) {
       if (disposed) return;
@@ -235,13 +206,16 @@ export async function createJourneyScene(host: HTMLElement, callbacks: Callbacks
       sky.position.copy(camera.position);
       sun.position.copy(look).add(lightOffset); sun.target.position.copy(look); sun.target.updateMatrixWorld();
       for (const site of sites) site.model.update?.(time);
+      const viewLabel = tour.viewAt(visitIndex).label;
+      host.dataset.journeyView = viewLabel;
+      if (viewLabel !== previousView) { previousView = viewLabel; callbacks.onView?.(viewLabel); }
       if (camera.view?.enabled && camera.view.width <= 700) {
-        const site = sites[Math.max(0, stopIndex)];
+        const site = tour.viewAt(visitIndex);
         camera.view.offsetX = camera.view.width * (site.portraitViewOffsetX ?? 0);
         camera.view.offsetY = camera.view.height * (site.portraitViewOffset ?? .1);
       }
       camera.updateProjectionMatrix(); camera.lookAt(look);
-      const settlingSky = atmosphere.update(camera, Math.max(0, stopIndex), time, delta, motionDeltaSeconds);
+      const settlingSky = atmosphere.update(camera, visitIndex, time, delta, motionDeltaSeconds);
       const visitor = atmosphere.group.userData.nightVisitor as string | null;
       if (visitor) { if (host.dataset.nightVisitor !== visitor) host.dataset.nightVisitor = visitor; }
       else if (host.dataset.nightVisitor) delete host.dataset.nightVisitor;
@@ -259,9 +233,9 @@ export async function createJourneyScene(host: HTMLElement, callbacks: Callbacks
         transition.elapsed += delta; const u = smooth(Math.min(1, transition.elapsed / 2.4));
         camera.position.copy(transition.from).lerp(transition.to, u); look.copy(transition.look).lerp(transition.target, u);
         camera.fov = THREE.MathUtils.lerp(transition.fromFov, 53, u);
-        notify(transition.index, 'Llegando'); callbacks.onProgress(0);
+        notify(visits[transition.index].stopIndex, 'Llegando'); callbacks.onProgress(0);
         if (u >= 1) { elapsed = transition.index * STOP_SECONDS + 5; transition = null; }
-      } else { elapsed = (elapsed + delta) % (STOP_SECONDS * sites.length); sample(elapsed); }
+      } else { elapsed = (elapsed + delta) % tour.duration; sample(elapsed); }
       render(elapsed, delta); frame = requestAnimationFrame(tick);
     }
     function wake() { if (!frame && !disposed && ready && !paused && visible && !document.hidden) frame = requestAnimationFrame(tick); }
@@ -291,7 +265,7 @@ export async function createJourneyScene(host: HTMLElement, callbacks: Callbacks
     controls.addEventListener('change', () => { if (paused && !disposed) { look.copy(controls.target); camera.position.y = Math.max(camera.position.y, terrainHeight(camera.position.x, camera.position.z) + 1.2); render(elapsed); } });
     function configureControls() {
       const distance = camera.position.distanceTo(look);
-      const focus = focusAt(Math.max(0, stopIndex));
+      const focus = focusAt(visitIndex);
       controls.target.copy(look); controls.minDistance = Math.min(focus * framing(), distance * .8); controls.maxDistance = Math.max(focus * 10 * framing(), distance * 1.2); controls.update();
     }
     function setPaused(value: boolean) {
@@ -299,13 +273,16 @@ export async function createJourneyScene(host: HTMLElement, callbacks: Callbacks
       if (value) { cancelAnimationFrame(frame); frame = 0; configureControls(); if (ready) render(elapsed); }
       else { cancelAnimationFrame(skyFrame); skyFrame = 0; wake(); }
     }
-    function select(index: number) {
+    function select(index: number, visit = 0) {
       index = Math.max(0, Math.min(sites.length - 1, index));
-      if (paused) { elapsed = index * STOP_SECONDS + 13; transition = null; sample(elapsed); configureControls(); render(elapsed); }
-      else { transition = { from: camera.position.clone(), look: look.clone(), to: widePose(index), target: subject(index), fromFov: camera.fov, elapsed: 0, index }; notify(index, 'Llegando'); wake(); }
+      const count = (sites[index].model.introViews?.length ?? 0) + 1;
+      visitIndex = tour.firstVisit(index) + Math.max(0, Math.min(count - 1, Math.trunc(visit)));
+      if (paused) { elapsed = visitIndex * STOP_SECONDS + 13; transition = null; sample(elapsed); configureControls(); render(elapsed); }
+      else { transition = { from: camera.position.clone(), look: look.clone(), to: tour.widePose(visitIndex, viewport()), target: tour.subject(visitIndex), fromFov: camera.fov, elapsed: 0, index: visitIndex }; notify(index, 'Llegando'); wake(); }
     }
     function applyMode(mode: JourneyMode) {
       const night = mode === 'night';
+      tour.setNight(night);
       sky.material.uniforms.uNight.value = night ? 1 : 0;
       scene.background = new THREE.Color(night ? '#081220' : '#cddbcf');
       scene.fog = new THREE.FogExp2(night ? '#0b1725' : '#cddbcf', night ? JOURNEY_NIGHT_FOG : JOURNEY_DAY_FOG);
@@ -320,6 +297,10 @@ export async function createJourneyScene(host: HTMLElement, callbacks: Callbacks
     function setMode(mode: JourneyMode) {
       if (disposed) return;
       applyMode(mode);
+      if (visits[visitIndex].nightVisit) {
+        if (transition) { elapsed = visitIndex * STOP_SECONDS + 13; transition = null; }
+        sample(elapsed); if (paused) configureControls();
+      }
       // Changing the lighting must also draw a frame when the tour is paused.
       render(elapsed);
     }

@@ -1,0 +1,127 @@
+{
+  "reviewer": "parque_rodo_quality",
+  "reviewDate": "2026-11-08",
+  "version": "native-v4",
+  "approved": false,
+  "nativeAssetApproved": true,
+  "approvedForFinalDelivery": false,
+  "scope": "Minimum-presentable photograph-led stylized native park geometry, not yet approval of actual Three.js festival/night/mobile integration.",
+  "files": [
+    {
+      "file": "assets/parque-rodo/parque-rodo.blend",
+      "sha256": "0f26656baa71004116c0c7ab1ceb4cd2ed286a1cd308c3b4565e764565cb3136"
+    },
+    {
+      "file": "assets/parque-rodo/parque-rodo.glb",
+      "sha256": "28df17cc7087e09b7a907c679b1a524726b5c08fc3693b60f033887e293a970e"
+    },
+    {
+      "file": "src/three/landmarks/parqueRodoAsset.json",
+      "sha256": "6d6cb0fc89c7a2c913adf773e5029d20adfcefe6e937eda634bdea47d0f9eec4"
+    }
+  ],
+  "reviewedViews": [
+    {
+      "file": "C:\\Users\\Nebyx\\.codex\\visualizations\\2026\\11\\05\\01a1ac24-31a1-7cf1-b9f8-0e83919bd003\\parque-rodo\\native-v4\\entry-front.png",
+      "sha256": "06e1d53bb5401b66ccef6287e61b791ce66bb74114b9546c0e0999d8994091cc"
+    },
+    {
+      "file": "C:\\Users\\Nebyx\\.codex\\visualizations\\2026\\11\\05\\01a1ac24-31a1-7cf1-b9f8-0e83919bd003\\parque-rodo\\native-v4\\entry-oblique.png",
+      "sha256": "43f825491e66b4a7cb62788ec935774576b05476f835a9a309d2a20b78301844"
+    },
+    {
+      "file": "C:\\Users\\Nebyx\\.codex\\visualizations\\2026\\11\\05\\01a1ac24-31a1-7cf1-b9f8-0e83919bd003\\parque-rodo\\native-v4\\pergola.png",
+      "sha256": "2b7c78737224612f00e243390fa25fb2841b478a8c122491cb48b769bb26c337"
+    },
+    {
+      "file": "C:\\Users\\Nebyx\\.codex\\visualizations\\2026\\11\\05\\01a1ac24-31a1-7cf1-b9f8-0e83919bd003\\parque-rodo\\native-v4\\lake-bridge.png",
+      "sha256": "7439c7c41762c75f01f15f0778e8c4052c980e5e80b8d549e6d20879a9b62734"
+    },
+    {
+      "file": "C:\\Users\\Nebyx\\.codex\\visualizations\\2026\\11\\05\\01a1ac24-31a1-7cf1-b9f8-0e83919bd003\\parque-rodo\\native-v4\\lake-aerial.png",
+      "sha256": "b905ba9e543b29bbf0097e01114a0ec5e25f88e0c423db0c2c23cd391a2ce920"
+    },
+    {
+      "file": "C:\\Users\\Nebyx\\.codex\\visualizations\\2026\\11\\05\\01a1ac24-31a1-7cf1-b9f8-0e83919bd003\\parque-rodo\\native-v4\\pool.png",
+      "sha256": "a05469d20b84f47f74e88be5137b3d1982e4e24efbd706e1b040e4ab15be1ae0"
+    },
+    {
+      "file": "C:\\Users\\Nebyx\\.codex\\visualizations\\2026\\11\\05\\01a1ac24-31a1-7cf1-b9f8-0e83919bd003\\parque-rodo\\native-v4\\arena.png",
+      "sha256": "3e9d04d5c1c1e7ddabc158b85a3bb7a2d2493fc248c0ddffb1db873f8f3f0c98"
+    },
+    {
+      "file": "C:\\Users\\Nebyx\\.codex\\visualizations\\2026\\11\\05\\01a1ac24-31a1-7cf1-b9f8-0e83919bd003\\parque-rodo\\native-v4\\overall.png",
+      "sha256": "a2915531a74bf0c6f574c660a0aecb969a6d67b44ee56e122b3f975a1e03e1bd"
+    }
+  ],
+  "resolvedBlockers": [
+    {
+      "id": "pool-lake-contact",
+      "finding": "V3 moves the swimming complex to x113; lake-aerial/pool views show a dry bank separating the base from water. Independently executed check:parque-rodo includes full base plus2m margin with no water intersections."
+    },
+    {
+      "id": "web-floor-winding",
+      "reportedBy": "primary agent",
+      "finding": "V4 corrects road/path face orientation and closes seating backs. Independently calculated geometric face normals are upward for all grass/road/path/water triangles."
+    }
+  ],
+  "nativeBlockers": [],
+  "independentChecks": [
+    {
+      "command": "npm run check:parque-rodo",
+      "result": "passed",
+      "lakeTerrainSamples": 27,
+      "trees": 155,
+      "parkTriangleCountWithCrowd": 513254,
+      "parkMusicians": 4,
+      "parkCrowd": 1722,
+      "artigasMusicians": 4,
+      "artigasCrowd": 1934,
+      "otherAssertions": [
+        "Pool dry margin",
+        "Daytime festival invisibility",
+        "Night light activation and offsite deactivation",
+        "Shared pause clock",
+        "Unchanged Artigas geometry/flags/rocks/hill",
+        "Ten stops / thirteen visits / original placements",
+        "Mode-specific camera continuity"
+      ]
+    }
+  ],
+  "remainingBeforeFinalDelivery": [
+    "Inspect actual WebGL day/night and desktop/mobile for park and Cerro Artigas",
+    "Inspect band, jumping public, firework launch/burst, campfires, mode transition and pause",
+    "Check source hashes, screenshots and console evidence for the final runtime version"
+  ],
+  "limitations": [
+    "Scenic condensed layout, not a measured survey or exact shoreline reconstruction",
+    "Trees, play equipment, masonry and secondary buildings are stylized",
+    "Native renders do not certify Three.js shader compilation, night lighting or responsive UI"
+  ],
+  "independentWindingAudit": {
+    "sourceSha256": "28df17cc7087e09b7a907c679b1a524726b5c08fc3693b60f033887e293a970e",
+    "faces": {
+      "grass": {
+        "triangles": 20672,
+        "minimumFaceNormalY": 0.9676603569027765,
+        "negativeFaces": 0
+      },
+      "road": {
+        "triangles": 320,
+        "minimumFaceNormalY": 0.9722913085795719,
+        "negativeFaces": 0
+      },
+      "path": {
+        "triangles": 360,
+        "minimumFaceNormalY": 0.9770371770684916,
+        "negativeFaces": 0
+      },
+      "water": {
+        "triangles": 776,
+        "minimumFaceNormalY": 0.9999999999999999,
+        "negativeFaces": 0
+      }
+    }
+  },
+  "nativeFindings": "Eight V4 renders preserve recognizable entry, pergola, specific wood X-railed bridge, covered pool on dry bank, and oval arena; no outstanding native blocking defects found."
+}

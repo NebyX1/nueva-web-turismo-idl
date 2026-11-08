@@ -40,11 +40,11 @@
     },
     {
       "file": "src/data/journeyRoute.ts",
-      "sha256": "76ebd30cfde32250ce249c0197e9ff67c1516713ad5d4410286dd2c6c7075e3f"
+      "sha256": "6c767dd1fe9da74e511521e7bdcd9f3e8ccf8fdbd1113ab000b5f34c82c5098d"
     },
     {
       "file": "src/data/journeyStops.ts",
-      "sha256": "3b0f352574c3337940cddaa15f840dddd506f4f4aa72d265b00f7de8ab9da7cf"
+      "sha256": "d5540b17aee6f26ae910fb7257b500de9e65508147ed7547eaa4f6eacfbf2e46"
     }
   ],
   "authorizedFollowups": [
@@ -100,6 +100,59 @@
         "terrain",
         "mast foot positions",
         "camera framing"
+      ]
+    },
+    {
+      "date": "2026-11-08",
+      "authorization": "User explicitly requested a photograph-led reconstruction of Represa Stewart Vargas in Villa Serrana, with independent quality control.",
+      "file": "src/data/journeyStops.ts",
+      "previousSha256": "3b0f352574c3337940cddaa15f840dddd506f4f4aa72d265b00f7de8ab9da7cf",
+      "sha256": "7a224983427b80908cfdbd9833c0ff045e274f488d85af26baf06caa1d61a92b",
+      "affectedStop": "villa-serrana",
+      "otherStopsUnchangedSha256": "19463aed3a7f8492970e36577c9fec7de2715340e10f9f008a9dd0685a89892b",
+      "preserved": [
+        "order and positions of the nine stops",
+        "original Ventorrillo builder",
+        "other eight destination texts and models"
+      ]
+    },
+    {
+      "date": "2026-11-08",
+      "authorization": "User requested a Villa Serrana visit to the Ventorrillo first, followed by Stewart Vargas, with jumping fish in its reservoir.",
+      "file": "src/data/journeyStops.ts",
+      "previousSha256": "7a224983427b80908cfdbd9833c0ff045e274f488d85af26baf06caa1d61a92b",
+      "sha256": "72b48c9336348b00d743b28a421d4d8f39d81f75a7fd468d1c57985f1f348b8c",
+      "affectedStop": "villa-serrana",
+      "otherStopsUnchangedSha256": "19463aed3a7f8492970e36577c9fec7de2715340e10f9f008a9dd0685a89892b",
+      "preserved": [
+        "order and positions of the nine stops",
+        "original Ventorrillo builder",
+        "native dam geometry",
+        "other eight destination texts and models"
+      ]
+    },
+    {
+      "date": "2026-11-08",
+      "authorization": "User requested a researched reconstruction of Parque Rodo in Minas and its addition to the Three.js route; the nine existing placements and relative order are preserved.",
+      "file": "src/data/journeyRoute.ts",
+      "previousSha256": "76ebd30cfde32250ce249c0197e9ff67c1516713ad5d4410286dd2c6c7075e3f",
+      "sha256": "6c767dd1fe9da74e511521e7bdcd9f3e8ccf8fdbd1113ab000b5f34c82c5098d",
+      "baselineRestoredByRemovingOnlyAuthorizedAdditions": "76ebd30cfde32250ce249c0197e9ff67c1516713ad5d4410286dd2c6c7075e3f",
+      "preserved": [
+        "all original destination positions and relative order",
+        "all other landmark constructors and approved assets"
+      ]
+    },
+    {
+      "date": "2026-11-08",
+      "authorization": "User requested Parque Rodo with its own views and a nocturnal festival; camera visit labels are shared with the previously authorized Ventorrillo then Stewart Vargas visit.",
+      "file": "src/data/journeyStops.ts",
+      "previousSha256": "72b48c9336348b00d743b28a421d4d8f39d81f75a7fd468d1c57985f1f348b8c",
+      "sha256": "d5540b17aee6f26ae910fb7257b500de9e65508147ed7547eaa4f6eacfbf2e46",
+      "baselineRestoredByRemovingOnlyAuthorizedAdditions": "72b48c9336348b00d743b28a421d4d8f39d81f75a7fd468d1c57985f1f348b8c",
+      "preserved": [
+        "all original destination positions and relative order",
+        "all other landmark constructors and approved assets"
       ]
     }
   ]

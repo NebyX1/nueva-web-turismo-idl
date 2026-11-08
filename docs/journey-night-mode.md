@@ -46,3 +46,13 @@ En móvil, la trayectoria baja dentro de su franja de cielo y reduce su altura m
 - Navegador: transiciones en ambos sentidos, cobertura visual del telón, continuidad del recorrido en marcha, conservación de pausa y parada, preferencia tras recargar, nueve destinos iluminados y composición móvil.
 - Distribución: nueve destinos en escritorio y 27 comprobaciones adicionales en 390×844, 320×568 y 701×700, sin colisiones ni recortes detectados con el selector nuevo.
 - `npm run check` y `npm run build`. El repositorio conserva sugerencias de variables/funciones no usadas en los módulos de Artigas y el aviso existente de bundles superiores a 500 kB.
+
+## Ampliación del 8 de noviembre: festivales
+
+Parque Rodó suma una evocación de Minas y Abril y Semana de Lavalleja: escenario en un extremo del ruedo, cuatro músicos con instrumentos y una multitud instanciada. Cerro Artigas incorpora Noche de los Fogones, con escenario al pie de la cumbre, público sobre la ladera, tres fogones y seis ciclos escalonados de pirotecnia. No se reproduce una edición o banda real. El monumento y los tres pabellones mantienen exactamente su geometría aceptada.
+
+El montaje temporal completo de cada lugar se agrupa bajo un nodo oculto por defecto: escenario, artistas, público, pantallas, haces, fogones y pirotecnia desaparecen juntos durante el día. Cada evento añade dos luces puntuales activas únicamente de noche y en la parada correspondiente. No añade mapas de sombras ni audio. Público, músicos, luces y partículas reciben el mismo reloj del recorrido y se congelan en pausa, telón, movimiento reducido y pestaña oculta. La pirotecnia sale detrás del escenario, asciende, estalla y cae con desvanecimiento.
+
+Las cámaras nocturnas de ambos ruedos priorizan escenario y público. Al cambiar de modo se conserva el tiempo y la parada, y se aplica el encuadre propio mientras el telón está cerrado. El lago y el acceso del Parque Rodó tienen sus propios blancos de reflectores. Las nueve pruebas históricas de atmósfera siguen siendo casos de referencia; `check:parque-rodo` cubre la décima parada, las trece visitas completas, los montajes festivos y la preservación de la escultura.
+
+Las fuentes visuales, límites de fidelidad y decisión Blender → GLB → Three.js se documentan en `research-parque-rodo.md`; el plan y el dictamen de aceptación independiente están en `parque-rodo-quality-plan.md` y `parque-rodo-quality-review.md`.

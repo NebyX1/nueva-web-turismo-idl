@@ -1,0 +1,276 @@
+{
+  "reviewer": "stewart_vargas_quality",
+  "reviewDate": "2026-11-08",
+  "version": "runtime-pavilion-then-dam-with-six-fish",
+  "approved": true,
+  "approvedForFinalDelivery": true,
+  "browserReview": "passed-with-scoped-evidence",
+  "browserWebGLReviewed": true,
+  "scope": "Minimum-presentable integration of Villa Serrana in the existing local Three.js journey: a complete Ventorrillo visit followed by a complete Stewart Vargas dam visit, six staggered reservoir fish, shared pause, view shortcuts, site-specific night floodlights, and the reviewed desktop1440x900/mobile390x844 views. This is not photogrammetry, a metric survey, hydraulic certification or a blanket audit of the rest of the website.",
+  "nativeReview": {
+    "file": "assets/stewart-vargas/quality-review.json",
+    "sha256": "22b8897cc8900d355662c2f73ba9959df8365d8ab616b6715efddfc104fc7dcb",
+    "sourceSha256": "eb97158a95a284f92f56a7dcd3f0dd926b9426dc8c4ac3c518cd1c48bd88f2df",
+    "unchanged": true,
+    "historicalStatusPreserved": "The native V4 review remains a historical partial approval. This separate runtime review closes criterion9 for the current scoped integration; it does not rewrite that record."
+  },
+  "files": [
+    {
+      "file": "src/three/journeyCameraTour.ts",
+      "sha256": "8587e6395f9c8b774ee10b115d907b58e6be0d0ccb5bda32a89da22e6ecaf6b4"
+    },
+    {
+      "file": "src/three/journeyScene.ts",
+      "sha256": "445bf5ba45b0d38bcdc5ed59c5fa2a777c50e5b26f72f587f04dbc2fccfe80f1"
+    },
+    {
+      "file": "src/three/landmarks/villaSerrana.ts",
+      "sha256": "339aea81eccbb3511985bb78426500c4e5a51fa6eef8b173774fccad1639e9e7"
+    },
+    {
+      "file": "src/three/landmarks/stewartVargas.ts",
+      "sha256": "669b80510587762fb979eca42e9466476532073c8ca7efe34308128e643982f4"
+    },
+    {
+      "file": "src/three/landmarks/stewartVargasFish.ts",
+      "sha256": "68ade563cb082dcb1ae93578912749ae1e496c4e2c873e32af9d0ccef455c135"
+    },
+    {
+      "file": "src/three/landmarks/waterLife.ts",
+      "sha256": "be2b722c791c0d2bd88d371e2f7ec369f0673e369007f9a1ae3a6c2a58ecec30"
+    },
+    {
+      "file": "src/three/journeySites.ts",
+      "sha256": "f30feeab3c164884eb3f58b278b4b6c5313eb7f4155f93dadb73cd22626fb770"
+    },
+    {
+      "file": "src/three/journeyAtmosphere.ts",
+      "sha256": "74308befb15591939f4eca92840bedc99e1f39dc40562c784dd42cd10cc3e6d5"
+    },
+    {
+      "file": "src/three/types.ts",
+      "sha256": "80ba268d2a75d4d3fee2b074fff89fc85273f003a8ded0d47b2929371864a017"
+    },
+    {
+      "file": "src/islands/JourneyHero.tsx",
+      "sha256": "b561195b8ebb8cc1319915bf3400b41ce86d073cfd50367af19a2d4adb204f75"
+    },
+    {
+      "file": "src/styles/journey.css",
+      "sha256": "26559b74b65ca26b4e2f7cc8e404cd139b1bac8d698219409d5decb9eaa1198e"
+    },
+    {
+      "file": "src/data/journeyStops.ts",
+      "sha256": "72b48c9336348b00d743b28a421d4d8f39d81f75a7fd468d1c57985f1f348b8c"
+    },
+    {
+      "file": "src/data/journeyRoute.ts",
+      "sha256": "76ebd30cfde32250ce249c0197e9ff67c1516713ad5d4410286dd2c6c7075e3f"
+    }
+  ],
+  "nativeFiles": [
+    {
+      "file": "assets/stewart-vargas/stewart-vargas.blend",
+      "sha256": "d9c23c6ade491d82be19e8c513f46925d7d3c74faeb2d0f1f6589762950ef018"
+    },
+    {
+      "file": "assets/stewart-vargas/stewart-vargas.glb",
+      "sha256": "eb97158a95a284f92f56a7dcd3f0dd926b9426dc8c4ac3c518cd1c48bd88f2df"
+    },
+    {
+      "file": "src/three/landmarks/stewartVargasAsset.json",
+      "sha256": "0aad35a349005c5ea15f976d7eebdc223e10ba9b5eab17c3707026eb1cd6c7ea"
+    }
+  ],
+  "reviewMethod": "Independent read-only source audit and visual inspection of eleven final real-browser screenshots captured by the primary agent. The reviewer also executed the targeted Stewart Vargas and atmosphere checks. Browser interaction and capture collection were performed by the primary agent, not by this reviewer. The original photo comparison is recorded in the unchanged native V4 review.",
+  "evidenceType": "real-browser-WebGL-captures-with-DOM-observations",
+  "reviewedRenderCount": 11,
+  "reviewedViews": [
+    {
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas/web-review/desktop-ventorrillo-day.jpg",
+      "sha256": "5eb6cf3862fda4bb5d025c4ed150a463320d9f89023e7a0df4a56d31dee3eaf8",
+      "evidenceType": "real-browser-screenshot",
+      "inspectedByReviewer": true
+    },
+    {
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas/web-review/desktop-dam-day.jpg",
+      "sha256": "a089470fa1eef98296706c999312c12d72a89a2bc39c03aedde1391f2c240321",
+      "evidenceType": "real-browser-screenshot",
+      "inspectedByReviewer": true
+    },
+    {
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas/web-review/desktop-dam-fish-day.jpg",
+      "sha256": "192427fa1db68ace5a4e65b0c4175f94570c44bbbc77de5677dbc215cd64c1f1",
+      "evidenceType": "real-browser-screenshot",
+      "inspectedByReviewer": true
+    },
+    {
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas/web-review/desktop-ventorrillo-night.jpg",
+      "sha256": "a0fbf91c96a47f4cb502ebafba9195ea36cc2eabc146fd2b376e3bb18f54dcf3",
+      "evidenceType": "real-browser-screenshot",
+      "inspectedByReviewer": true
+    },
+    {
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas/web-review/desktop-dam-night.jpg",
+      "sha256": "923f8fadea00933c8f6a6d9ce6792600f1c85cbbfda7287d9125aa3cdbb49054",
+      "evidenceType": "real-browser-screenshot",
+      "inspectedByReviewer": true
+    },
+    {
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas/web-review/mobile-ventorrillo-day.jpg",
+      "sha256": "6ed176c94cdf32240b8571a746cba6b0635eb5afe8f10dcd7f0b713924ac5e7e",
+      "evidenceType": "real-browser-screenshot",
+      "inspectedByReviewer": true
+    },
+    {
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas/web-review/mobile-dam-day.jpg",
+      "sha256": "8e6e71d173b472723b555a3c214f6e66e1cc7532679fd6c3fb11ef9258599ecb",
+      "evidenceType": "real-browser-screenshot",
+      "inspectedByReviewer": true
+    },
+    {
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas/web-review/mobile-ventorrillo-night.jpg",
+      "sha256": "b19fcda733d6acd3f62f500acaad52c766b60a8b6c29d4c35b243715f56008b0",
+      "evidenceType": "real-browser-screenshot",
+      "inspectedByReviewer": true
+    },
+    {
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas/web-review/mobile-dam-night.jpg",
+      "sha256": "07e009ad14bddb6ab364a82fdf8c7c92f615cafdaae06602e55e0d8f3f2bc914",
+      "evidenceType": "real-browser-screenshot",
+      "inspectedByReviewer": true
+    },
+    {
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas/web-review/desktop-night-transition-before.jpg",
+      "sha256": "c636ec9c61a53450269ab7a9c007d2e6cc21e2d69f5beccc8ea1fe5135f7f64e",
+      "evidenceType": "real-browser-screenshot",
+      "inspectedByReviewer": true
+    },
+    {
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas/web-review/desktop-night-transition-after.jpg",
+      "sha256": "01d9d7049bdda90c0d554744efdc51e35c49ce8ef7eabd6fc2c1b2b275544bf1",
+      "evidenceType": "real-browser-screenshot",
+      "inspectedByReviewer": true
+    }
+  ],
+  "browserObservations": {
+    "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas/web-review/browser-observations.json",
+    "sha256": "8e8e6b7a71ea862709a98f7a7bd35cb4cea184fdfee01729e4a4b09ce0825efd",
+    "collectedBy": "/root",
+    "url": "http://localhost:4321/",
+    "browser": "ChatGPT in-app browser",
+    "viewports": [
+      {
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "consoleErrorsRecorded": [],
+    "mobileHorizontalOverflow": false
+  },
+  "findings": [
+    {
+      "id": "visit-order",
+      "status": "pass",
+      "detail": "Ten internal camera visits preserve nine public stops. Villa Serrana retains stopIndex8 and spans44 virtual-motion seconds: Ventorrillo first22s, then dam22s. Caption labels and pressed view shortcuts match the pictured subject."
+    },
+    {
+      "id": "camera-continuity",
+      "status": "pass",
+      "detail": "The shared pure sampler preserves position, look target and FOV at phase/visit boundaries; progress spans both visits continuously. Final automatic night captures show Ventorrillo at0.4234886515 and the next dam visit at0.5079545606."
+    },
+    {
+      "id": "fish-and-water",
+      "status": "pass",
+      "detail": "The real daytime dam capture shows an airborne fish above the reservoir. Runtime code and targeted checks verify six staggered paths constrained to the actual lake, above-water arcs, landing droplets and a common paused-safe clock."
+    },
+    {
+      "id": "night-lighting",
+      "status": "pass-with-disclosed-limit",
+      "detail": "Real night captures show warm/cool illumination following the selected pavilion or dam. At the automatic handoff the two-light rig moves immediately to the new visit, leaving the pavilion in ambient light while the camera flies; sky and interface stay visible, without a whole-frame blackout. There is no light-rig crossfade."
+    },
+    {
+      "id": "desktop-mobile-layout",
+      "status": "pass-for-reviewed-formats",
+      "detail": "All eight final base captures show the complete masthead and readable distinct caption rows. Architecture/dam stay above the mobile caption at390x844 after the portrait-offset correction. Recorded DOM rectangles have separated text rows and no horizontal overflow. The corrected mobile dam night image was re-opened and its final hash verified."
+    },
+    {
+      "id": "pause-and-selection",
+      "status": "pass",
+      "detail": "Shared clock and repeated-time assertions freeze water, fish and splash; paused selection clears pending camera transitions and moves to the chosen view. Accessible view buttons expose aria-pressed and visible keyboard focus styles."
+    },
+    {
+      "id": "criterion9",
+      "status": "pass-with-scoped-evidence",
+      "detail": "The browser block that prevented the earlier native review was resolved for this follow-up. Actual WebGL screenshots, DOM observations and empty recorded error log are now available and independently inspected. No offline Blender images are counted as browser evidence."
+    }
+  ],
+  "independentlyExecutedChecks": [
+    {
+      "command": "npm run check:stewart-vargas",
+      "result": "passed",
+      "triangles": 117206,
+      "waterConcreteSamples": 279,
+      "maximumWaterConcreteGapMetres": 0.042,
+      "waterTerrainSamples": 96,
+      "alsoChecks": [
+        "two-view order",
+        "full visit timing",
+        "phase/visit continuity",
+        "six fish",
+        "splash",
+        "pause",
+        "five-aspect-ratio projection"
+      ]
+    },
+    {
+      "command": "npm run check:journey-atmosphere",
+      "result": "passed",
+      "alsoChecks": [
+        "two-light budget",
+        "site-specific placement",
+        "day toggle",
+        "moon continuity",
+        "disposal"
+      ]
+    }
+  ],
+  "finalVersionChecksReportedByPrimary": [
+    {
+      "command": "npm run check",
+      "result": "passed",
+      "files": 73,
+      "errors": 0,
+      "warnings": 0,
+      "hints": 0
+    },
+    {
+      "command": "npm run check:stewart-vargas",
+      "result": "passed",
+      "triangles": 117206
+    },
+    {
+      "command": "npm run build",
+      "result": "passed",
+      "durationSeconds": 16.87,
+      "note": "Existing bundle-size warning above500kB was reported; no build failure."
+    }
+  ],
+  "blockers": [],
+  "limitations": [
+    "The visual acceptance is of a stylized photograph-led recreation, not a measured or photogrammetric replica.",
+    "Desktop1440x900 and mobile390x844 were visually reviewed. Projection arithmetic covers additional aspect ratios, but it is not a claim of live browser testing on every device.",
+    "Static images show selected real WebGL frames; motion/order/pause confidence also uses source audit, targeted tests and the primary agent recorded automatic transition. No frame-perfect full-video or fluid-simulation certification is claimed.",
+    "The two floodlights transfer instantaneously between visits; this inherited behavior is visible and accepted as non-blocking for the present scope."
+  ],
+  "excludedEvidence": [
+    "mobile-night-transition-before.jpg",
+    "mobile-night-transition-after.jpg"
+  ],
+  "excludedEvidenceReason": "Earlier scrolled intermediate frames were explicitly excluded; only the eleven final listed screenshots enter this verdict.",
+  "otherLandmarksOrHistoricalReviewsModifiedByReviewer": false
+}

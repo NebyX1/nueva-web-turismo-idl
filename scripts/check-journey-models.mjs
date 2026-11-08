@@ -39,8 +39,8 @@ const { journeyDefinitions, JOURNEY_WORLD_SIZE, JOURNEY_TERRAIN_SEGMENTS } = loa
 const { journeyTerrainHeight } = load('src/three/journeyTerrain.ts');
 const { guideChapters } = load('src/data/lavallejaGuide.ts');
 assert.equal(new Set(journeyStops.map(stop => stop.id)).size, journeyStops.length, 'Paradas duplicadas');
-assert.equal(journeyStops.length, 9);
-const correctOrder = ['monasterio', 'salus', 'minas-sign', 'verdun', 'plaza-libertad', 'arequita', 'cerro-artigas', 'penitente', 'villa-serrana'];
+assert.equal(journeyStops.length, 10);
+const correctOrder = ['monasterio', 'salus', 'minas-sign', 'verdun', 'plaza-libertad', 'parque-rodo', 'arequita', 'cerro-artigas', 'penitente', 'villa-serrana'];
 assert.equal(JSON.stringify(journeyStops.map(stop => stop.id)), JSON.stringify(correctOrder), 'La navegación debe seguir el orden confirmado por el usuario');
 assert.equal(JSON.stringify(journeyDefinitions.map(stop => stop.id)), JSON.stringify(correctOrder), 'El vuelo de cámara debe coincidir con la navegación');
 for (let i = 0; i < journeyDefinitions.length; i++) {
@@ -402,4 +402,4 @@ for (const [file, factory] of models) {
   assert.ok(verdunCrest > terrainTop + 20, 'El relieve y el bosque de fondo deben quedar por debajo de la cumbre');
   console.log(`Verdún: ladera ${verdunWidth.toFixed(0)} × ${verdunDepth.toFixed(0)}, cima ${verdunCrest.toFixed(1)}, santuario ${verdunModelTop.toFixed(1)}, siguiente sitio ${otherTop.toFixed(1)}, terreno de fondo ${terrainTop.toFixed(1)}`);
 }
-console.log('Nueve paradas y enlaces a la guía verificados.');
+console.log('Diez paradas y enlaces a la guía verificados; orden relativo de los nueve destinos anteriores conservado.');

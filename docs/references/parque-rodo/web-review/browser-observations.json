@@ -1,0 +1,78 @@
+{
+  "recordedOn": "2026-11-08",
+  "url": "http://localhost:4321/",
+  "capturedBy": "root through the documented CUA browser UI",
+  "renderer": "Actual Three.js WebGL canvas; journeyReady=true observed in DOM",
+  "viewports": [
+    "1440x900",
+    "390x844",
+    "320x568"
+  ],
+  "modes": [
+    "day",
+    "night"
+  ],
+  "viewsObserved": {
+    "parqueRodo": [
+      "Entrada y paseos",
+      "Lago y mirador",
+      "Ruedo del Parque Rodó"
+    ],
+    "artigas": [
+      "Monumento a Artigas",
+      "Noche de los Fogones"
+    ]
+  },
+  "checks": {
+    "desktopAnd390AllViews": true,
+    "minimum320Caption": true,
+    "horizontalOverflowDetected": false,
+    "titleDescriptionAndViewButtonsSeparated": true,
+    "modeCurtainClosedBeforeChange": true,
+    "returnedDayHasNoFestival": true,
+    "nightStageCrowdAndFireworksVisible": true,
+    "stageAndAudiencePoseChangedDuringPlayback": true,
+    "sculptureAndFlagOrderVisuallyPreserved": true
+  },
+  "motionEvidence": {
+    "parkBefore": {
+      "pause": "Activar movimiento",
+      "progress": "--journey-progress: 0.8636363636363636;"
+    },
+    "artigasBefore": {
+      "pause": "Activar movimiento",
+      "progress": "--journey-progress: 0.5909090909090909;"
+    },
+    "artigasPausedAfter": {
+      "pause": "Activar movimiento",
+      "progress": "--journey-progress: 0.5909090909090909;"
+    },
+    "artigasAfterPlayback": {
+      "pause": "Activar movimiento",
+      "progress": "--journey-progress: 0.6537848484848635;"
+    }
+  },
+  "consoleErrors": [],
+  "limitations": [
+    "Manual screenshots and UI observations; not a physical phone GPU benchmark.",
+    "References define recognizable forms; distances between park sectors are condensed, not a survey."
+  ],
+  "screenshots": [
+    "desktop-artigas-day.jpg",
+    "desktop-artigas-fireworks-motion.jpg",
+    "desktop-artigas-night.jpg",
+    "desktop-park-arena-day.jpg",
+    "desktop-park-arena-night.jpg",
+    "desktop-park-departure-night.jpg",
+    "desktop-park-entry-day.jpg",
+    "desktop-park-festival-motion.jpg",
+    "desktop-park-lake-day.jpg",
+    "mobile-320-park-entry-day.jpg",
+    "mobile-artigas-day.jpg",
+    "mobile-artigas-night.jpg",
+    "mobile-park-arena-day.jpg",
+    "mobile-park-arena-night.jpg",
+    "mobile-park-entry-day.jpg",
+    "mobile-park-lake-day.jpg"
+  ]
+}

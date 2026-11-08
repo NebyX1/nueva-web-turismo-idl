@@ -1,10 +1,14 @@
 # Preserve the exact bytes covered by model/review SHA-256 manifests.
 # A checkout must not change their hashes through automatic line endings.
 src/three/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+src/islands/JourneyHero.tsx -text whitespace=trailing-space,space-before-tab,cr-at-eol
+src/styles/journey.css -text whitespace=trailing-space,space-before-tab,cr-at-eol
 src/data/journeyRoute.ts -text whitespace=trailing-space,space-before-tab,cr-at-eol
 src/data/journeyStops.ts -text whitespace=trailing-space,space-before-tab,cr-at-eol
 scripts/artigas/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
 scripts/penitente/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+scripts/stewart-vargas/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+scripts/check-stewart-vargas.mjs -text whitespace=trailing-space,space-before-tab,cr-at-eol
 scripts/check-artigas-rebuild.mjs -text whitespace=trailing-space,space-before-tab,cr-at-eol
 scripts/check-penitente-rebuild.mjs -text whitespace=trailing-space,space-before-tab,cr-at-eol
 assets/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
@@ -12,3 +16,5 @@ docs/references/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
 
 # Keep upstream CC0 source files intact, including their comment whitespace.
 assets/artigas/source/** -whitespace
+scripts/parque-rodo/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+scripts/check-parque-rodo.mjs -text whitespace=trailing-space,space-before-tab,cr-at-eol

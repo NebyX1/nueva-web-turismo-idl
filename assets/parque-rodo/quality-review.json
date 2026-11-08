@@ -1,0 +1,484 @@
+{
+  "reviewer": "parque_rodo_quality",
+  "reviewDate": "2026-11-08",
+  "version": "native-v4-and-final-runtime",
+  "approved": true,
+  "nativeAssetApproved": true,
+  "runtimeApproved": true,
+  "approvedForFinalDelivery": true,
+  "scope": "Minimum-presentable stylized integration requested for Parque Rodo in Minas, Lavalleja: recognizable portal, family walks/pergola, specific wood X-railed mirador, covered swimming complex on dry terrain and oval arena; band/crowd/concert lighting exclusive to night; Cerro Artigas night stage/crowd/campfires/fireworks while preserving its accepted sculpture, hill and three flags. Approval covers the observed local Three.js integration and tested viewport evidence, not the entire website or metric/photogrammetric accuracy.",
+  "sourceSha256": "28df17cc7087e09b7a907c679b1a524726b5c08fc3693b60f033887e293a970e",
+  "files": [
+    {
+      "file": "scripts/parque-rodo/build_model.py",
+      "sha256": "b03794a03bbea8d81756301178c6333755aeacdf094666361cd5defeebf53acc"
+    },
+    {
+      "file": "scripts/parque-rodo/pack_model.mjs",
+      "sha256": "2a45a6c25b30dcadf822864a953d932fd66e90ed9b4b6b61fda1738eb125ab0f"
+    },
+    {
+      "file": "scripts/parque-rodo/render_review.py",
+      "sha256": "14a32cc9d46ae9c531e3cd8755e1792a38a840c9ad046d65f65f23002bb36e2f"
+    },
+    {
+      "file": "scripts/check-parque-rodo.mjs",
+      "sha256": "10688347b414b757b0d2e85ed7e6fa83c39a80f86b834c6705e3cfb4671f4799"
+    },
+    {
+      "file": "assets/parque-rodo/parque-rodo.blend",
+      "sha256": "0f26656baa71004116c0c7ab1ceb4cd2ed286a1cd308c3b4565e764565cb3136"
+    },
+    {
+      "file": "assets/parque-rodo/parque-rodo.glb",
+      "sha256": "28df17cc7087e09b7a907c679b1a524726b5c08fc3693b60f033887e293a970e"
+    },
+    {
+      "file": "src/three/landmarks/parqueRodoAsset.json",
+      "sha256": "6d6cb0fc89c7a2c913adf773e5029d20adfcefe6e937eda634bdea47d0f9eec4"
+    },
+    {
+      "file": "src/three/landmarks/parqueRodo.ts",
+      "sha256": "c15b934a9b4c1b15c188c66ccf5ff4e4fc1bbb41f641f99b68ac3f4cf08007ae"
+    },
+    {
+      "file": "src/three/landmarks/festivalNight.ts",
+      "sha256": "8c24952dd4ecda578bcd7bb76b9a7c17f57f3ccc5caf67cf41e9fc1418149788"
+    },
+    {
+      "file": "src/three/landmarks/artigasFogones.ts",
+      "sha256": "dfc3f393ee38fbe0a9111d45a71c4039b6025b537434f4039150b1b62794ce50"
+    },
+    {
+      "file": "src/three/journeyCameraTour.ts",
+      "sha256": "3727826a83965c58705d3da91079d3c9e7701b60fa0aea882fd85e2fe762cfc2"
+    },
+    {
+      "file": "src/three/journeyScene.ts",
+      "sha256": "3e9e0945c625e49ecdede48b91fb78b2951a81ae3091cf17b17ae60009bb0032"
+    },
+    {
+      "file": "src/three/journeySites.ts",
+      "sha256": "e9a8aa885723e4ddae0fbce6eaac6f58f7e3ff13bd96b6f46f06bd881edc1421"
+    },
+    {
+      "file": "src/three/types.ts",
+      "sha256": "51f6fe43abb3e6f4eaf29f08d3d14e22cdec5b0e32dc406c942be15ab3aefeeb"
+    },
+    {
+      "file": "src/data/journeyRoute.ts",
+      "sha256": "6c767dd1fe9da74e511521e7bdcd9f3e8ccf8fdbd1113ab000b5f34c82c5098d"
+    },
+    {
+      "file": "src/data/journeyStops.ts",
+      "sha256": "d5540b17aee6f26ae910fb7257b500de9e65508147ed7547eaa4f6eacfbf2e46"
+    },
+    {
+      "file": "src/islands/JourneyHero.tsx",
+      "sha256": "bf6c90935339087764cd5117fb2b8bf09a8184a21eb778bcebaeed755f8f6aab"
+    },
+    {
+      "file": "src/styles/journey.css",
+      "sha256": "26559b74b65ca26b4e2f7cc8e404cd139b1bac8d698219409d5decb9eaa1198e"
+    }
+  ],
+  "nativeViews": [
+    {
+      "name": "entry-front",
+      "file": "docs/references/parque-rodo/native-v4/entry-front.png",
+      "sha256": "06e1d53bb5401b66ccef6287e61b791ce66bb74114b9546c0e0999d8994091cc",
+      "evidenceType": "native-Blender-offline-render"
+    },
+    {
+      "name": "entry-oblique",
+      "file": "docs/references/parque-rodo/native-v4/entry-oblique.png",
+      "sha256": "43f825491e66b4a7cb62788ec935774576b05476f835a9a309d2a20b78301844",
+      "evidenceType": "native-Blender-offline-render"
+    },
+    {
+      "name": "pergola",
+      "file": "docs/references/parque-rodo/native-v4/pergola.png",
+      "sha256": "2b7c78737224612f00e243390fa25fb2841b478a8c122491cb48b769bb26c337",
+      "evidenceType": "native-Blender-offline-render"
+    },
+    {
+      "name": "lake-bridge",
+      "file": "docs/references/parque-rodo/native-v4/lake-bridge.png",
+      "sha256": "7439c7c41762c75f01f15f0778e8c4052c980e5e80b8d549e6d20879a9b62734",
+      "evidenceType": "native-Blender-offline-render"
+    },
+    {
+      "name": "lake-aerial",
+      "file": "docs/references/parque-rodo/native-v4/lake-aerial.png",
+      "sha256": "b905ba9e543b29bbf0097e01114a0ec5e25f88e0c423db0c2c23cd391a2ce920",
+      "evidenceType": "native-Blender-offline-render"
+    },
+    {
+      "name": "pool",
+      "file": "docs/references/parque-rodo/native-v4/pool.png",
+      "sha256": "a05469d20b84f47f74e88be5137b3d1982e4e24efbd706e1b040e4ab15be1ae0",
+      "evidenceType": "native-Blender-offline-render"
+    },
+    {
+      "name": "arena",
+      "file": "docs/references/parque-rodo/native-v4/arena.png",
+      "sha256": "3e9d04d5c1c1e7ddabc158b85a3bb7a2d2493fc248c0ddffb1db873f8f3f0c98",
+      "evidenceType": "native-Blender-offline-render"
+    },
+    {
+      "name": "overall",
+      "file": "docs/references/parque-rodo/native-v4/overall.png",
+      "sha256": "a2915531a74bf0c6f574c660a0aecb969a6d67b44ee56e122b3f975a1e03e1bd",
+      "evidenceType": "native-Blender-offline-render"
+    }
+  ],
+  "browserViews": [
+    {
+      "name": "desktop-artigas-day",
+      "file": "docs/references/parque-rodo/web-review/desktop-artigas-day.jpg",
+      "sha256": "2a342845afc25cec2ebcdece2407d7a8f51c70f51abed8697aa62420dc66f2e8",
+      "evidenceType": "actual-ThreeJS-WebGL-browser-capture",
+      "capturedBy": "root through documented CUA browser UI",
+      "independentlyObservedBy": "parque_rodo_quality"
+    },
+    {
+      "name": "desktop-artigas-fireworks-motion",
+      "file": "docs/references/parque-rodo/web-review/desktop-artigas-fireworks-motion.jpg",
+      "sha256": "126b09de4cd9ce7d83f2145a4160b18bfc7cca776d62067b7b5e31c73619afda",
+      "evidenceType": "actual-ThreeJS-WebGL-browser-capture",
+      "capturedBy": "root through documented CUA browser UI",
+      "independentlyObservedBy": "parque_rodo_quality"
+    },
+    {
+      "name": "desktop-artigas-night",
+      "file": "docs/references/parque-rodo/web-review/desktop-artigas-night.jpg",
+      "sha256": "17e39b1fc41d582037c13d951459f1e217054a7187759e8e395031446918cd2e",
+      "evidenceType": "actual-ThreeJS-WebGL-browser-capture",
+      "capturedBy": "root through documented CUA browser UI",
+      "independentlyObservedBy": "parque_rodo_quality"
+    },
+    {
+      "name": "desktop-park-arena-day",
+      "file": "docs/references/parque-rodo/web-review/desktop-park-arena-day.jpg",
+      "sha256": "31e941068c271c885ea5275a718c31c82823adbfa8cd1c39234009a49f1409c5",
+      "evidenceType": "actual-ThreeJS-WebGL-browser-capture",
+      "capturedBy": "root through documented CUA browser UI",
+      "independentlyObservedBy": "parque_rodo_quality"
+    },
+    {
+      "name": "desktop-park-arena-night",
+      "file": "docs/references/parque-rodo/web-review/desktop-park-arena-night.jpg",
+      "sha256": "60b6fe1517190f09fb94ee9551b805b3f253fdbe62f394b6fffc18d9f3855589",
+      "evidenceType": "actual-ThreeJS-WebGL-browser-capture",
+      "capturedBy": "root through documented CUA browser UI",
+      "independentlyObservedBy": "parque_rodo_quality"
+    },
+    {
+      "name": "desktop-park-departure-night",
+      "file": "docs/references/parque-rodo/web-review/desktop-park-departure-night.jpg",
+      "sha256": "ce005973d002910a2b77fae971d67ffc3cd5677f816c37e867149bc6573520c0",
+      "evidenceType": "actual-ThreeJS-WebGL-browser-capture",
+      "capturedBy": "root through documented CUA browser UI",
+      "independentlyObservedBy": "parque_rodo_quality"
+    },
+    {
+      "name": "desktop-park-entry-day",
+      "file": "docs/references/parque-rodo/web-review/desktop-park-entry-day.jpg",
+      "sha256": "146a92c261f6fcade58569977541beb7ee10a85e551a5c47fae9dea5420e0a4c",
+      "evidenceType": "actual-ThreeJS-WebGL-browser-capture",
+      "capturedBy": "root through documented CUA browser UI",
+      "independentlyObservedBy": "parque_rodo_quality"
+    },
+    {
+      "name": "desktop-park-festival-motion",
+      "file": "docs/references/parque-rodo/web-review/desktop-park-festival-motion.jpg",
+      "sha256": "c796013b81b135730b4f876cf62cc3436e89c23292165608c0dc3407dd0659a1",
+      "evidenceType": "actual-ThreeJS-WebGL-browser-capture",
+      "capturedBy": "root through documented CUA browser UI",
+      "independentlyObservedBy": "parque_rodo_quality"
+    },
+    {
+      "name": "desktop-park-lake-day",
+      "file": "docs/references/parque-rodo/web-review/desktop-park-lake-day.jpg",
+      "sha256": "7bdfec3623e1db9f2e05348d6b099936ed450358ca54dc2860c68ee40c466b1e",
+      "evidenceType": "actual-ThreeJS-WebGL-browser-capture",
+      "capturedBy": "root through documented CUA browser UI",
+      "independentlyObservedBy": "parque_rodo_quality"
+    },
+    {
+      "name": "mobile-320-park-entry-day",
+      "file": "docs/references/parque-rodo/web-review/mobile-320-park-entry-day.jpg",
+      "sha256": "fc87ab6b3615d3d729d8f6b1789a68030f4e6ba45b52c50dd07c7aae11c27279",
+      "evidenceType": "actual-ThreeJS-WebGL-browser-capture",
+      "capturedBy": "root through documented CUA browser UI",
+      "independentlyObservedBy": "parque_rodo_quality"
+    },
+    {
+      "name": "mobile-artigas-day",
+      "file": "docs/references/parque-rodo/web-review/mobile-artigas-day.jpg",
+      "sha256": "a12e426db0f12938a9b0e9f458265d2def7e7638fb611819c311a79ce20d1b79",
+      "evidenceType": "actual-ThreeJS-WebGL-browser-capture",
+      "capturedBy": "root through documented CUA browser UI",
+      "independentlyObservedBy": "parque_rodo_quality"
+    },
+    {
+      "name": "mobile-artigas-night",
+      "file": "docs/references/parque-rodo/web-review/mobile-artigas-night.jpg",
+      "sha256": "bda385bb80037e2ff3320ed9b5d0bcddb40b18acc0dd574dcc606843f9de4fef",
+      "evidenceType": "actual-ThreeJS-WebGL-browser-capture",
+      "capturedBy": "root through documented CUA browser UI",
+      "independentlyObservedBy": "parque_rodo_quality"
+    },
+    {
+      "name": "mobile-park-arena-day",
+      "file": "docs/references/parque-rodo/web-review/mobile-park-arena-day.jpg",
+      "sha256": "29ac09e94ec31c66f053ba54abf59af374641f341aa37fab84a995979c94db03",
+      "evidenceType": "actual-ThreeJS-WebGL-browser-capture",
+      "capturedBy": "root through documented CUA browser UI",
+      "independentlyObservedBy": "parque_rodo_quality"
+    },
+    {
+      "name": "mobile-park-arena-night",
+      "file": "docs/references/parque-rodo/web-review/mobile-park-arena-night.jpg",
+      "sha256": "2efcd4f0eb492c3031741c2cb613197ac32af6543bdd1f7224502801231b72e7",
+      "evidenceType": "actual-ThreeJS-WebGL-browser-capture",
+      "capturedBy": "root through documented CUA browser UI",
+      "independentlyObservedBy": "parque_rodo_quality"
+    },
+    {
+      "name": "mobile-park-entry-day",
+      "file": "docs/references/parque-rodo/web-review/mobile-park-entry-day.jpg",
+      "sha256": "b482f00232925be3805a28894409dab2c1503d448d9fc119bda99e2b678391d2",
+      "evidenceType": "actual-ThreeJS-WebGL-browser-capture",
+      "capturedBy": "root through documented CUA browser UI",
+      "independentlyObservedBy": "parque_rodo_quality"
+    },
+    {
+      "name": "mobile-park-lake-day",
+      "file": "docs/references/parque-rodo/web-review/mobile-park-lake-day.jpg",
+      "sha256": "6bd792b5dc330b398f6c776257c2586eea0ab6ece6e6136192a5d6b6489efc95",
+      "evidenceType": "actual-ThreeJS-WebGL-browser-capture",
+      "capturedBy": "root through documented CUA browser UI",
+      "independentlyObservedBy": "parque_rodo_quality"
+    }
+  ],
+  "browserObservations": {
+    "file": "docs/references/parque-rodo/web-review/browser-observations.json",
+    "sha256": "96f300378280cb4df19419aedb16f65d1b19917a57dc4f01b21c935474f700fc",
+    "capturedBy": "root",
+    "independentlyReadBy": "parque_rodo_quality",
+    "consoleErrors": []
+  },
+  "reviewMethod": {
+    "reviewerControlledBrowser": false,
+    "photographicComparison": "Reviewer independently opened official/identified photographs, the full Trotamundo page and its specific bridge photograph; compared them with all eight final native views and sixteen final browser captures.",
+    "browserEvidence": "Root collected actual WebGL screenshots and DOM/console observations through the documented browser tool. Reviewer opened and visually examined the exact files, verified their portable copies by SHA-256, and audited the final camera/festival code. Offline Blender images are not counted as WebGL evidence.",
+    "motionEvidence": "Static moments before/after playback and one departure frame, supplemented by root UI observations, code inspection and independent time/pause/visibility tests. No claim of uninterrupted video review or physical-phone GPU testing."
+  },
+  "references": [
+    {
+      "source": "https://turismominaslavalleja.blogspot.com/2017/05/parque-rodo.html",
+      "observed": "Seven specific photographs of the Minas portal, games, pergola, parador and quinchos; unrelated thumbnail images excluded."
+    },
+    {
+      "source": "https://www.gub.uy/intendencia-lavalleja/comunicacion/noticias/lunes-9-marzo-se-reabrira-zona-intervenida-del-parque-rodo",
+      "observed": "Mature grove, clearings and family-play context in 2026; temporary tree-work machinery is excluded."
+    },
+    {
+      "source": "https://www.gub.uy/ministerio-interior/comunicacion/noticias/resultado-del-dispositivo-seguridad-semana-lavalleja-2026-parque-rodo",
+      "observed": "Official aerial of the oval festival arena and end-stage placement."
+    },
+    {
+      "source": "https://www.gub.uy/intendencia-lavalleja/comunicacion/noticias/piscina-del-parque-rodo-reabre-sus-puertas-jueves-20-agosto",
+      "observed": "Current blue/light-metal roof, glazed sides and swimming lanes; historic uncovered diving-board photo is not used as the current entire complex."
+    },
+    {
+      "source": "https://guiatrotamundo.com/wp-content/uploads/2024/05/lavalleja.pdf",
+      "observed": "PDF index6, printed page7: park paragraph and its timber bridge photograph, X railings, posts, deck and directional change. Full page was opened to distinguish it from the Artigas image below."
+    },
+    {
+      "source": "https://fredleenaestrada.com.br/2022/09/08/salto-del-penitente-maior-cachoeira-uruguai/",
+      "observed": "Only four images under the Parque Rodo section: rose/pergola walk, grove/picnic and Scout Guarani. Penitente and Verdun photos elsewhere on the page excluded."
+    },
+    {
+      "source": "https://www.gub.uy/intendencia-lavalleja/comunicacion/noticias/semana-todos-todo-lavalleja-tiempo-record",
+      "observed": "Official stage/natural audience slope at Cerro Artigas and festival crowd/light structure; stage below the summit rather than on the pedestal."
+    },
+    {
+      "source": "https://www.gub.uy/intendencia-lavalleja/sites/intendencia-lavalleja/files/2024-12/Anexo%20I%20PLMinas_Memo%20Informaci%C3%B3n_2024%20%281%29_compressed.pdf",
+      "observed": "Identity of Minas park, distinct OSE site and absence of a current zoo. No imported Montevideo castle/stone bridge/coastal setting."
+    }
+  ],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Minas identity",
+      "status": "pass-with-stylization-limits",
+      "finding": "Portal, palm-lined access, family sector, pergola and oval arena are recognizable together; no unrelated Montevideo landmarks."
+    },
+    {
+      "id": 2,
+      "name": "Entry structure",
+      "status": "pass-with-stylization-limits",
+      "finding": "Stone piers, light columns/horizontal canopy, oculi, metal arch and name are coherent in native and browser views; materials and precise dimensions remain approximate."
+    },
+    {
+      "id": 3,
+      "name": "Sectors and terrain",
+      "status": "pass-with-declared-layout-limits",
+      "finding": "Specific X-railed wooden mirador, long pergola, pond, dry swimming base and curved arena tiers are coherent. Sector distances and complete bridge/shore plan are interpreted, not measured."
+    },
+    {
+      "id": 4,
+      "name": "Current secondary elements",
+      "status": "pass",
+      "finding": "Covered blue/glazed pool, family play and picnic structures; no zoo reconstructed as current. Native V2 water/pool overlap is resolved in final V4."
+    },
+    {
+      "id": 5,
+      "name": "Night-only park festival",
+      "status": "pass",
+      "finding": "Daytime arena empty; nighttime four-musician stage and instanced crowd are clearly lit. Repeat frames/code/time checks support staggered motion and connected human-scale bodies."
+    },
+    {
+      "id": 6,
+      "name": "Night-only Artigas fogones",
+      "status": "pass",
+      "finding": "Stage and crowd occupy the slope below the monument; night fireworks/campfires are visible; daytime group hidden. Sculpture, terrain, rocks and accepted flag order remain unchanged. Rocket launch positions moved behind the stage."
+    },
+    {
+      "id": 7,
+      "name": "Animation, pause and modes",
+      "status": "pass-with-evidence-scope-limits",
+      "finding": "Independent tests freeze event clocks/poses at equal times, animate at changed times, hide groups by day and extinguish offsite lights. Root observed playback and curtain/mode changes; snapshots do not certify continuous video."
+    },
+    {
+      "id": 8,
+      "name": "Integrity and cost",
+      "status": "pass-for-tested-budget",
+      "finding": "Final geometry/normals/indices pass; pool dry margin retained; independently computed grass/road/path/water face winding points upward. Instanced audiences and two actual point lights per event; no physical-device performance guarantee."
+    },
+    {
+      "id": 9,
+      "name": "Actual WebGL and responsive UI",
+      "status": "pass-for-observed-viewports",
+      "finding": "Sixteen real browser captures cover desktop1440x900/mobile390x844 day/night and a partial320x568 entry/caption sample. Text rows separate, no reported horizontal overflow, root consoleErrors empty. Small viewport sample requires vertical scrolling for lower controls."
+    },
+    {
+      "id": 10,
+      "name": "Preservation",
+      "status": "pass",
+      "finding": "Ten public stops/thirteen visits; all nine original positions/order preserved, Villa Serrana remains Ventorrillo then Stewart Vargas, Artigas base geometry compared unchanged. Historical reviews not modified."
+    }
+  ],
+  "correctionHistory": [
+    {
+      "version": "V2",
+      "status": "native-rejected",
+      "issue": "Water beneath swimming-complex base, independently confirmed at16 footprint samples.",
+      "resolution": "Pool moved to dry terrain in V3; final V4 regression covers full footprint plus2m margin."
+    },
+    {
+      "version": "V3",
+      "status": "native-only-accepted-runtime-not-approved",
+      "issue": "Primary agent subsequently detected downward road/path winding concealed by offline double-sided rendering.",
+      "resolution": "V4 corrects road/path winding, internal tier faces and exterior/back seating closure; independently confirmed on packed triangles and final images."
+    }
+  ],
+  "independentlyExecutedChecks": [
+    {
+      "command": "npm run check:parque-rodo",
+      "result": "passed",
+      "finalParkTrianglesIncludingCrowd": 513254,
+      "lakeTerrainSamples": 27,
+      "groveTrees": 155,
+      "parqueMusicians": 4,
+      "parqueAudience": 1722,
+      "artigasMusicians": 4,
+      "artigasAudience": 1934,
+      "coverage": [
+        "Pool foundation plus2m dry margin",
+        "Upward road/path normals",
+        "No daytime event visibility",
+        "Night lights and offsite deactivation",
+        "Event time/pose pause",
+        "Accepted Artigas constructor and full base geometry preservation",
+        "Ten original/new route stops and thirteen visits",
+        "Four viewport camera/continuity checks",
+        "Ventorrillo before Stewart Vargas"
+      ]
+    },
+    {
+      "command": "npm run check:journey-atmosphere",
+      "result": "passed",
+      "coverage": "Existing shared-rig baseline using nine synthetic site cases per desktop/mobile projection suite, fixed moon bearing, daylight toggle and disposal; current ten-stop route is checked separately by check:parque-rodo."
+    },
+    {
+      "command": "Independent cross-product audit of packed triangles",
+      "result": "passed",
+      "sourceSha256": "28df17cc7087e09b7a907c679b1a524726b5c08fc3693b60f033887e293a970e",
+      "faceCounts": {
+        "grass": 20672,
+        "road": 320,
+        "path": 360,
+        "water": 776
+      },
+      "minimumFaceNormalY": {
+        "grass": 0.9676603569,
+        "road": 0.9722913086,
+        "path": 0.9770371771,
+        "water": 0.9999999999
+      },
+      "negativeFaces": 0
+    }
+  ],
+  "checksReportedByPrimary": {
+    "commands": [
+      "npm run check",
+      "npm run check:journey-models",
+      "npm run check:stewart-vargas",
+      "npm run check:journey-mode",
+      "npm run build"
+    ],
+    "result": "passed as reported by root; not represented as fresh reviewer executions",
+    "browserConsoleErrors": []
+  },
+  "blockers": [],
+  "limitations": [
+    "Photograph-led stylized scenic reconstruction; condensed sector layout, approximate dimensions/materials/planting, not survey or photogrammetry.",
+    "The bridge reference establishes observed timber/X-rail/deck character and a turn, not a complete original plan or exact shoreline.",
+    "Night scenes evoke local festivals/Fogones and do not reproduce a specific edition or real artist lineup or imply an event every night.",
+    "Responsive acceptance is limited to the observed viewports and frames;320x568 is a partial reading/scroll sample, not a full-viewport survey of every scene.",
+    "Motion confidence combines code/tests and root browser observations with selected frames; no uninterrupted-video certification or physical-phone GPU benchmark.",
+    "Approval is for this park/Artigas event integration, not a blanket approval of every model, booklet page or the entire website."
+  ],
+  "otherModelsOrHistoricalReviewsModifiedByReviewer": false,
+  "browserReview": "reviewed-from-root-browser-evidence",
+  "browserWebGLReviewed": true,
+  "reviewedNativeRenderCount": 8,
+  "reviewedBrowserCaptureCount": 16,
+  "publicationFollowups": [
+    {
+      "reviewDate": "2026-11-08",
+      "reviewer": "parque_rodo_quality",
+      "scope": "Publication continuity of the regression test only; no runtime/model/image changes.",
+      "file": "scripts/check-parque-rodo.mjs",
+      "previousSha256": "54b4e167c45c5b5a9258300606e23eead4bfe75b42d73e87cd0df601429c9d53",
+      "sha256": "10688347b414b757b0d2e85ed7e6fa83c39a80f86b834c6705e3cfb4671f4799",
+      "acceptedRevision": "098597aa5cfac62abb668b3580017e1e6150171c",
+      "approved": true,
+      "reason": "Two git show baseline reads now use the fixed accepted nine-stop revision instead of mutable HEAD, so committing the ten-stop integration cannot silently redefine the preservation baseline or create a false failure.",
+      "changeIsolation": "Reversing only the new comment/acceptedRevision declaration and the two git show references reconstructs the exact previously reviewed script SHA-256.",
+      "independentlyExecutedCheck": {
+        "command": "npm run check:parque-rodo",
+        "result": "passed",
+        "exitCode": 0,
+        "parkTrianglesIncludingCrowd": 513254
+      },
+      "otherReviewedFilesUnchanged": 17,
+      "allNativeAndBrowserEvidenceUnchanged": true,
+      "runtimeVisualApprovalScopeChanged": false,
+      "publicationPerformedByReviewer": false
+    }
+  ]
+}

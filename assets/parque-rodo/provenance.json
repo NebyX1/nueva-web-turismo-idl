@@ -1,0 +1,147 @@
+{
+  "requestedOn": "2026-11-08",
+  "construction": "Original photograph-led stylized Blender model with editable native source, GLB, packed geometry and procedural Three.js festivals.",
+  "blender": {
+    "version": "4.5.15 LTS",
+    "download": "https://download.blender.org/release/Blender4.5/blender-4.5.15-windows-x64.zip",
+    "verifiedArchiveSha256": "52dd02fd74877fa08e74b67d7854cf32468a232c02aaa19b6844c91285574f8d"
+  },
+  "foreignMeshesIncluded": false,
+  "photographsUsedAsTextures": false,
+  "research": "docs/research-parque-rodo.md",
+  "limitations": [
+    "Condensed editorial sector arrangement, not a metric survey.",
+    "Single-view wooden mirador reference does not establish its complete original plan.",
+    "Night festivals evoke the events, not a particular edition or artist."
+  ],
+  "files": [
+    {
+      "file": "scripts/parque-rodo/build_model.py",
+      "sha256": "b03794a03bbea8d81756301178c6333755aeacdf094666361cd5defeebf53acc"
+    },
+    {
+      "file": "scripts/parque-rodo/pack_model.mjs",
+      "sha256": "2a45a6c25b30dcadf822864a953d932fd66e90ed9b4b6b61fda1738eb125ab0f"
+    },
+    {
+      "file": "scripts/parque-rodo/render_review.py",
+      "sha256": "14a32cc9d46ae9c531e3cd8755e1792a38a840c9ad046d65f65f23002bb36e2f"
+    },
+    {
+      "file": "scripts/check-parque-rodo.mjs",
+      "sha256": "10688347b414b757b0d2e85ed7e6fa83c39a80f86b834c6705e3cfb4671f4799"
+    },
+    {
+      "file": "assets/parque-rodo/parque-rodo.blend",
+      "sha256": "0f26656baa71004116c0c7ab1ceb4cd2ed286a1cd308c3b4565e764565cb3136"
+    },
+    {
+      "file": "assets/parque-rodo/parque-rodo.glb",
+      "sha256": "28df17cc7087e09b7a907c679b1a524726b5c08fc3693b60f033887e293a970e"
+    },
+    {
+      "file": "src/three/landmarks/parqueRodoAsset.json",
+      "sha256": "6d6cb0fc89c7a2c913adf773e5029d20adfcefe6e937eda634bdea47d0f9eec4"
+    },
+    {
+      "file": "src/three/landmarks/parqueRodo.ts",
+      "sha256": "c15b934a9b4c1b15c188c66ccf5ff4e4fc1bbb41f641f99b68ac3f4cf08007ae"
+    },
+    {
+      "file": "src/three/landmarks/festivalNight.ts",
+      "sha256": "8c24952dd4ecda578bcd7bb76b9a7c17f57f3ccc5caf67cf41e9fc1418149788"
+    },
+    {
+      "file": "src/three/landmarks/artigasFogones.ts",
+      "sha256": "dfc3f393ee38fbe0a9111d45a71c4039b6025b537434f4039150b1b62794ce50"
+    },
+    {
+      "file": "src/three/journeyCameraTour.ts",
+      "sha256": "3727826a83965c58705d3da91079d3c9e7701b60fa0aea882fd85e2fe762cfc2"
+    },
+    {
+      "file": "src/three/journeyScene.ts",
+      "sha256": "3e9e0945c625e49ecdede48b91fb78b2951a81ae3091cf17b17ae60009bb0032"
+    },
+    {
+      "file": "src/three/journeySites.ts",
+      "sha256": "e9a8aa885723e4ddae0fbce6eaac6f58f7e3ff13bd96b6f46f06bd881edc1421"
+    },
+    {
+      "file": "src/three/types.ts",
+      "sha256": "51f6fe43abb3e6f4eaf29f08d3d14e22cdec5b0e32dc406c942be15ab3aefeeb"
+    },
+    {
+      "file": "src/data/journeyRoute.ts",
+      "sha256": "6c767dd1fe9da74e511521e7bdcd9f3e8ccf8fdbd1113ab000b5f34c82c5098d"
+    },
+    {
+      "file": "src/data/journeyStops.ts",
+      "sha256": "d5540b17aee6f26ae910fb7257b500de9e65508147ed7547eaa4f6eacfbf2e46"
+    },
+    {
+      "file": "src/islands/JourneyHero.tsx",
+      "sha256": "bf6c90935339087764cd5117fb2b8bf09a8184a21eb778bcebaeed755f8f6aab"
+    },
+    {
+      "file": "src/styles/journey.css",
+      "sha256": "26559b74b65ca26b4e2f7cc8e404cd139b1bac8d698219409d5decb9eaa1198e"
+    }
+  ],
+  "native": {
+    "version": "V4",
+    "batches": 18,
+    "triangles": 169404,
+    "groveTrees": 155,
+    "renderViews": 8,
+    "evidence": "docs/references/parque-rodo/native-v4"
+  },
+  "runtime": {
+    "evidence": "docs/references/parque-rodo/web-review/browser-observations.json",
+    "publicStops": 10,
+    "cameraVisits": 13,
+    "durationSeconds": 286,
+    "views": [
+      "Entrance and walks",
+      "Lake and wooden mirador",
+      "Oval arena; festival only at night"
+    ],
+    "parqueAudience": 1722,
+    "artigasAudience": 1934,
+    "musiciansPerStage": 4,
+    "actualPointLightsPerEvent": 2,
+    "festivalHiddenInDay": true,
+    "independentReview": "assets/parque-rodo/quality-review.json"
+  },
+  "preservation": {
+    "acceptedArtigasConstructorUnchanged": true,
+    "sculptureFlagTerrainGeometryCompared": true,
+    "allNineOriginalStopPositionsUnchanged": true,
+    "villaOrder": "Ventorrillo then Stewart Vargas",
+    "historicalOtherModelReviews": "Retained as historical records; this follow-up has its own review."
+  },
+  "publicationFollowups": [
+    {
+      "reviewDate": "2026-11-08",
+      "reviewer": "parque_rodo_quality",
+      "scope": "Publication continuity of the regression test only; no runtime/model/image changes.",
+      "file": "scripts/check-parque-rodo.mjs",
+      "previousSha256": "54b4e167c45c5b5a9258300606e23eead4bfe75b42d73e87cd0df601429c9d53",
+      "sha256": "10688347b414b757b0d2e85ed7e6fa83c39a80f86b834c6705e3cfb4671f4799",
+      "acceptedRevision": "098597aa5cfac62abb668b3580017e1e6150171c",
+      "approved": true,
+      "reason": "Two git show baseline reads now use the fixed accepted nine-stop revision instead of mutable HEAD, so committing the ten-stop integration cannot silently redefine the preservation baseline or create a false failure.",
+      "changeIsolation": "Reversing only the new comment/acceptedRevision declaration and the two git show references reconstructs the exact previously reviewed script SHA-256.",
+      "independentlyExecutedCheck": {
+        "command": "npm run check:parque-rodo",
+        "result": "passed",
+        "exitCode": 0,
+        "parkTrianglesIncludingCrowd": 513254
+      },
+      "otherReviewedFilesUnchanged": 17,
+      "allNativeAndBrowserEvidenceUnchanged": true,
+      "runtimeVisualApprovalScopeChanged": false,
+      "publicationPerformedByReviewer": false
+    }
+  ]
+}

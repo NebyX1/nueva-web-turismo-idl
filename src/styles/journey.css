@@ -23,6 +23,10 @@
 .journey-caption-meta{display:flex;align-items:center;gap:14px;font-size:8px;letter-spacing:.13em;line-height:1.6;color:#d2dece;margin:0 0 14px}
 .journey-caption-meta>span:first-child{flex:none;white-space:nowrap;letter-spacing:.1em;border-right:1px solid #ffffff4d;padding-right:14px;font-variant-numeric:tabular-nums}
 .journey-caption-meta>span:last-child{min-width:0;overflow-wrap:anywhere}
+.journey-views{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.journey-views button{min-height:32px;border:1px solid #ffffff38;border-radius:20px;padding:6px 11px;background:#173a333d;color:#e1e8db;font:inherit;font-size:10px;line-height:1.5;cursor:pointer}
+.journey-views button[aria-pressed=true]{border-color:#e1e5bc;background:#e1e5bc1f;color:#fffdf4}
+.journey-views button:focus-visible{outline:2px solid #e1e5bc;outline-offset:3px}
 .journey-caption h1{font-family:'Barlow Condensed','DM Sans',sans-serif;font-size:clamp(36px,4.2vw,64px);text-transform:uppercase;font-weight:600;letter-spacing:-.015em;line-height:1.1;color:#fffdf4;margin:0 0 18px;text-wrap:balance;overflow-wrap:anywhere}
 .journey-caption .journey-title-continuation{display:block;margin-top:12px;font-size:clamp(18px,1.7vw,25px);line-height:1.4;font-weight:500;letter-spacing:.025em;text-transform:none;text-wrap:balance}
 .journey-caption>p{max-width:390px;color:#e0e9dd;font-size:13px;line-height:1.8;margin:0 0 15px}

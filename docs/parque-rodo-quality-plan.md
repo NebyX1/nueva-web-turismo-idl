@@ -1,0 +1,50 @@
+# Plan independiente de calidad: Parque Rodó de Minas y noches festivas
+
+Revisor: `parque_rodo_quality`. Encargo del 8 de noviembre de 2026. Este plan se fija antes de examinar el modelo. **Estado inicial: sin activo revisado y sin aprobación de entrega.** El plan no constituye una aprobación del resultado.
+
+## Identidad y fuentes comprobadas
+
+Se representa el Parque Rodó de **Minas, Lavalleja**, sobre la avenida Aparicio Saravia, y no su homónimo de Montevideo. El [Plan Local de Minas de la Intendencia, 2024](https://www.gub.uy/intendencia-lavalleja/sites/intendencia-lavalleja/files/2024-12/Anexo%20I%20PLMinas_Memo%20Informaci%C3%B3n_2024%20%281%29_compressed.pdf) identifica su valor urbano y sus festivales; aclara que el parque ya no cuenta con área de zoológico. Las imágenes de animales y jaulas de reseñas antiguas no definen el estado actual.
+
+El [relevamiento de espacios de Lavalleja Productivo](https://www.lavallejaproductivo.com/espacios-verdes-y-recreacion/) distingue el Parque Rodó, su lago artificial, picnic, ruedo con tribunas y polideportivo, del Parque y Represa de OSE. El puente y embalse de la sección OSE no pueden trasladarse al Rodó por proximidad en la página. La [guía familiar del Ministerio de Turismo](https://uruguaynatural.com/wp-content/uploads/2023/02/guia-familia.pdf) también identifica expresamente el parque de Minas y su lago.
+
+Referencias visuales abiertas y observadas por el revisor:
+
+| Referencia | Qué acredita | Límites |
+|---|---|---|
+| [Blog de Turismo Minas/Lavalleja, 2017, fotografías con crédito Prensa IDL](https://turismominaslavalleja.blogspot.com/2017/05/parque-rodo.html): `blog2017-0.jpg` | Entrada frontal: pilares y alas bajas revestidos en piedra, columnas claras, marquesina horizontal clara con huecos circulares, arco metálico superior y nombre PARQUE RODÓ, palmeras y calle descendente. | No es un arco de mampostería ni un castillo. Foto de 2017, sin medición métrica. |
+| Mismo artículo: `blog2017-1.jpg` a `blog2017-6.jpg` | Juegos inclusivos en pavimentos coloreados, juegos de madera y tubo multicolor, pérgola larga de postes claros y travesaños verdosos, parador bajo, quinchos de paja con mesas y parrilleros independientes. | No usar sus miniaturas de otros artículos: `blog2017-7/8/9` muestran otros lugares. |
+| [IDL, mantenimiento del arbolado, marzo de 2026](https://www.gub.uy/intendencia-lavalleja/comunicacion/noticias/lunes-9-marzo-se-reabrira-zona-intervenida-del-parque-rodo): `grove2026-0.jpg` | Espacio verde con árboles maduros de tronco alto, claros, senderos, bancos y zona de juegos. | La maquinaria corresponde a obras temporales y no debe formar parte del parque turístico. No valida todo el trazado del predio. |
+| [Ministerio del Interior, aérea de Semana de Lavalleja 2026](https://www.gub.uy/ministerio-interior/comunicacion/noticias/resultado-del-dispositivo-seguridad-semana-lavalleja-2026-parque-rodo): `offical-aerial-1.jpg` | Ruedo de planta ovalada, pista perimetral y tribunas curvas; escenario en un extremo y gran público en el campo durante festival. | Es una vista nocturna del sector de eventos, no un plano completo del parque. |
+| [IDL, piscina, agosto de 2026](https://www.gub.uy/intendencia-lavalleja/comunicacion/noticias/piscina-del-parque-rodo-reabre-sus-puertas-jueves-20-agosto): `pool-2026.jpg` | Vaso rectangular de natación con carriles, partidores y cubierta liviana azul, cerchas metálicas y grandes paños vidriados. | El trampolín azul externo de la foto histórica de Tripadvisor no reemplaza la cubierta actual. No implica anunciar horarios de acceso. |
+| [FredLee, sección Parque Rodó de una crónica de 2022](https://fredleenaestrada.com.br/2022/09/08/salto-del-penitente-maior-cachoeira-uruguai/): fotos `0017`, `0015`, `0014`, `0016` | Pérgola/rosedal, arbolado con picnic y acceso del Grupo Scout Guaraní. | El mismo artículo comienza con Penitente y termina con Verdún: esas otras fotos están excluidas. No utilizar personas de las fotos como texturas. |
+| [Guía Trotamundo Lavalleja, 2024](https://guiatrotamundo.com/wp-content/uploads/2024/05/lavalleja.pdf), página PDF 6 / página impresa 7, fotografía bajo el párrafo Parque Rodó | Puente propio de entablonado amaderado gris, postes oscuros, barandas de cruces X y cambio de dirección/ensanche junto a un árbol. | El revisor abrió tanto la página completa como la foto extraída para comprobar la identidad. No es un puente de arco y una sola vista no define su planta completa, el contorno exacto del lago o todas las distancias. |
+| [IDL, Semana de Lavalleja 2025](https://www.gub.uy/intendencia-lavalleja/comunicacion/noticias/semana-todos-todo-lavalleja-tiempo-record): `fogones-tribuna-2025.jpg` | Cerro Artigas: el público ocupa una tribuna natural en la ladera y mira hacia un escenario grande, de cubierta de estructura metálica, con ciudad/valle detrás. | Escenario debajo de la cumbre; no sobre el pedestal ni sustituyendo al monumento. |
+| Misma fuente: `festival-2025-1.jpg`, `festival-2025-2.jpg` | Público multitudinario, escenario con trusses, pantallas y torres de audio, luces de concierto; personas con brazos elevados. | La escenificación no copia una edición o artista concreto ni anuncia un evento real permanente. |
+
+Las referencias de trabajo están fuera de `public`, en las carpetas `parque-rodo/references` y `parque-rodo-qa` del directorio de visualizaciones de esta tarea. La foto de trampolín antiguo se guarda como referencia histórica, no como prueba del estado actual de todo el complejo.
+
+## Criterios obligatorios
+
+1. **Parque reconocible.** La combinación de entrada característica, arbolado maduro, pérgola/espacios familiares y ruedo debe permitir identificar Minas. No se acepta un parque genérico con cartelería añadida, una costa, castillo, canteras o puentes de Montevideo.
+2. **Entrada proporcionada.** Pilares, columnas, marquesina horizontal y arco metálico son piezas legibles y coherentes. El nombre no se solapa ni aparece invertido. Palmeras y acceso acompañan la silueta sin taparla.
+3. **Sectores y terreno coherentes.** Ruedo ovalado con tribunas curvas, claros entre árboles, senderos apoyados en suelo y elementos de picnic. El conjunto puede condensar distancias de forma declarada; no simular un plano exacto sin soporte. El lago/mirador sólo se modelan con geometría específica si hay referencia visual suficiente: no inventar un puente ajeno para completar una lista.
+4. **Elementos actuales y secundarios.** Piscina cubierta reconocible si se incluye; juegos y quinchos con escala humana y apoyos. Sin zoológico vigente, flotación, plataformas sin contacto, árboles que oculten por completo los hitos o masas deformes.
+5. **Fiesta del parque únicamente nocturna.** Banda con instrumentos reconocibles, escenario, público y luces deben desaparecer en modo día. El ruedo y las tribunas permanentes pueden permanecer vacíos. La multitud debe tener cuerpos/miembros coherentes y tamaños humanos; saltos y brazos con variación y apoyos creíbles.
+6. **Fogones en Cerro Artigas únicamente nocturnos.** Escenario en una ladera/zona de evento, público y fuegos/fogones conservan el protagonismo del monumento. Fuegos artificiales legibles sobre el cielo, con ascenso/estallido/dispersión coherentes, sin reemplazar la estatua ni atravesarla. Escenario, público festivo, fogones y pirotecnia se ocultan de día. No alterar el monumento ecuestre ni el orden de los tres pabellones ya aceptados.
+7. **Animación, pausa y modos.** Todo movimiento festivo usa el reloj del recorrido y se congela en pausa y con movimiento reducido. El cambio de modo elimina las fiestas y sus luces; los equipos de otros destinos no quedan encendidos por accidente. No se exige audio ni se lo incorpora sin necesidad.
+8. **Integridad y coste.** Coordenadas/normales/índices finitos, sin piezas sueltas, interpenetraciones evidentes, caras invertidas o rutas de cámara a través de arquitectura. Vegetación y público repetidos deben usar instancias o lotes; luces acotadas y apagadas fuera del motivo activo. Recursos se liberan al desmontar.
+9. **Lectura real en Three.js.** Capturas de día/noche en escritorio y móvil con el encabezado completo; título, navegación y controles sin solapamientos; entrada, parque/ruedo y fiesta legibles. Consola sin errores de shaders. Revisar acercamiento, panorámica y transición de modo, no sólo un render nativo.
+10. **Alcance preservado.** La integración añade el parque sin borrar otras visitas, respeta Ventorrillo → represa y los rasgos aprobados de los demás lugares. Una aprobación histórica de otro modelo no puede ser reescrita como si cubriera las nuevas fiestas.
+
+## Puertas de revisión
+
+- Antes de construir: comprobar identidad de cada imagen, registrar herramienta elegida y límites del modelo reutilizado. No confundir una licencia de visualización con permiso para redistribuir una malla.
+- Primer activo: vista frontal de entrada, oblicuas izquierda/derecha, elevada de sectores y detalle de pérgola/ruedo. Comprobar proporciones sin depender de una iluminación que esconda la geometría.
+- Runtime: día/noche del parque, día/noche de Cerro Artigas, instantes de salto y estallido, pausas y cambio de modo. Evaluar móvil y escritorio reales. Los renders de Blender no sustituyen WebGL.
+- Control independiente: entregar al revisor hashes de fuentes/activos y capturas concretas. El dictamen debe declarar qué se observó, qué pruebas ejecutó cada agente y qué queda sin verificar. Si hay un fallo bloqueante, corregirlo y volver a presentar.
+- Entrega: sólo después de un dictamen independiente de mínimo presentable para el alcance realmente revisado. No se infiere aprobación por terminar el plan, por tests geométricos verdes o por estar corriendo en localhost.
+
+Este archivo sólo establece el plan y las referencias. No aprueba todavía ningún modelo o escena.
+
+Resultado posterior: el [dictamen independiente V4 y runtime](parque-rodo-quality-review.md) aplica estos criterios al activo y a la integración efectivamente observados. Esa aprobación tiene su propio registro con hashes y alcance; no se deduce de este plan previo.

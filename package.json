@@ -17,7 +17,9 @@
     "check:penitente": "node scripts/check-penitente-rebuild.mjs",
     "check:journey-mode": "node scripts/check-journey-mode.mjs",
     "check:journey-atmosphere": "node scripts/check-journey-atmosphere.mjs",
-    "check:journey-surprises": "node scripts/check-journey-surprises.mjs"
+    "check:journey-surprises": "node scripts/check-journey-surprises.mjs",
+    "check:stewart-vargas": "node scripts/check-stewart-vargas.mjs",
+    "check:parque-rodo": "node scripts/check-parque-rodo.mjs"
   },
   "dependencies": {
     "@astrojs/react": "7.1.1",

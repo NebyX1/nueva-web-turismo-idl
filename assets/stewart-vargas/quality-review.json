@@ -1,0 +1,238 @@
+{
+  "reviewer": "stewart_vargas_quality",
+  "reviewDate": "2026-11-08",
+  "version": "native-v4",
+  "approved": false,
+  "nativeAssetApproved": true,
+  "approvedForFinalDelivery": false,
+  "browserReview": "blocked-not-executed",
+  "browserWebGLReviewed": false,
+  "scope": "Minimum-presentable stylized native reconstruction of Represa Stewart Vargas, assessed against photographed references in eight daytime and two night Blender offline renders. Criteria1-8 apply only to that native asset and static geometry; criterion9 and final application delivery remain unapproved.",
+  "sourceSha256": "eb97158a95a284f92f56a7dcd3f0dd926b9426dc8c4ac3c518cd1c48bd88f2df",
+  "files": [
+    {
+      "file": "assets/stewart-vargas/stewart-vargas.blend",
+      "sha256": "d9c23c6ade491d82be19e8c513f46925d7d3c74faeb2d0f1f6589762950ef018"
+    },
+    {
+      "file": "assets/stewart-vargas/stewart-vargas.glb",
+      "sha256": "eb97158a95a284f92f56a7dcd3f0dd926b9426dc8c4ac3c518cd1c48bd88f2df"
+    },
+    {
+      "file": "src/three/landmarks/stewartVargasAsset.json",
+      "sha256": "0aad35a349005c5ea15f976d7eebdc223e10ba9b5eab17c3707026eb1cd6c7ea"
+    }
+  ],
+  "reviewedRenderCount": 10,
+  "reviewedViews": [
+    {
+      "mode": "day",
+      "name": "front",
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas/review-v4/front.png",
+      "sha256": "3882ecc84dc632c8e5f21a1b02f9c640785d266b0de132b5c7ef7f053d8b8b07",
+      "evidenceType": "native-Blender-offline-render"
+    },
+    {
+      "mode": "day",
+      "name": "left-oblique",
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas/review-v4/left-oblique.png",
+      "sha256": "7d40681f59ecea32857d4ec554294cb5fbbe836ec93d6d68c71124dc07c4547d",
+      "evidenceType": "native-Blender-offline-render"
+    },
+    {
+      "mode": "day",
+      "name": "right-oblique",
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas/review-v4/right-oblique.png",
+      "sha256": "f174e33b66e5f4da95795088f23cf7d7d0b77188417a0bac5aa41de425f5e059",
+      "evidenceType": "native-Blender-offline-render"
+    },
+    {
+      "mode": "day",
+      "name": "upstream",
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas/review-v4/upstream.png",
+      "sha256": "98ffb9db1bfaf8b73249537d107b008ea9309a086918e7803c999d2bcc21fe1b",
+      "evidenceType": "native-Blender-offline-render"
+    },
+    {
+      "mode": "day",
+      "name": "profile",
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas/review-v4/profile.png",
+      "sha256": "433629ce68c70ab4bfab52a32f1be8c90aad135da369acae233a7eaf44313d58",
+      "evidenceType": "native-Blender-offline-render"
+    },
+    {
+      "mode": "day",
+      "name": "aerial",
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas/review-v4/aerial.png",
+      "sha256": "d6717a24c4215531d215abe2f9e497d50fa17030b2b508572483893fbf409e3b",
+      "evidenceType": "native-Blender-offline-render"
+    },
+    {
+      "mode": "day",
+      "name": "walkway",
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas/review-v4/walkway.png",
+      "sha256": "e7e488c82737c8c1f192c03d1ad5d7f93629b368bb41481d37457c689b36f218",
+      "evidenceType": "native-Blender-offline-render"
+    },
+    {
+      "mode": "day",
+      "name": "crest",
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas/review-v4/crest.png",
+      "sha256": "e73803c2958c7efe85fba2b2f8aa7285f314fa8f707edb8588c3a7c86a9b06e8",
+      "evidenceType": "native-Blender-offline-render"
+    },
+    {
+      "mode": "night",
+      "name": "front",
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas/review-v4-night/front.png",
+      "sha256": "d8c15f9161322062b8f8a864c6c534c1fd896b7023c8b9dd3a6b076cdb8042cb",
+      "evidenceType": "native-Blender-offline-render"
+    },
+    {
+      "mode": "night",
+      "name": "left-oblique",
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas/review-v4-night/left-oblique.png",
+      "sha256": "9c8334193294523e7f9cdfc919a7f82444b05b21bcd04a37360f1ed8f8f9582c",
+      "evidenceType": "native-Blender-offline-render"
+    }
+  ],
+  "referenceEvidence": [
+    {
+      "name": "commons-aerial.jpeg",
+      "source": "https://commons.wikimedia.org/wiki/File:Villa_Serrana_(218241731).jpeg",
+      "view": "whole dam, reservoir and asymmetrical banks; modern deck",
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas-qa/commons-aerial.jpeg",
+      "sha256": "f89ef6e4cf7214ea7fddce2669cf5f95cdbbbecf149bf49d22c748fe7b7f7aa1"
+    },
+    {
+      "name": "wikiloc-downstream.jpg",
+      "source": "https://es.wikiloc.com/rutas-senderismo/sierra-del-guazuvira-29351749",
+      "view": "elevated downstream oblique, modern deck and active channels",
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas-qa/wikiloc-downstream.jpg",
+      "sha256": "3660f7aac9821ab76bd4f7fc0b6c7002c6d3c44acb137523da00c1a833b0b731"
+    },
+    {
+      "name": "wikiloc-upstream.jpg",
+      "source": "https://es.wikiloc.com/rutas-senderismo/villa-serrana-represa-stewart-vargas-21623441",
+      "view": "upstream bank and back of modern deck",
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas-qa/wikiloc-upstream.jpg",
+      "sha256": "7e25b390d0113c09f8476ecad3404abf98e53c9eac686733efa2deb17657aa5d"
+    },
+    {
+      "name": "bridge-detail.jpg",
+      "source": "https://www.tripadvisor.com/Attraction_Review-g3860179-d12569343-Reviews-Represa_Arq_Stewart_Vargas-Villa_Serrana_Lavalleja_Department.html",
+      "view": "close modern timber railing, inclined supports and wire mesh",
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas-qa/bridge-detail.jpg",
+      "sha256": "2255fde84a298b9c89fa627000c158fdcabf93330e9fa929802492c805f8f798"
+    },
+    {
+      "name": "blog-oblique.jpg",
+      "source": "https://unafoto-unahistoria.blogspot.com/2012/08/villa-serrana.html",
+      "view": "2012 pre-deck crest; historical posts are not the modern railing",
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas-qa/blog-oblique.jpg",
+      "sha256": "8745d31eb6fa3086076675da2c08e826904d4d8ea7b43b3730dcb878f1b0374e"
+    },
+    {
+      "name": "portal-spillway.jpg",
+      "source": "https://www.portaldevillaserrana.com.uy/es/blogs/tip/que-hacer-en-uruguay-guia-de-balnearios-para-visitar",
+      "view": "downstream channels and heavy cheeks before modern deck",
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas-qa/portal-spillway.jpg",
+      "sha256": "bba50dd4150da7191e984350f25847e469cda1feab7eea6ad39b8c6baaf84d1c"
+    },
+    {
+      "name": "elpais-front.jpeg",
+      "source": "https://www.elpais.com.uy/domingo/una-postal-que-se-renueva",
+      "view": "distant structural scale within meadow",
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas-qa/elpais-front.jpeg",
+      "sha256": "0b8771bc67f84d2d23e5a3a666586f24518677f04231e2d1a97909f837a4faaa"
+    },
+    {
+      "name": "official-photo-page.png",
+      "source": "https://www.gub.uy/intendencia-lavalleja/sites/intendencia-lavalleja/files/documentos/publicaciones/1%20Memoria%20de%20Informaci%C3%B3n.pdf",
+      "view": "IDL photos19-21: upstream, dry inclined cheeks, downstream flow; photo22 is the separate Baño de la India",
+      "file": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas-qa/official-photo-page.png",
+      "sha256": "9abfcb28b3f48930b71e4bb7ab2721b120fb6649c16ac6c419b3f5f86744a33a"
+    }
+  ],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Identidad y silueta",
+      "status": "pass-native",
+      "finding": "Long low dam with a dense repeated concrete body and a narrow straight timber walkway; no arch-dam towers or unrelated generic bridge."
+    },
+    {
+      "id": 2,
+      "name": "Coronamiento y caras inclinadas",
+      "status": "pass-native",
+      "finding": "Crest view now shows water inside the upstream teeth; profile and obliques establish broad solid cheeks and genuinely recessed narrow channels, replacing the first version triangular-tile appearance."
+    },
+    {
+      "id": 3,
+      "name": "Proporciones y altura variable",
+      "status": "pass-native",
+      "finding": "The 120m-length/13m-maximum-height reference is used proportionally; exposed height declines toward the raised meadow. Eighteen modules are an explicitly approximate visual rhythm, not a measured count."
+    },
+    {
+      "id": 4,
+      "name": "Pasarela actual",
+      "status": "pass-native",
+      "finding": "Close walkway view shows reddish planks, long handrails, inclined repeated supports, wire mesh and short concrete supports. Historical cable posts are not mixed into this version."
+    },
+    {
+      "id": 5,
+      "name": "Relación hidráulica y contacto",
+      "status": "pass-native",
+      "finding": "Broad horizontal upstream lake, water inside crest recesses, six narrow active channels in the deeper sector and a lower continuous collector/outlet. The isolated runoff strips of V1 are gone. Static contacts were inspected visually and checked numerically; WebGL water motion is not certified here."
+    },
+    {
+      "id": 6,
+      "name": "Terreno y orillas",
+      "status": "pass-native",
+      "finding": "Wooded rocky abutment and opposite rising meadow are differentiated; a broad irregular reservoir and a lower outlet replace any pedestal/disc treatment. Trees, distant houses and shore vegetation remain deliberately simplified context."
+    },
+    {
+      "id": 7,
+      "name": "Materiales y lectura nativa",
+      "status": "pass-native-with-limitations",
+      "finding": "The native render distinguishes warm grey-brown concrete, reddish timber, fine mesh and dark calm lake from narrow falling-water strips. Surface weathering and vegetation are stylized; the offline materials and lighting do not validate the Three.js shaders."
+    },
+    {
+      "id": 8,
+      "name": "Integridad nativa",
+      "status": "pass-native",
+      "finding": "No conspicuous detached pieces, distorted body, floating spillway strips or reversed surfaces were found in the ten reviewed renders. Native night views keep the structure readable. The independent geometry check passed; actual runtime lights and interaction remain outside this scope."
+    },
+    {
+      "id": 9,
+      "name": "Aplicación Three.js real y móvil",
+      "status": "blocked-not-executed",
+      "finding": "Browser/Windows computer control was reported blocked by the primary agent because the active URL could not be verified; no UI work or bypass was attempted by this reviewer. No actual WebGL, mobile UI, shader animation or browser-console review was executed."
+    }
+  ],
+  "independentlyExecutedChecks": [
+    {
+      "command": "npm run check:stewart-vargas",
+      "result": "passed",
+      "waterConcreteSamples": 279,
+      "maximumGapMetres": 0.042,
+      "waterTerrainSamples": 96,
+      "triangleCount": 112604,
+      "projectionCheck": "five aspect ratios x three pan poses; arithmetic only, not browser evidence"
+    }
+  ],
+  "limitations": [
+    "Photograph-led proportional reconstruction, not a metric survey or hydraulic certification.",
+    "Module count, water flow, planting and surrounding houses are interpretive, not measured or species-exact.",
+    "The V4 offline water strips do not prove that animated foam, ripples and droplets look correct under Three.js.",
+    "The native night setup uses review lights; runtime floodlight appearance has not been visually verified.",
+    "The separate distant Ventorrillo wrapper and its final relative scale/placement have not been visually verified in the actual web scene."
+  ],
+  "remainingBeforeFinalDelivery": [
+    "Reopen the actual journey with the verified asset in an authorized browser session.",
+    "Inspect and capture daytime and nighttime views, camera approach/pan/retreat, actual animated water/foam and shader behavior.",
+    "Inspect mobile and desktop with the full interface; confirm legibility, no cropping/overlap, and console errors absent.",
+    "Submit that real browser evidence for independent criterion9 review before marking the complete product approved."
+  ],
+  "otherLandmarksChangedByReviewer": false
+}

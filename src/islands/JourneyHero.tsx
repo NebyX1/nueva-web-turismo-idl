@@ -27,6 +27,7 @@ export default function JourneyHero() {
   const [loading, setLoading] = useState<JourneyLoadingState>({ slow: false, failed: false });
   const [active, setActive] = useState(0);
   const [phase, setPhase] = useState<JourneyPhase>('Acercándonos');
+  const [viewLabel, setViewLabel] = useState('');
   const [ready, setReady] = useState(false);
   const [unavailable, setUnavailable] = useState(false);
   const [paused, setPaused] = useState(false);
@@ -94,7 +95,7 @@ export default function JourneyHero() {
       moduleLoaded = true; moduleFailed.current = false;
       if (cancelled || controller.signal.aborted || !host.current) return;
       return createJourneyScene(host.current, {
-          onStop: setActive, onPhase: setPhase,
+          onStop: setActive, onPhase: setPhase, onView: setViewLabel,
           onProgress: value => progress.current?.style.setProperty('--journey-progress', String(value)),
           onReady: () => {
             if (cancelled || controller.signal.aborted) return;
@@ -177,9 +178,12 @@ export default function JourneyHero() {
       </div>
     </header>
     <div className="journey-caption" key={stop.id}>
-      <div className="journey-caption-meta"><span>{String(active + 1).padStart(2, '0')} / {String(journeyStops.length).padStart(2, '0')}</span><span>{stop.eyebrow}</span></div>
+      <div className="journey-caption-meta"><span>{String(active + 1).padStart(2, '0')} / {String(journeyStops.length).padStart(2, '0')}</span><span>{viewLabel || stop.eyebrow}</span></div>
       <h1 id="journey-title" tabIndex={-1} aria-label={stop.name} aria-live="polite" aria-atomic="true">{stop.heading ? <>{stop.heading.title}{' '}<span className="journey-title-continuation">{stop.heading.subtitle}</span></> : stop.name}</h1>
       <p>{stop.description}</p>
+      {stop.cameraVisits && ready && <div className="journey-views" role="group" aria-label={`Visitas de ${stop.name}`}>
+        {stop.cameraVisits.map((visit, index) => <button key={visit.label} type="button" aria-pressed={viewLabel === visit.label} onClick={() => { if (curtainRef.current === 'idle') scene.current?.select(active, index); }}>{visit.button}</button>)}
+      </div>}
       {stop.id === 'monasterio' ? <a href="https://budismo.com.uy/" target="_blank" rel="noopener noreferrer" className="journey-link">Consultá el templo <span>↗</span></a> : <button className="journey-link" onClick={openGuide}>Conocé este lugar <span>↗</span></button>}
       {stop.note && <small className="journey-stop-note">{stop.note}</small>}
     </div>

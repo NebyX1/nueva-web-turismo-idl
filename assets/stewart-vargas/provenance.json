@@ -1,0 +1,102 @@
+{
+  "requestedOn": "2026-11-08",
+  "construction": "Original photograph-led model authored in Blender, with synchronous decoded geometry and procedural Three.js materials.",
+  "blender": {
+    "version": "4.5.15 LTS",
+    "download": "https://download.blender.org/release/Blender4.5/blender-4.5.15-windows-x64.zip",
+    "verifiedArchiveSha256": "52dd02fd74877fa08e74b67d7854cf32468a232c02aaa19b6844c91285574f8d"
+  },
+  "foreignMeshesIncluded": false,
+  "photographsUsedAsTextures": false,
+  "files": [
+    {
+      "file": "assets/stewart-vargas/stewart-vargas.blend",
+      "sha256": "d9c23c6ade491d82be19e8c513f46925d7d3c74faeb2d0f1f6589762950ef018"
+    },
+    {
+      "file": "assets/stewart-vargas/stewart-vargas.glb",
+      "sha256": "eb97158a95a284f92f56a7dcd3f0dd926b9426dc8c4ac3c518cd1c48bd88f2df"
+    },
+    {
+      "file": "src/three/landmarks/stewartVargasAsset.json",
+      "sha256": "0aad35a349005c5ea15f976d7eebdc223e10ba9b5eab17c3707026eb1cd6c7ea"
+    },
+    {
+      "file": "src/three/landmarks/stewartVargas.ts",
+      "sha256": "669b80510587762fb979eca42e9466476532073c8ca7efe34308128e643982f4"
+    },
+    {
+      "file": "src/three/landmarks/villaSerrana.ts",
+      "sha256": "339aea81eccbb3511985bb78426500c4e5a51fa6eef8b173774fccad1639e9e7"
+    },
+    {
+      "file": "src/three/journeySites.ts",
+      "sha256": "f30feeab3c164884eb3f58b278b4b6c5313eb7f4155f93dadb73cd22626fb770"
+    }
+  ],
+  "browserReview": {
+    "status": "executed",
+    "recordedOn": "2026-11-08",
+    "priorAttempt": "blocked-not-executed, retained in native V4 review",
+    "evidence": "C:/Users/Nebyx/.codex/visualizations/2026/11/05/01a1ac24-31a1-7cf1-b9f8-0e83919bd003/stewart-vargas/web-review/browser-observations.json",
+    "independentReview": "assets/stewart-vargas/runtime-review.json",
+    "viewports": [
+      "1440x900",
+      "390x844"
+    ],
+    "modes": [
+      "day",
+      "night"
+    ],
+    "consoleErrors": 0
+  },
+  "runtimeFollowups": [
+    {
+      "requestedOn": "2026-11-08",
+      "intent": "Ventorrillo first, Stewart Vargas second, six jumping reservoir fish with shared pause clock.",
+      "nativeGeometryChanged": false,
+      "files": [
+        {
+          "file": "src/three/journeyCameraTour.ts",
+          "sha256": "8587e6395f9c8b774ee10b115d907b58e6be0d0ccb5bda32a89da22e6ecaf6b4"
+        },
+        {
+          "file": "src/three/journeyScene.ts",
+          "sha256": "445bf5ba45b0d38bcdc5ed59c5fa2a777c50e5b26f72f587f04dbc2fccfe80f1"
+        },
+        {
+          "file": "src/three/types.ts",
+          "sha256": "80ba268d2a75d4d3fee2b074fff89fc85273f003a8ded0d47b2929371864a017"
+        },
+        {
+          "file": "src/three/landmarks/stewartVargas.ts",
+          "sha256": "669b80510587762fb979eca42e9466476532073c8ca7efe34308128e643982f4"
+        },
+        {
+          "file": "src/three/landmarks/villaSerrana.ts",
+          "sha256": "339aea81eccbb3511985bb78426500c4e5a51fa6eef8b173774fccad1639e9e7"
+        },
+        {
+          "file": "src/three/landmarks/stewartVargasFish.ts",
+          "sha256": "68ade563cb082dcb1ae93578912749ae1e496c4e2c873e32af9d0ccef455c135"
+        },
+        {
+          "file": "src/islands/JourneyHero.tsx",
+          "sha256": "b561195b8ebb8cc1319915bf3400b41ce86d073cfd50367af19a2d4adb204f75"
+        },
+        {
+          "file": "src/styles/journey.css",
+          "sha256": "26559b74b65ca26b4e2f7cc8e404cd139b1bac8d698219409d5decb9eaa1198e"
+        },
+        {
+          "file": "src/data/journeyStops.ts",
+          "sha256": "72b48c9336348b00d743b28a421d4d8f39d81f75a7fd468d1c57985f1f348b8c"
+        },
+        {
+          "file": "scripts/check-stewart-vargas.mjs",
+          "sha256": "6efcf798e915d4c82467f016a922f3225cc917f93517652fbe3d4c65e57435aa"
+        }
+      ]
+    }
+  ]
+}

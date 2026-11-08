@@ -18,6 +18,30 @@ export interface LandmarkNightLighting {
   setNight(night: boolean, active: boolean): void;
 }
 
+export interface LandmarkCameraFraming {
+  focus: number;
+  reveal: number;
+  sweep: number;
+  eye?: number;
+  rise?: number;
+  approachFocusFactor?: number;
+  overviewDistance?: number;
+  portraitFocus?: number;
+  portraitEye?: number;
+  portraitViewOffsetX?: number;
+  portraitViewOffset?: number;
+}
+
+/** An additional visit inside one destination; all coordinates are local. */
+export interface LandmarkCameraView extends LandmarkCameraFraming {
+  label: string;
+  origin: Vector3;
+  target: Vector3;
+  cameraDirection: Vector3;
+  bounds: { radius: number; height: number };
+  nightLighting?: LandmarkNightLighting;
+}
+
 export interface LandmarkModel {
   group: Group;
   target: Vector3;
@@ -25,6 +49,10 @@ export interface LandmarkModel {
   groundY?: number;
   /** Direction from the subject toward the preferred camera viewpoint. */
   cameraDirection?: Vector3;
+  cameraLabel?: string;
+  introViews?: readonly LandmarkCameraView[];
+  /** Same timed visit, wider subject/framing behind the night-mode curtain. */
+  nightView?: LandmarkCameraView;
   nightLighting?: LandmarkNightLighting;
   update?: (time: number) => void;
 }
@@ -40,6 +68,8 @@ export interface JourneyStop {
   image: string;
   imageAlt: string;
   label: string;
+  /** Optional internal visits, in the same order as the model's camera tour. */
+  cameraVisits?: readonly { label: string; button: string }[];
   /** Existing guide chapter used by an additional stop in the same city. */
   guideChapter?: string;
   sources: { label: string; url: string }[];

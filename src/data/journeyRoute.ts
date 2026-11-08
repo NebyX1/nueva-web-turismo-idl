@@ -8,6 +8,8 @@ export const journeyRoute = [
   { id: 'minas-sign', mapX: 386, mapY: 582 },
   { id: 'verdun', mapX: 331, mapY: 489 },
   { id: 'plaza-libertad', mapX: 526, mapY: 430 },
+  // New visit requested after the original route; preserve all nine placements.
+  { id: 'parque-rodo', mapX: 416, mapY: 362 },
   { id: 'arequita', mapX: 124, mapY: 318 },
   { id: 'cerro-artigas', mapX: 584, mapY: 315 },
   { id: 'penitente', mapX: 623, mapY: 166 },

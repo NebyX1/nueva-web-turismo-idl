@@ -1,0 +1,25 @@
+{
+  "sourceSha256": "28df17cc7087e09b7a907c679b1a524726b5c08fc3693b60f033887e293a970e",
+  "faces": {
+    "grass": {
+      "triangles": 20672,
+      "minimumFaceNormalY": 0.9676603569027765,
+      "negativeFaces": 0
+    },
+    "road": {
+      "triangles": 320,
+      "minimumFaceNormalY": 0.9722913085795719,
+      "negativeFaces": 0
+    },
+    "path": {
+      "triangles": 360,
+      "minimumFaceNormalY": 0.9770371770684916,
+      "negativeFaces": 0
+    },
+    "water": {
+      "triangles": 776,
+      "minimumFaceNormalY": 0.9999999999999999,
+      "negativeFaces": 0
+    }
+  }
+}

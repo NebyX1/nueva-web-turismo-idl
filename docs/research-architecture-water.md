@@ -41,6 +41,8 @@ Tres vistas inspeccionadas:
 
 El edificio posee un gran techo a dos aguas de paja, gabletes amplios, galería vidriada con estructura clara inclinada, apoyos de madera delgados y diagonales, una chimenea alta de ladrillo y basamento de rocas salpicadas por agaves. Se modela este perfil elevado y singular; la escalera de piedra, el cartel de madera, el estriado de la paja, el Mesón como ala secundaria baja y unas pocas cabañas completan el contexto. El agrupamiento del contexto es editorial, no una planta catastral de la localidad. Cámara sugerida `(0.75,0.27,1)`, foco `(0,14,2)`, altura 30 y radio 79.
 
+La ampliación de Villa Serrana del 8 de noviembre de 2026 incorpora la represa Stewart Vargas como motivo principal, conservando el pabellón original como contexto distante. Su constructor y referencias anteriores no cambian; el nuevo wrapper ajusta el conjunto al valle de la represa. El [estudio específico](research-stewart-vargas.md) documenta fotografías modernas/históricas, módulos y niveles, búsqueda de mallas similares, elección de Blender y límites de la reconstrucción. El [plan de calidad](stewart-vargas-quality-plan.md) separa revisión del activo y comprobación real del navegador, que no se da por realizada cuando la herramienta de control está bloqueada.
+
 ## Salto del Penitente
 
 Fuente primaria:
