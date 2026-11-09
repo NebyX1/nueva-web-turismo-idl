@@ -1,0 +1,12 @@
+.git
+.venv
+.env
+.env.*
+models
+storage
+logs
+run
+reports
+frontend
+tests
+**/__pycache__

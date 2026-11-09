@@ -1,0 +1,41 @@
+.gianna-connection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 16px;
+  color: #625071;
+  background: #f0ecf5;
+  font-size: 11px;
+}
+
+.gianna-connection button {
+  flex-shrink: 0;
+  font-size: inherit;
+}
+
+.gianna-message-text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.gianna-error {
+  padding: 12px 16px;
+  border: 1px solid #b32a2a;
+  border-radius: 12px;
+  color: #8b2020;
+  font-size: 13px;
+}
+
+.gianna-panel .chat-compose textarea {
+  height: 64px;
+  padding-block: 10px;
+  resize: none;
+  border-radius: 20px;
+  line-height: 1.4;
+}
+
+.gianna-panel button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}

@@ -4,4 +4,5 @@ dist/
 .env
 .env.*
 !.env.example
+!gianna-backend/.env.local.example
 npm-debug.log*

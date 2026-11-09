@@ -19,7 +19,96 @@ La salida estática se genera en `dist/`. Las fotografías, fuentes y licencias 
 
 ## Despliegue con Coolify
 
-Crear un recurso desde el repositorio, seleccionar el `Dockerfile` incluido y exponer el puerto 80. La imagen compila el sitio con Node.js y sirve `dist/` con nginx. No requiere variables de entorno ni un backend. También se puede servir `dist/` desde cualquier servidor de archivos estáticos.
+La configuración sigue el esquema de Invest Lavalleja: URL pública de API en el frontend y `CORS_ORIGINS`, `OLLAMA_HOST`, `OLLAMA_API_KEY` y `OLLAMA_MODEL` en el backend. No se añadió un panel administrativo: estas opciones se gestionan desde Environment Variables de Coolify. No hace falta MariaDB, MinIO ni correo para este chat.
+
+### Opción A: dos aplicaciones independientes (como Invest Lavalleja)
+
+Crear ambas aplicaciones desde este repositorio, con build pack **Dockerfile**:
+
+| Recurso | Base Directory / contexto | Dockerfile relativo al contexto | Puerto | Health check |
+| --- | --- | --- | --- | --- |
+| Turismo | `/` | `/Dockerfile` | `80` | `GET /health` |
+| API Gianna | `/gianna-backend` | `/Dockerfile` | `5000` | `GET /api/ready` |
+
+Si Coolify pide la ubicación relativa al repositorio en lugar del contexto, el Dockerfile del backend es `/gianna-backend/Dockerfile`; el contexto debe seguir siendo `/gianna-backend`. También puede desplegarse esa carpeta como repositorio independiente, pero debe incluir su corpus `data/generated/` y `data/source/`.
+
+1. Asignar primero el dominio HTTPS al backend, por ejemplo `https://gianna-api.turismo.example`.
+2. Configurar sus variables **runtime**, usando `gianna-backend/.env.example` como referencia:
+
+   ```dotenv
+   FLASK_ENV=production
+   HOST=0.0.0.0
+   PORT=5000
+   CORS_ORIGINS=https://turismo.example,https://www.turismo.example
+   OLLAMA_HOST=https://ollama.com
+   OLLAMA_API_KEY=<secreto de Ollama Cloud>
+   OLLAMA_MODEL=deepseek-v4.1-flash:cloud
+   ```
+
+   Reemplazar los dominios de ejemplo por los reales. Los orígenes deben ser exactos, sin `/` final, rutas ni `*`. Si sólo se usa un dominio, incluir sólo ese. El modelo debe existir y estar autorizado en la cuenta del proveedor; `OLLAMA_MODEL` gobierna respuestas, router, investigación web y fallback. `OLLAMA_BASE_URL` sigue siendo compatible si no se define `OLLAMA_HOST`.
+3. Añadir almacenamiento persistente **volume** para `/app/storage`, dedicado a esta aplicación. Para un bind mount ya existente, su propietario debe ser `10001:10001`. El backend utiliza un único proceso de Waitress con cuatro hilos: no levantar réplicas compartiendo este volumen, porque Qdrant embebido bloquea el índice. SQLite del corpus se incluye en la imagen; el índice se construye al primer inicio.
+4. Desplegar el backend y esperar `GET /api/ready` → HTTP 200, `status: ready`. Dar al primer arranque al menos tres minutos; el tiempo depende de la CPU. El health check comprueba modelos, índice y configuración del proveedor, **no** consume tokens ni garantiza que la clave esté autorizada: comprobar además una consulta real.
+5. En Turismo, configurar `PUBLIC_GIANNA_API_BASE=https://gianna-api.turismo.example` como variable **Build**. Es el origen de API, sin `/api`, sin credenciales. Asignar el dominio HTTPS del frontend y desplegar. Cada cambio de esa URL requiere reconstruir la imagen; cambiar únicamente una variable runtime no modifica el JavaScript estático.
+
+La API permite preflight CORS para JSON y sólo los orígenes indicados; no usa cookies ni expone la API key al navegador. En producción no se publican rutas de diagnóstico, trazas ni las herramientas web auxiliares: el chat invoca la investigación web internamente. Un servidor fuera de la lista CORS recibe un error explícito. CORS no es autenticación ni impide clientes de consola; para el dominio público de la API configurar protección/rate limiting en el proxy de Coolify si se necesita controlar abuso.
+
+### Opción B: un recurso Docker Compose
+
+Seleccionar `compose.yaml`, configurar `CORS_ORIGINS` con el dominio HTTPS público de Turismo, `OLLAMA_API_KEY` como secreto runtime y, opcionalmente, `OLLAMA_HOST` y `OLLAMA_MODEL`. Asignar el dominio al servicio `web`, puerto `80`; no asignar un dominio al servicio `gianna`. Dejar `PUBLIC_GIANNA_API_BASE` vacío: nginx reenvía `/api` por la red interna. Compose espera al backend saludable y conserva el índice en `gianna-storage`.
+
+Compose no ocupa el puerto 80 del host: Coolify publica la web mediante su proxy. nginx reenvía sólo las rutas del chat y limita consultas por IP. Con un proxy inverso por delante, comprobar cómo se identifica la IP real antes de modificar límites; el límite predeterminado usa la IP del cliente que ve nginx. Para desplegar nginx por separado en modo proxy, configurar `GIANNA_BACKEND_URL` como dirección del backend, sin barra final.
+
+### Requisitos y verificación
+
+CPU **x86-64 con AVX2**, Docker y conexión saliente a Hugging Face (descarga inicial de unos 259 MB de modelos), Ollama Cloud y las fuentes web. Los dos modelos de recuperación tienen hashes inmutables y no se cambian con `OLLAMA_MODEL`. La API key sólo es un secreto runtime del backend; no usar `PUBLIC_`, argumentos de build ni versionarla.
+
+La web tiene health check propio y no depende de la API para arrancar en modo URL pública. Si el backend no está listo o falla Ollama, el chat muestra el error y permite reintentar, sin respuestas ficticias. Ambos Dockerfiles excluyen entornos, credenciales e índices locales.
+
+```powershell
+# Verificación tras desplegar, con la URL REAL del backend o del proxy /api:
+$env:GIANNA_SITE_URL = 'https://gianna-api.turismo.example'
+npm run check:gianna -- --live
+# Con dos recursos separados:
+$env:GIANNA_WEB_URL = 'https://turismo.example'
+$env:GIANNA_CORS_ORIGIN = 'https://turismo.example'
+$env:GIANNA_EXPECT_PUBLIC_API = 'true'
+npm run check:coolify
+```
+
+La prueba de Gianna hace consultas reales al modelo: verifica respuesta con evidencia, memoria y límite de mensaje. La de Coolify comprueba assets compilados, health checks, URL incrustada, preflight, orígenes permitidos/rechazados y aislamiento de rutas privadas. Para Compose, ejecutar `check:gianna -- --live` con `GIANNA_SITE_URL` igual a la URL del frontend con proxy. `check:coolify` requiere acceso directo al backend para comprobar CORS: nginx no publica OPTIONS en su proxy same-origin. Verificar también en el navegador del frontend. Modificar `OLLAMA_MODEL` o la API key requiere reiniciar/redeploy del backend; modificar `PUBLIC_GIANNA_API_BASE` requiere rebuild del frontend. No se ha creado ni configurado ningún recurso remoto de Coolify automáticamente.
+
+## Gianna: API real en la interfaz de Lavalleja
+
+`gianna-backend/` contiene una copia del repositorio [NebyX1/gianna-turismo-web](https://github.com/NebyX1/gianna-turismo-web), revisión `dbc66f807d17e147481aa690e009cf9b6e69b9c3`. Se incorporan los archivos directamente, sin depender de un submódulo. Se conserva el backend, la interfaz original, el corpus, las pruebas y los scripts de instalación. La adaptación del backend permite configurar `HOST` para contenedores; localmente sigue escuchando sólo en loopback.
+
+Para ejecutar todo localmente se necesitan Python 3.12 de 64 bits, Node.js compatible, una CPU con AVX2 y Ollama abierto con sesión autorizada:
+
+```powershell
+ollama run deepseek-v4.1-flash:cloud
+# Salir de la consola de Ollama con /bye; mantener la aplicación abierta.
+Push-Location gianna-backend
+powershell -ExecutionPolicy Bypass -File scripts\setup.ps1
+powershell -ExecutionPolicy Bypass -File scripts\start_giana.ps1
+Pop-Location
+npm run dev
+```
+
+Abrir la URL que imprime Astro (puerto 4321, o el siguiente libre). Astro reenvía `/api` a `http://127.0.0.1:5000` tanto en desarrollo como en preview cuando `PUBLIC_GIANNA_API_BASE` está vacío. Si el backend está en otra dirección, copiar `.env.example` a `.env` y ajustar `GIANNA_BACKEND_URL` para usar proxy, o `PUBLIC_GIANNA_API_BASE` para conexión directa. La configuración local del backend usa `.env.local.example`; sus scripts la copian a `.env` sólo si todavía no existe. Si se utiliza conexión directa, incluir el origen local exacto en `CORS_ORIGINS`. Las credenciales de Ollama pertenecen exclusivamente al `.env` del backend o al entorno del servidor.
+
+`src/islands/GiannaChat.tsx` conserva el diálogo visual de Lavalleja y conecta todos los accesos del menú, la guía y los destinos mediante `gianna:open`. Envía consultas a `/api/ask-text`, mantiene un identificador de conversación propio, consulta el progreso de búsqueda y muestra respuestas y fuentes reales. Permite mensajes de 4000 caracteres, Enter para enviar, Shift+Enter para una nueva línea, reintento y nueva conversación. Se retiraron las respuestas preparadas y la simulación de voz. Un fallo del servidor se muestra explícitamente, sin recomendaciones ficticias.
+
+Las conversaciones permanecen en memoria del servidor durante su ejecución. Cerrar el diálogo mantiene la consulta; «Nueva conversación» cancela la espera local y usa otro contexto, pero no borra la memoria anterior del backend. Recargar la página inicia otra conversación. Los mensajes pueden enviarse a Ollama Cloud y las consultas actuales pueden usar búsqueda web; no introducir datos personales o sensibles. La información variable debe confirmarse con cada prestador.
+
+```powershell
+npm run check:gianna
+# Con ambos servidores iniciados; usar la URL real que imprimió Astro:
+$env:GIANNA_SITE_URL = 'http://localhost:4321'
+npm run check:gianna -- --live
+```
+
+La prueba local verifica el contrato de API, límites, fuentes, respuestas inválidas, errores y eliminación del mock. `--live` exige una respuesta turística real con evidencia, memoria de seguimiento y rechazo de mensajes demasiado largos.
+
+Para detener el backend local, ejecutar `gianna-backend\scripts\stop_giana.ps1` si se inició con su script. Detener Astro con Ctrl+C. Los entornos, modelos descargados, índices y credenciales están excluidos de Git.
 
 ## Recorrido 3D del encabezado
 
@@ -67,4 +156,4 @@ El contenido se mantiene en `src/data/guideDestinations.ts` y `src/data/guidePla
 
 ## Estado de la migración
 
-El material disponible para esta migración fue el HTML autocontenido en `base-project/`; no se incluyó el ZIP con los módulos fuente. Las secciones editoriales están separadas en componentes Astro; el recorrido y los controles de la guía son islas React. El motor del libro, el catálogo, el planificador y Gianna conservan el bundle original, que incluye Three.js r170. La única cabecera usa el recorrido modular de Three.js; los controles de movimiento y reinicio se conectan mediante eventos. El motor del libro expone un adaptador para recibir las páginas completas de la guía; un puente conserva sus enlaces internos. Gianna funciona como demostración local y no está conectada a un backend.
+El material disponible para esta migración fue el HTML autocontenido en `base-project/`; no se incluyó el ZIP con los módulos fuente. Las secciones editoriales están separadas en componentes Astro; el recorrido y los controles de la guía son islas React. El motor del libro, el catálogo y el planificador conservan el bundle original, que incluye Three.js r170. La única cabecera usa el recorrido modular de Three.js; los controles de movimiento y reinicio se conectan mediante eventos. El motor del libro expone un adaptador para recibir las páginas completas de la guía; un puente conserva sus enlaces internos. Gianna usa una isla React conectada al backend real de `gianna-backend/`.

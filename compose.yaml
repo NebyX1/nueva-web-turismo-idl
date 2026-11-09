@@ -1,0 +1,28 @@
+services:
+  web:
+    build: .
+    expose:
+      - "80"
+    environment:
+      GIANNA_BACKEND_URL: http://gianna:5000
+    depends_on:
+      gianna:
+        condition: service_healthy
+    restart: unless-stopped
+  gianna:
+    build: ./gianna-backend
+    environment:
+      HOST: 0.0.0.0
+      PORT: "5000"
+      FLASK_ENV: production
+      CORS_ORIGINS: ${CORS_ORIGINS:?Configura el origen HTTPS de la web}
+      OLLAMA_HOST: ${OLLAMA_HOST:-https://ollama.com}
+      OLLAMA_API_KEY: ${OLLAMA_API_KEY:?Configura OLLAMA_API_KEY en el servidor}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-deepseek-v4.1-flash:cloud}
+    volumes:
+      - gianna-storage:/app/storage
+    expose:
+      - "5000"
+    restart: unless-stopped
+volumes:
+  gianna-storage:
